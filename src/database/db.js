@@ -1,10 +1,7 @@
 // db.js
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(process.env.DB_URI);
 
 const db = mongoose.connection;
 db.on('error', (error) => console.log(error));
