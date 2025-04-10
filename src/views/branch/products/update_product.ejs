@@ -1,0 +1,226 @@
+<%- include('../../partials/main', { pageTitle: 'Update Branch Products' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <form class="theme-form theme-form-2 mega-form" method="POST" action="/branch/product/update/<%= product._id %>" enctype="multipart/form-data"> 
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Update Branch Product</h5>
+                                    </div>
+
+                                        <input type="hidden" name="token" value="<%= product.token %>">
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-3 mb-0">Product
+                                                Name</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Product Name" name="name" value="<%= product.name %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-3 mb-0">Category</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Product Name" name="category" value="<%= product.category %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-3 mb-0">Sub-Category</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Product Name" name="sub_category" value="<%= product.sub_category %>">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Available time Starts</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" name="available_time_starts" class="form-control" value="<%= product.available_time_starts %>" placeholder="Ex : 10:30 am" required="">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Available time ends</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" name="available_time_ends" class="form-control" value="<%= product.available_time_ends %>" placeholder="Ex : 10:30 am" required="">
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Description</h5>
+                                    </div>
+
+                                    
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <label class="form-label-title col-sm-3 mb-0">Product Description</label>
+                                                    <div class="col-sm-9">
+                                                       <textarea name="description" id="" cols="50" value="">
+                                                        <%= product.description %>
+                                                       </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Images</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Images</label>
+                                                <div class="custom-file">
+                                                    <input type="file" name="image" id="customFileEg1" class="form-control form-choose"
+                                                            accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                                            oninvalid="document.getElementById('en-link').click()">
+                                                    <div class="custom-file">
+                                                        <div class="text-center">
+                                                            <% if ( product.image ){ %>
+                                                                <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="<%= product.image%>" onerror="this.src='/images/defaults/default.jpg'" alt="image" />
+                                                            <% } else { %>
+                                                                <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/public/images/img2.jpg" alt="image" />
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Price</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">price</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="string" placeholder="0" value="<%= product.price%>" name="price">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Tax</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="string" value="<%= product.tax %>" placeholder="0" name="tax">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Tax type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="tax_type">
+                                                    <option disabled>Tax Type</option>
+                                                    <option value="amount" <%= product.tax_type === 'amount' ? 'selected' : '' %>>Amount</option>
+                                                    <option value="percentage" <%= product.tax_type === 'percentage' ? 'selected' : '' %>>Percent</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Discount</h5>
+                                    </div>
+
+                                    
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Discount</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="string" placeholder="0" name="discount" value="<%= product.discount %>">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Discount type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="discount_type">
+                                                    <option disabled>Discount Type</option>
+                                                    <option value="amount" <%= product.tax_type === 'amount' ? 'selected' : '' %>>Amount</option>
+                                                    <option value="percentage" <%= product.tax_type === 'percentage' ? 'selected' : '' %>>Percent</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Branch Price</h5>
+                                    </div>
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="col-sm-3 form-label-title">Branch Price</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="string" placeholder="0" name="branch_price" value="<%= product.branch_price %>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="mb-4 row align-items-center">
+                                            <button class="btn btn-solid" type="submit">Update</button>
+                                        </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+  <!-- Container-fluid End -->
+
+  <script>
+    function readURL(input, viewer_id) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+viewer_id).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#customFileEg1").change(function () {
+        readURL(this, 'viewer');
+    });
+    $("#customFileEg2").change(function () {
+        readURL(this, 'viewer2');
+    });
+</script>
+<!-- footer start-->
+<%- include('../../partials/footer')%>
+<!-- footer End--> 
+
+<%- include('../../partials/end')%>

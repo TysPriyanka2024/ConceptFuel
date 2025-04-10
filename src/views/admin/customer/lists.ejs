@@ -1,0 +1,390 @@
+
+<%- include('../../partials/main', { pageTitle: "Customer's List's " }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- All User Table Start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                    <div class="title-header option-title">
+                                        <h5>All Users ( <%= customerCount%> )</h5>
+                                        <form class="d-inline-flex">
+                                            <a href="/admin/customer/add" class="align-items-center btn btn-theme d-flex">
+                                                <i data-feather="plus"></i>Add New
+                                            </a>
+                                        </form>
+                                    </div>
+
+                                    <div class="table-responsive table-customer">
+                                        <table class="table all-package theme-table" id="table_id">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr No</th>
+                                                    <th>Organisation</th>
+                                                    <th>Contact Person</th>
+                                                    <th>Phone</th>
+                                                    <th>Email</th>
+                                                    <th>Rate</th>
+                                                    <th>Gst</th>
+                                                    <th>Active Status</th>
+                                                    <th>Payment Method</th>
+                                                    <th>Discount</th>
+                                                    <th>Delivery Fees</th>
+                                                    <th>Option</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <% if (customers != '') { %>        
+                                                    <% customers.forEach((row, index) => { %> 
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <%= index+1 %>
+                                                    </td>
+                                                    <td><%= row.company %></td>
+                                                    <td>
+                                                        <div class="user-name">
+                                                            <span><%= row.first_name %> <%= row.last_name %></span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td><%= row.phone %></td>
+                                                    <td><%= row.email %></td>
+                                                    <td>
+                                                        <% if (row.rate <= 0) { %>
+                                                            ---
+                                                        <% } else { %>
+                                                            <%= row.rate %>
+                                                        <% } %>
+                                                      </td>
+                                                    <td><%= row.gst_no %></td>
+
+                                                    <td>
+                                                        <div class="legend-indicator <%= row.status ? 'status-close' : 'status-danger' %>">
+                                                            <span id="statusText_<%= row._id %>"><%= row.status ? 'Active' : 'InActive' %></span>
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <div class="status-close" >
+                                                            <span style="background-color:rgba(0, 201, 219, .1);color: #00c9db;;">
+                                                                <%= row.payment_method %>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td><%= (row.discount + row.volume_discount + row.card_discount).toFixed(2) %></td>
+                                                    <td><%= (row.delivery_fee).toFixed(2) %></td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="/admin/customer/detail/<%= row.id%>">
+                                                                    <i class="ri-eye-line"></i>
+                                                                </a>
+                                                            </li>
+
+                                                            <li>
+                                                                <a href="/admin/customer/update/<%= row.id%>">
+                                                                    <i class="ri-pencil-line"></i>
+                                                                </a>
+                                                            </li>
+
+                                                            <li>
+                                                                <a href="/admin/customer/delete/<%= row.id%>" data-bs-toggle="modal"
+                                                                    data-bs-target="#exampleModalToggle">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <% }) %>      
+                                                    <% } else { %>
+                                                            <td>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td style="width: 100%;text-align:right;padding-right:10%">
+                                                                        Nothing To Show
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </td>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- All User Table Ends-->
+
+                <div class="container-fluid">
+                    <!-- footer start-->
+                    <%- include('../../partials/footer')%>
+                    <!-- footer end-->
+                </div>
+            </div>
+            <!-- Container-fluid end -->
+
+                        <!-- Container-fluid end -->
+                        
+                    
+                <!-- Delete Modal Box Start -->
+                    <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle" aria-hidden="true" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header d-block text-center">
+                                    <h5 class="modal-title w-100" id="exampleModalLabel22">Are You Sure ?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="remove-box">
+                                        <p>You want to delete the record.</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                                    <button type="button" class="btn btn-animation btn-md fw-bold" id="confirmDeleteBtn" data-bs-target="#exampleModalToggle2"
+                                        data-bs-toggle="modal" data-bs-dismiss="modal">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="remove-box text-center">
+                                        <div class="wrapper">
+                                            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                            </svg>
+                                        </div>
+                                        <h4 class="text-content">It's Removed.</h4>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- Delete Modal Box End -->
+
+
+                <!-- Make Customer Privilaged -->
+                <div class="modal fade theme-modal remove-coupon" id="confirmationModal" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header d-block text-center">
+                                <h5 class="modal-title w-100" id="exampleModalLabel22">Please Set the Discussed Price ......</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                                <!-- Add this input field inside your confirmationModal body -->
+                                <div class="modal-body container">
+                                    <h4 id="text-false"></h4>
+                                    <div id="confirmationContainer" >
+                                        <label
+                                            class="form-label-title">
+                                            Discussed Price
+                                        </label>
+                                        <div class="">
+                                            <input class="form-control" type="text" name="discussed_price" id="numberInput" oninput="validateFloat(this)" placeholder="Enter Your Price...." required>
+                                        </div>
+                                        <span id="errorMessage" style="color: red;"></span>
+                                    </div>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                                <button type="button" class="btn btn-animation btn-md fw-bold" id="confirmStatusChange" data-bs-target="#exampleModalToggle2"
+                                    data-bs-toggle="modal" data-bs-dismiss="modal" disabled>Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="remove-box text-center">
+                                    <div class="wrapper">
+                                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-content">It's Updated.</h4>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                      // Handle click event on the "Delete" link
+                      $('a[data-bs-toggle="modal"]').on('click', function () {
+                        // Get the customer ID from the link's href attribute
+                        const customerId = this.href.split('/').pop();
+                  
+                        // Update the "Yes" button's data attribute with the customer ID for reference when confirming deletion
+                        $('#confirmDeleteBtn').data('customer-id', customerId);
+                      });
+                  
+                      // Handle click event on the "Yes" button inside the modal
+                      $('#confirmDeleteBtn').on('click', function () {
+                        // Get the customer ID from the data attribute
+                        const customerId = $(this).data('customer-id');
+                  
+                        // Make an AJAX request to the server to delete the customer
+                        $.ajax({
+                          method: 'DELETE',
+                          url: `/admin/customer/delete/${customerId}`,
+                          success: function (data) {
+                            // If the deletion is successful, you can handle the response or reload the page
+                            console.log(data); // Optional: Log the server response
+                            window.location.reload(); // Reload the page to reflect the changes
+                          },
+                          error: function (error) {
+                            // Handle errors if any
+                            console.error(error);
+                          },
+                        });
+                      });
+                    });
+                </script>
+            
+            <script>
+                function validateFloat(floatField) {
+                    // Remove any non-numeric characters (including '.') from the input
+                    floatField.value = floatField.value.replace(/[^0-9.]/g, '');
+            
+                    // Parse the entered value as a float
+                    var enteredValue = parseFloat(floatField.value);
+            
+                    // Display an error message if the entered value is not a valid number or less than or equal to 0
+                    var errorMessage = document.getElementById("errorMessage");
+                    if (isNaN(enteredValue) || enteredValue <= 0) {
+                        errorMessage.textContent = "Please enter a valid number greater than 0.";
+                        document.getElementById("confirmStatusChange").disabled = true;
+                    } else {
+                        errorMessage.textContent = "";
+                        document.getElementById("confirmStatusChange").disabled = false;
+                    }
+                }
+            </script>
+
+                <!-- <script>
+                    $(document).ready(function () {
+                        // Function to open the modal and handle data
+                        function openConfirmationModal(customerId, isPrivilaged) {
+                            // Set the data-customer-id and is-privilaged in the modal
+                            $('#confirmationModal').attr('data-customer-id', customerId);
+                            $('#confirmationModal').attr('data-is-privilaged', isPrivilaged);
+
+                            // Show/hide the input box based on the isPrivilaged value
+                            if (isPrivilaged === 'True') {
+                                // If isPrivilaged is true, hide the input box
+                                $('#exampleModalLabel22').text('Are you sure?');
+                                $('#text-false').text('You want to Unprivilage the User');
+                                $('#confirmationContainer').hide();
+                                document.getElementById("confirmStatusChange").disabled = false;
+
+                            } else {
+                                // If isPrivilaged is false, show the input box
+                                $('#exampleModalLabel22').text(''); // Empty the text
+                                $('#text-false').text('');
+                                $('#confirmationContainer').show();
+                            }
+
+                            // Change the modal title to "Are you sure?"
+                            $('#exampleModalLabel22').text('Are you sure?');
+
+                            // Open the confirmation modal
+                            $('#confirmationModal').modal('show');
+                        }
+
+                        // Function to handle the confirmation and make API call
+                        function confirmStatusChange() {
+                            // Get data-customer-id and is-privilaged from the modal
+                            var customerId = $('#confirmationModal').attr('data-customer-id');
+                            var isPrivilaged = $('#confirmationModal').attr('data-is-privilaged');
+
+                            // Get the discussed price from the input field (only if it's visible)
+                            var discussedPrice = $('#numberInput:visible').val();
+
+                            // Determine the opposite of isPrivilaged
+                            var oppositeIsPrivilaged = isPrivilaged === 'True' ? 'False' : 'True';
+
+                            // Make an API call using AJAX (Assuming you have an API endpoint to handle this)
+                            $.ajax({
+                                url: '/admin/customer/update-prime',
+                                method: 'POST',
+                                data: {
+                                    customerId: customerId,
+                                    discussedPrice: discussedPrice,
+                                    isPrivilaged: oppositeIsPrivilaged // Send the opposite value
+                                },
+                                success: function (response) {
+                                    // Update the status text
+                                    const statusTextElement = $(`#privalgeText_${customerId}`);
+                                    statusTextElement.text(response.is_privilaged ? 'True' : 'False');
+
+                                    // Update the class of the legend-indicator span for the clicked category only
+                                    const clickedProductIndicator = $(`#privalgeText_${customerId}`).siblings('.legend-indicator');
+                                    clickedProductIndicator.removeClass('bg-success bg-disabled');
+                                    clickedProductIndicator.addClass(response.is_privilaged ? 'bg-success' : 'bg-disabled');
+                                    window.location.reload();
+                                },
+                                error: function (error) {
+                                    console.error("Error updating database value");
+                                }
+                            });
+                        }
+
+                        // Event listener for the click button
+                        $('.clickable-cell').on('click', function () {
+                            // Get the data-customer-id and is-privilaged attribute values
+                            var customerId = $(this).data('customer-id');
+                            var isPrivilaged = $('#privalgeText_' + customerId).text().trim();
+
+                            // Open the confirmation modal with the customer ID and is-privilaged value
+                            openConfirmationModal(customerId, isPrivilaged);
+                        });
+
+                        // Event listener for the confirmStatusChange button
+                        $('#confirmStatusChange').on('click', function () {
+                            // Call the function to confirm status change and make API call
+                            confirmStatusChange();
+                        });
+                    });
+                </script> -->
+                <!-- Add this script after including jQuery -->
+<%- include('../../partials/end')%>

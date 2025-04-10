@@ -1,0 +1,326 @@
+<%- include('../../partials/main', { pageTitle: "Customer's Wallet detail" }) %>
+<script src="https://kit.fontawesome.com/78155a1a48.js" crossorigin="anonymous"></script>
+<style>
+    .progtrckr li.fail:before{
+        background-color: #ff0000;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.return:before{
+        background-color: #cbc82f;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.schedule:before{
+        background-color: #9faca5;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.out:before{
+        content: "\f472";
+    }
+    .progtrckr li.process:before{
+        content: "\f52f";
+    }
+    .progtrckr li.deliver:before{
+        content: "\f06b";
+    }
+</style>
+
+            <!-- Order Tracking Seation starts-->
+            <div class="page-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="title-header option-title">
+                                                <h5>Wallet Summary</h5>
+                                                <div class="clickable-cell" data-bs-toggle="modal" data-wallet-id="<%= wallet._id %>">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="#09a487" d="M3 0v3H0v2h3v3h2V5h3V3H5V0H3m6 3v3H6v3H3v10a2 2 0 0 0 2 2h14c1.11 0 2-.89 2-2v-1h-9a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h9V5a2 2 0 0 0-2-2H9m3 5v8h10V8H12m4 2.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5Z"/></svg>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-xxl-6 col-lg-6">
+                                                <div class="main-tiles border-5 border-0 card o-hidden">
+                                                    <h4><%= wallet.user_id.first_name %> <%= wallet.user_id.last_name %>'s Wallet</h4>
+                                                    <br>
+                                                    <div class="custome-1-bg b-r-4 card-body">
+                                                        <div class="media align-items-center static-top-widget">
+                                                            <div class="media-body p-0">
+                                                                <span class="m-0">Total Available Balance</span>
+                                                                <h4 class="mb-0 counter">₹<%= wallet.total_credit %>
+                                                                </h4>
+                                                            </div>
+                                                            <div class="align-self-center text-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 20 20"><path fill="#0da487" fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16a8 8 0 0 0 0 16ZM7 5a1 1 0 1 0 0 2h1a2 2 0 0 1 1.732 1H7a1 1 0 1 0 0 2h2.732A2 2 0 0 1 8 11H7a1 1 0 0 0-.707 1.707l3 3a1 1 0 0 0 1.414-1.414l-1.483-1.484A4.008 4.008 0 0 0 11.874 10H13a1 1 0 1 0 0-2h-1.126a3.976 3.976 0 0 0-.41-1H13a1 1 0 1 0 0-2H7Z" clip-rule="evenodd"/></svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="title-header option-title">
+                                                <h5>Transaction History</h5>
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-12 overflow-visible">
+                                                    <div class="tracker-table">
+                                                        <div class="table-responsive">
+                                                            <table class="table text-center">
+                                                                <thead>
+                                                                    <tr class="table-head">
+                                                                        <th class="text-center" scope="col">Transaction ID</th>
+                                                                        <th class="text-center" scope="col">Order Id</th>
+                                                                        <th class="text-center" scope="col">Debited</th>
+                                                                        <th class="text-center" scope="col">Credited</th>
+                                                                        <th class="text-center" scope="col">Balance</th>
+                                                                        <th class="text-center" scope="col">Status</th>
+                                                                        <th class="text-center" scope="col">Created Date</th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                    <% if (transactions != '') { %>        
+                                                                        <% transactions.forEach((row, index) => { %> 
+                                                                    <tr>
+                                                                        <td class="text-center"><%= row.transaction_id %></td>
+                                                                        <td class="text-center"><%= row.order_id ?? '--' %></td>
+                                                                        <td class="text-center"><%= row.debited %></td>
+                                                                        <td class="text-center"><%= row.credited %></td>
+                                                                        <td class="text-center"><%= row.available %></td>
+                                                                        <td class="text-center">
+                                                                            <div class="legend-indicator <%= row.status ? 'status-close' : 'status-danger' %>">
+                                                                                <span id="statusText_<%= row._id %>"><%= row.status ? 'Successful' : 'Unsuccessful' %></span>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="text-center"><%= row.created_date.toLocaleDateString('en-UK', options)%></td>
+                                                                    </tr>
+                                                                    
+                                                                    <% }) %>      
+                                                                        <% } else { %>    
+                                                                            <tr>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td style="width: 100%;text-align:right;padding-right:10%">
+                                                                                    Nothing To Show
+                                                                                </td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        <% } %>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+
+                                <!-- Make Customer Privilaged -->
+                                <div class="modal fade theme-modal remove-coupon" id="confirmationModal" aria-hidden="true" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header d-block text-center">
+                                                <h5 class="modal-title w-100" id="exampleModalLabel22">Please Reload Wallet......</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                                <!-- Add this input field inside your confirmationModal body -->
+                                                <div class="modal-body container">
+                                                    <h4 id="text-false"></h4>
+                                                    <div id="confirmationContainer" >
+                                                        <label
+                                                            class="form-label-title">
+                                                            Enter the amount you have to set
+                                                        </label>
+                                                        <div class="">
+                                                            <input class="form-control" type="text" name="discussed_price" id="numberInput" oninput="validateFloat(this)" placeholder="Enter Your Price...." required>
+                                                        </div>
+                                                        <span id="errorMessage" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-animation btn-md fw-bold" id="confirmStatusChange" data-bs-target="#exampleModalToggle2"
+                                                    data-bs-toggle="modal" data-bs-dismiss="modal">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="remove-box text-center">
+                                                    <div class="wrapper">
+                                                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                                        </svg>
+                                                    </div>
+                                                    <h4 class="text-content">It's Updated.</h4>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                                
+                                <script>
+                                    function validateFloat(floatField) {
+                                        // Remove any non-numeric characters (including '.') from the input
+                                        floatField.value = floatField.value.replace(/[^0-9.]/g, '');
+                                
+                                        // Parse the entered value as a float
+                                        var enteredValue = parseFloat(floatField.value);
+                                
+                                        // Display an error message if the entered value is not a valid number or less than or equal to 0
+                                        var errorMessage = document.getElementById("errorMessage");
+                                        if (isNaN(enteredValue) || enteredValue <= 0) {
+                                            errorMessage.textContent = "Please enter a valid number greater than 0.";
+                                            document.getElementById("confirmStatusChange").disabled = true;
+                                        } else {
+                                            errorMessage.textContent = "";
+                                            document.getElementById("confirmStatusChange").disabled = false;
+                                        }
+                                    }
+                                </script>
+                
+                                <script>
+                                    $(document).ready(function () {
+                                        // Function to open the modal and handle data
+                                        function openConfirmationModal(walletId) {
+                                            // Set the data-customer-id and is-privilaged in the modal
+                                            $('#confirmationModal').attr('data-wallet-id', walletId);
+                
+                                            // Open the confirmation modal
+                                            $('#confirmationModal').modal('show');
+                                        }
+                
+                                        // Function to handle the confirmation and make API call
+                                        function confirmStatusChange() {
+                                            var walletId = $('#confirmationModal').attr('data-wallet-id');
+                                            var reload_amount = $('#numberInput:visible').val();
+
+                                            console.log('walletId:', walletId);
+                                            console.log('reload_amount:', reload_amount);
+
+                                            // Make an API call using AJAX (Assuming you have an API endpoint to handle this)
+                                            $.ajax({
+                                                url: '/admin/customer/wallets/reload-wallet',
+                                                method: 'POST',
+                                                data: {
+                                                    walletId: walletId,
+                                                    amount: reload_amount,
+                                                },
+                                                success: function (response) {
+                                                    window.location.reload();
+                                                },
+                                                error: function (error) {
+                                                    console.error("Error updating database value");
+                                                }
+                                            });
+                                        }
+                
+                                        // Event listener for the click button
+                                        $('.clickable-cell').on('click', function () {
+                                            // Get the data-customer-id and is-privilaged attribute values
+                                            var walletId = $(this).data('wallet-id');
+                
+                                            // Open the confirmation modal with the customer ID and is-privilaged value
+                                            openConfirmationModal(walletId);
+                                        });
+                
+                                        // Event listener for the confirmStatusChange button
+                                        $('#confirmStatusChange').on('click', function () {
+                                            // Call the function to confirm status change and make API call
+                                            confirmStatusChange();
+                                        });
+                                    });
+                                </script>
+
+<!-- footer start-->
+  <%- include('../../partials/footer')%>
+  <!-- footer End-->
+
+  <%- include('../../partials/end')%>
+

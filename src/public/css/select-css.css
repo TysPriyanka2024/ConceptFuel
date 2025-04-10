@@ -1,0 +1,114 @@
+
+.Pending span, .Confirmed span{ 
+    background-color: rgba(47,135,51,0.15);
+    color: #00c9db;
+    padding: 5px 10px;
+    text-transform: capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 400;
+    background-color: rgba(0, 201, 219, .1);
+}
+
+.Processing span , .Out_For_Delivery span{
+    padding: 5px 10px;
+    text-transform: capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 400;
+    background-color: rgba(0, 201, 219, .1);
+    color: #f5ca99;
+    background-color: rgba(245, 202, 153, .1);
+}
+
+
+
+.Returned span , .Cancelled span, .Delivered span, .Failed span, .Rejected span{
+    padding: 5px 10px;
+    text-transform: capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #ed4c78;
+    background-color: rgba(237, 76, 120, .1);
+}
+
+
+.pending , .all , .scheduled{ 
+    background-color: rgb(76 237 229 / 25%);
+    color: #00c9db ;
+    padding: 2px 10px;
+    text-transform: capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-left: 4%;
+    font-weight: 400;
+}
+
+.confirmed , .delivered{ 
+    background-color: rgba(47, 135, 51, 0.601);
+    color: #00c9a7;
+    padding: 2px 10px;
+    text-transform: capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-left: 4%;
+    font-weight: 400;
+}
+
+.processing, .out_for_delivery { 
+    background-color: rgb(241 241 21 / 67%);
+    color: #f5ca99;
+    padding: 2px 10px;
+    text-transform: capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-left: 4%;
+    font-weight: 400;
+}
+
+.returned, .failed { 
+    color: rgb(199 2 56) ;
+    background-color: rgb(237 76 120 / 35%);
+    padding: 2px 10px;
+    text-transform: capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-left: 4%;
+    font-weight: 400;
+}
+
+.cancelled {
+    color: #132144;
+    background-color: rgba(59, 59, 60, 0.697);
+    padding: 2px 10px;
+    text-transform: capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-left: 4%;
+    font-weight: 400;
+}
+
+
+.status-drop a{
+    font-size: calc(15px + (16 - 15) * ((100vw - 320px) / (1920 - 320)));
+    color: #222;
+    text-transform: capitalize;
+    display: block;
+    padding: 8px 17px;
+    margin-bottom: 2%;
+}
+
+.status-drop a:hover{
+    color: #0b7560;
+    text-decoration: none;
+    background-color: #f9f9f6;
+}

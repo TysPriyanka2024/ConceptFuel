@@ -1,0 +1,231 @@
+<%- include('../../../partials/main', { pageTitle: 'Product Lists' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- All User Table Start -->
+                <div class="container-fluid">
+                    <div class="product">
+                        <div class="col-sm-12">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                    <div class="title-header option-title">
+                                        <h5>All Product (<%= productCount %>)</h5>
+                                    </div>
+
+                                    <div class="table-responsive category-table">
+                                        <div>
+                                            <table class="table all-package theme-table" id="table_id">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th>Product Name</th>
+                                                        <th>Image</th>
+                                                        <th>Actual Price</th>
+                                                        <th>Category</th>
+                                                        <th>Sub-category</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <% if (products != '') { %>        
+                                                        <% products.forEach((product, index) => { %> 
+                                                    <tr>
+                                                        <td><%= index + 1 %></td>
+                                                        <td><%= product.name %></td>
+                                                        <td>
+                                                            <div class="table-image">
+                                                                <% if( product.image ){ %>   
+                                                                    <img src="/images/<%= product.image %>" class="img-fluid" alt="">
+                                                                
+                                                                <% }else{ %>  
+                                                                    <img src="/public/images/product/1.png" class="img-fluid" alt="">
+                                                                <% }%>  
+                                                            </div>
+                                                        </td>
+                                                        <td><%= product.price %></td>
+                                                        <td><%= product.category.name %></td>
+                                                        <td><%= product.sub_category.name %></td>
+                                                        
+                                                        <td>
+                                                            <%
+                                                                const branchExists = product.branch_status.some(branchStatus => branchStatus.branch_id.equals(user.userId));
+                                                    
+                                                                if (branchExists) {
+                                                                const branchStatusForCurrentBranch = product.branch_status.find(branchStatus => branchStatus.branch_id.equals(user.userId));
+                                                    
+                                                                if (branchStatusForCurrentBranch) {
+                                                                    const branchStatusId = branchStatusForCurrentBranch._id;
+                                                                    const status = branchStatusForCurrentBranch.status;
+                                                            %>
+
+
+                                                                <div onclick="updateStatus('<%= product._id %>', '<%= branchStatusId %>')">
+                                                                    <div class="legend-indicator <%= status ? 'status-close' : 'status-danger' %>">
+                                                                        <span id="statusText_<%= branchStatusId %>"><%= status ? 'Active' : 'Disabled' %></span>
+                                                                    </div>
+                                                                </div>
+
+                                                            
+                                                          <!-- Render your HTML content here -->
+                                                  
+                                                          <%
+                                                              } else {
+                                                                console.log('No branch status found for the product with matching branch ID');
+                                                              }
+                                                            } else {
+                                                              console.log('No product with matching branch ID found');
+                                                            }
+                                                          %>
+                                                                                                                
+                                                        </td>
+
+                                                        
+                                                    </tr>
+                                                    <% }) %>      
+                                                    <% } else { %>
+                                                            <td>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td style="width: 100%;text-align:right;">
+                                                                        Please Ask Admin to Allow to select products 
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </td>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="remove-box text-center">
+                                    <div class="wrapper">
+                                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-content">It's Removed.</h4>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete Modal Box End -->
+
+                <!-- All User Table Ends-->
+                <%- include('../../../partials/footer')%>
+            </div>
+            <!-- Container-fluid end -->
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                function updateStatus(productId,branchId) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/branch/catalogue/update-status",
+                        data: { 
+                            productId: productId, 
+                            branchId:branchId },
+                        success: function (response) {
+                            // Update the status text
+                            const statusTextElement = $(`#statusText_${productId}`);
+                            statusTextElement.text(response.status ? 'Active' : 'Disabled');
+                
+                            // Update the class of the legend-indicator span for the clicked category only
+                            const clickedProductIndicator = $(`#statusText_${productId}`).siblings('.legend-indicator');
+                            clickedProductIndicator.removeClass('bg-success bg-disabled');
+                            clickedProductIndicator.addClass(response.status ? 'bg-success' : 'bg-disabled');
+                            window.location.reload();
+                            console.log("Database value updated successfully!");
+                        },
+                        error: function (error) {
+                            console.error("Error updating database value");
+                        }
+                    });
+                }
+                
+            </script>
+            
+        
+
+    <!-- Delete Modal Box Start -->
+    <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title w-100" id="exampleModalLabel22">Are You Sure ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="remove-box">
+                        <p>You want to delete the record.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                    <button type="button"  id="confirmDeleteBtn" class="btn btn-animation btn-md fw-bold">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+          // Handle click event on the "Delete" link
+          $('a[data-bs-toggle="modal"]').on('click', function () {
+            // Get the Product ID from the link's href attribute
+            const productId = this.href.split('/').pop();
+      
+            // Update the "Yes" button's data attribute with the category ID for reference when confirming deletion
+            $('#confirmDeleteBtn').data('category-id', productId);
+          });
+      
+          // Handle click event on the "Yes" button inside the modal
+          $('#confirmDeleteBtn').on('click', function () {
+            // Get the category ID from the data attribute
+            const productId = $(this).data('category-id');
+      
+            // Make an AJAX request to the server to delete the category
+            $.ajax({
+              method: 'DELETE',
+              url: `/admin/product/delete/${productId}`,
+              success: function (data) {
+                // If the deletion is successful, you can handle the response or reload the page
+                console.log(data); // Optional: Log the server response
+                window.location.reload(); // Reload the page to reflect the changes
+              },
+              error: function (error) {
+                // Handle errors if any
+                console.error(error);
+              },
+            });
+          });
+        });
+      </script>
+
+
+<%- include('../../../partials/end')%>

@@ -1,0 +1,211 @@
+<%- include('./partials/main', { pageTitle: 'Order detail' }) %>
+<script src="https://kit.fontawesome.com/78155a1a48.js" crossorigin="anonymous"></script>
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+    .progtrckr li.fail:before{
+        background-color: #ff0000;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.return:before{
+        background-color: #cbc82f;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.schedule:before{
+        background-color: #9faca5;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.out:before{
+        content: "\f472";
+    }
+    .progtrckr li.process:before{
+        content: "\f52f";
+    }
+    .progtrckr li.deliver:before{
+        content: "\f06b";
+    }
+</style>
+
+            <!-- Order Tracking Seation starts-->
+            <div class="page-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="title-header option-title">
+                                                <h5>Order Tracking</h5>
+                                            </div>
+
+                                            <% if (orderItemData === "null") { %>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p>Delivery window for your order is closed or the order is not tracked.</p>
+                                                    </div>
+                                                </div>
+                                            <% } else if (orderItemData === "undefined") { %>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p>The order appears to be invalid or cannot be found in the system.</p>
+                                                    </div>
+                                                </div>
+                                            <% } else { %>
+                                                <div class="row">
+                                                    <div class="col-12 overflow-hidden">
+                                                        <div class="order-left-image">
+                                                            
+
+                                                            <div class="order-image-contain">
+                                                                <div class="tracker-number">
+                                                                    <p>Order Number : <span id="order_id"> <%= orderItemData.orderData.order_id %> </span></p>
+                                                                    <p>Branch :<span> <%= orderItemData.ordered_branch.branch_name %> </span></p>
+                                                                </div>
+                                                                
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 overflow-hidden">
+                                                        <div class="card">
+                                                            <div id="map"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+
+<!-- footer start-->
+  <%- include('./partials/footer')%>
+  <!-- footer End-->
+    <% if (!orderItemData === "null") { %>
+        <script>
+            "none"
+        </script>
+    <% } else { %>
+        <script>
+            function initMap() {
+            // Create a map object and specify the DOM element for display.
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: { lat: 20.7346165, lng:72.0770793 } // Default center (Example: New York City)
+            });
+    
+            // Function to update user and delivery person's locations
+            function updateLocations(orderId) {
+                // Make AJAX request to fetch user and delivery person's locations
+                fetch(`/customer/auth/track-order-api/${orderId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.orderItemData);
+                    console.log('Customer Latitude:', data.orderItemData.ordered_address.latitude);
+                    console.log('Customer Longitude:', data.orderItemData.ordered_address.longitude);
+                    console.log('Deliveryman Latitude:', data.orderItemData.assigned_deliveryMan.latitude);
+                    console.log('Deliveryman Longitude:', data.orderItemData.assigned_deliveryMan.longitude);
+    
+                    // Calculate and display the route between user and delivery person
+                    var directionsService = new google.maps.DirectionsService();
+                    var directionsRenderer = new google.maps.DirectionsRenderer();
+                    directionsRenderer.setMap(map);
+    
+                    var request = {
+                        origin: { lat: data.orderItemData.ordered_address.latitude, lng: data.orderItemData.ordered_address.longitude },
+                        destination: { lat: data.orderItemData.assigned_deliveryMan.latitude, lng: data.orderItemData.assigned_deliveryMan.longitude },
+                        travelMode: 'DRIVING'
+                    };
+    
+                    directionsService.route(request, function(result, status) {
+                        if (status == 'OK') {
+                            directionsRenderer.setDirections(result);
+                        } else {
+                            console.error('Error calculating route:', status);
+                        }
+                    });
+    
+                    
+    
+                })
+                .catch(error => console.error('Error fetching locations:', error));
+            }
+    
+            var orderId = document.getElementById('order_id').innerText;
+            updateLocations(orderId);
+    
+            // Update user and delivery person's locations every second
+            setInterval(() => updateLocations(orderId), 30000);
+            }
+            </script>
+    <% } %>
+
+
+
+<!-- Load the Google Maps JavaScript API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOSLNx2YesgpKBIckkEi_fGhjZQ_tyMo4&callback=initMap" async defer></script>
+
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmv7mDVQYkq3euCTbIa6vI5NxU8iyOTb8&callback=initMap" async defer></script> -->
+
+  <%- include('./partials/end')%>
+

@@ -1,0 +1,431 @@
+<%- include('../../partials/main', { pageTitle: 'Add new Customer' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-8 m-auto">
+                                    <div class="card">
+                                        <div class="card-body title-header option-title">
+                                            <h5 style="font-size: calc(20px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));">Add New Organisation</h5>
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="theme-form theme-form-2 mega-form" action="/admin/customer/add" method="post" enctype="multipart/form-data">
+                                        <div class="card" >
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Personal Information </h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Organisation Name
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <select class="js-example-basic-single w-100" name="company" id="company selectOption" required>
+                                                                <option value="none">-- All Organisation --</option>
+                                                                <% if (companies != '') { %>        
+                                                                    <% companies.forEach((row, index) => { %> 
+                                                                        <option value="<%= row.name %>"> <%= row.name %></option>
+                                                                <% }) %>      
+                                                                <% } else { %>
+                                                                    <option>Nothing To Show</option>
+                                                                <% } %>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Contact Person's First Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="first_name" placeholder="Enter your first Name" required>
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Contact Person's Last Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" placeholder="Enter your last name" name="last_name" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Email
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="email" name="email" placeholder="Enter Email" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Phone
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="phone" placeholder="Enter Phone Number" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="my-4 row align-items-center">
+                                                        <label class="col-sm-3 col-form-label form-label-title">Customer Image</label>
+                                                        <div class="custom-file">
+                                                            <input class="form-control" type="hidden" name="maincategory" value="Admin">
+                                                            <input class="form-control" type="hidden" name="subcategory" value="Customers">
+                                                            <input type="file" name="image" id="customFileEg1" class="form-control form-choose"
+                                                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                                                    oninvalid="document.getElementById('en-link').click()">
+                                                            <div class="custom-file">
+                                                                <div class="text-center">
+                                                                    <img style="height: 200px;border: 1px solid;border-radius: 10px;width: 50%;margin-top:2rem" id="viewer" src="/public/images/img2.jpg" alt="image" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="pt-5 pb-3 row align-items-center">
+                                                        <div class="form-check ps-4 m-0 remember-box">
+                                                            <input class="checkbox_animated check-box" name="accept_term" type="checkbox" value="true" id="flexCheckDefault" required>
+                                                            <label class="form-check-label" for="flexCheckDefault">By clicking 'Accept Terms,' you agree to our terms and conditions.</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card" >
+                                            <div class="card-body ">
+                                                <div class="card-header-2">
+                                                    <h5>Customer Address</h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 1
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="address1" placeholder="Enter Address 1...." required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 2
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="address2" placeholder="Enter Address 2...." required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">State
+                                                            </label>
+                                                            <select class="js-example-basic-single w-100" name="state" id="state">
+                                                                <option value="none">-- All States  --</option>
+                                                                <% if (states != '') { %>        
+                                                                    <% states.forEach((row, index) => { %> 
+                                                                        <option value="<%= row.name %>"> <%= row.name %></option>
+                                                                <% }) %>      
+                                                                <% } else { %>
+                                                                    <option>Nothing To Show</option>
+                                                                <% } %>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">City
+                                                            </label >
+                                                            <select class="js-example-basic-single w-100" name="city" id="cities" required>
+                                                                <option value="none">-- Select a State First --</option>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">Area
+                                                            </label>
+                                                            <select class="js-example-basic-single w-100" name="area" id="areas" required>
+                                                                <option value="none">-- Select a State First --</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">                                                        
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">PinCode
+                                                            </label>
+                                                            <input class="form-control" type="text" placeholder="Enter Pincode...." name="pincode" id="numberInput" oninput="validateInput(this)" required>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">Country
+                                                            </label>
+                                                            <input class="form-control" type="text" name="country" placeholder="Enter Your Country...." value="India" required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="mb-4 row align-items-center">
+                                                    <label class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        GST No.
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="gst_no"
+                                                            placeholder="Enter GST Number...." required>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Credit Limit
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="credit_limit" id="floatField" oninput="validateFloat(this, 'errorMessage1')"  value="100000.0" required >                                                        
+                                                        <span id="errorMessage1" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Discount
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="discount" id="floatField" oninput="validateFloat(this, 'errorMessage2')"  value="0"  required >                                                        
+                                                        <span id="errorMessage2" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Volume Discount
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="volume_discount" id="floatField" oninput="validateFloat(this, 'errorMessage3')"  value="0"  required >                                                        
+                                                        <span id="errorMessage3" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Card Discount
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="card_discount" id="floatField" oninput="validateFloat(this, 'errorMessage4')"  value="0"  required >                                                        
+                                                        <span id="errorMessage4" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Delivery Fees
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="delivery_fees" id="floatField" oninput="validateFloat(this, 'errorMessage5')"  value="0"  required >                                                        
+                                                        <span id="errorMessage5" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4 row align-items-center">
+                                                    <label class="form-label-title col-sm-3 mb-0">Mode of Payment</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="js-example-basic-single w-100" name="payment_method" id="payment_method">
+                                                                <option value="Debit Card">Debit Card</option>
+                                                                <option value="Bank Transfer">Bank Transfer</option>
+                                                                <option value="Cash on Delivery">Cash on Delivery</option> 
+                                                        </select>
+                                                    </div>
+                                                </div>
+    
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <button class="btn btn-solid" type="submit">Add Customer</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                    <%- include('../../partials/footer')%>
+                <!-- footer end -->
+            </div>
+            <!-- Container-fluid end -->
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                
+            <script>
+                function readURL(input, viewer_id) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+            
+                        reader.onload = function (e) {
+                            $('#'+viewer_id).attr('src', e.target.result);
+                        }
+            
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+            
+                $("#customFileEg1").change(function () {
+                    readURL(this, 'viewer');
+                });
+                $("#customFileEg2").change(function () {
+                    readURL(this, 'viewer2');
+                });
+            </script>
+            <script>
+                function validateInput(inputField) {
+                    // Remove any non-numeric characters from the input
+                    inputField.value = inputField.value.replace(/[^0-9]/g, '');
+                
+                    // Display an error message if input is empty
+                    var errorMessage = document.getElementById("errorMessage");
+                    if (inputField.value === "") {
+                        errorMessage.textContent = "Please enter a number.";
+                    } else {
+                        errorMessage.textContent = "";
+                    }
+                }
+            </script>
+
+<script>
+    $(document).ready(function () {
+        $("#state").change(function () {
+            var selectedCategoryId = $(this).val();
+            $.ajax({
+                url: "/admin/customer/getCityList",
+                method: "GET",
+                data: { state: selectedCategoryId },
+                success: function (data) {
+                    var subcategoryDropdown = $("#cities");
+                    subcategoryDropdown.empty();
+                    
+                    // Add a default or selected option
+                    subcategoryDropdown.append(
+                        $("<option>").text('Select City')
+                    );
+
+                    if (data.length > 0) {
+                        data.forEach(function (row) {
+                            subcategoryDropdown.append(
+                                $("<option>").val(row.name).text(row.name)
+                            );
+                        });
+                    } else {
+                        subcategoryDropdown.append(
+                            $("<option>").text("We Don't Server in this city")
+                        );
+                    }
+                },
+                error: function () {
+                    console.log("Error fetching cities");
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#state").change(function () {
+            var selectedCategoryId = $(this).val();
+            $.ajax({
+                url: "/admin/customer/getAreaList",
+                method: "GET",
+                data: { state: selectedCategoryId },
+                success: function (data) {
+                    var subcategoryDropdown = $("#areas");
+                    subcategoryDropdown.empty();
+                    
+                    // Add a default or selected option
+                    subcategoryDropdown.append(
+                        $("<option>").text('Select Area')
+                    );
+
+                    if (data.length > 0) {
+                        data.forEach(function (row) {
+                            subcategoryDropdown.append(
+                                $("<option>").val(row.name).text(row.name)
+                            );
+                        });
+                    } else {
+                        subcategoryDropdown.append(
+                            $("<option>").text("We Don't Server in this Area")
+                        );
+                    }
+                },
+                error: function () {
+                    console.log("Error fetching cities");
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    function validateFloat(floatField , errorMessageId) {
+        // Remove any non-numeric characters (including '.') from the input
+        floatField.value = floatField.value.replace(/[^0-9.+-]/g, '');
+
+        // Parse the entered value as a float
+        var enteredValue = parseFloat(floatField.value);
+
+        // Display an error message if the entered value is not a valid number or less than or equal to 0
+        var errorMessage = document.getElementById(errorMessageId);
+        if (isNaN(enteredValue)) { 
+            document.getElementById("confirmStatusChange").disabled = true;
+        } else {
+            errorMessage.textContent = "";
+            document.getElementById("confirmStatusChange").disabled = false;
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Event listener for form submission
+        $("form").submit(function (event) {
+            // Get the selected value from the "select" element
+            var selectedValue = $("#selectOption").val();
+
+            // Check if the selected value is 'none' (you can replace 'none' with the actual value you want to check)
+            if (selectedValue === 'none') {
+                // Prevent form submission
+                event.preventDefault();
+
+                // Display an error message or perform any other actions to indicate the validation failure
+                alert('Please select a valid option.');
+            }
+        });
+    });
+</script>
+
+            
+
+<%- include('../../partials/end')%>

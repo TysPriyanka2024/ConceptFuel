@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JoshFuels | Ledger</title>
+    <style>
+        .container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            border-radius: 8px;
+        }
+        .button-group ul {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            list-style: none;
+            justify-content: center;
+        }
+
+        .button-group li {
+            margin-right: 5%; /* Adjust the spacing between buttons as needed */
+        }
+
+        .mt-5{
+            padding-top: 2%;
+            padding-bottom: 2%;
+        }
+        .btn {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            padding: calc(7px + (10 - 7) * ((100vw - 320px) / (1920 - 320))) calc(14px + (32 - 14) * ((100vw - 320px) / (1920 - 320)));
+            font-weight: 500;
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            border: none;
+            font-size: 14px;
+            z-index: 0;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            border: 2px solid #0da487 !important;
+            width: 100%;
+            color: #0da487;
+            background-color: #f9f9f6;
+        }
+
+        .btn-primary:hover {
+            color: white;
+            background-color: #097560 !important;
+            border-color: #097560 !important;
+        }
+    </style>
+</head>
+<body>
+    <section id="printableArea">
+        <div class="container">
+            <table style="border-collapse: collapse;width: 100%;">
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">
+                        <strong>Customer Name </strong> - <span class="text-body text-hover-primary m-3"> <%= customer.first_name %> <%= customer.last_name %></span>
+                    </td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">
+                        <strong>Phone No  </strong> - <span class="text-body text-hover-primary m-3"> <%= customer.phone %></span>
+                    </td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">
+                        <strong>Email  </strong> - <span class="text-body text-hover-primary m-3"> <%= customer.email %></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="border: 1px solid black;padding: 8px;">S. No</th>
+                    <th style="border: 1px solid black;padding: 8px;">Date</th>
+                    <th style="border: 1px solid black;padding: 8px;">Id</th>
+                    <th style="border: 1px solid black;padding: 8px;">Type</th>
+                    <th style="border: 1px solid black;padding: 8px;">Mode</th>
+                    <th style="border: 1px solid black;padding: 8px;">Amount</th>
+                </tr>
+                <% if (combinedData != '') { %>        
+                    <% combinedData.forEach((row, index) => { %> 
+                        <tr>
+                            <td style="border: 1px solid black;padding: 8px;text-align: center;"><%= index + 1 %></td>
+                            <td style="border: 1px solid black;padding: 8px;text-align: center;"><%= row.date %></td>
+                            <td style="border: 1px solid black;padding: 8px;text-align: center;"><%= row.id  %> </td>
+                            <td style="border: 1px solid black;padding: 8px;text-align: center;">
+                                <%= row.type %>
+                            </td>
+                            <td style="border: 1px solid black;padding: 8px;text-align: center;"><%= row.paymentMode %></td>
+                            <td style="border: 1px solid black;padding: 8px;text-align: center;"><%= row.amount %></td>
+                        </tr>
+                        <% }) %>      
+                    <% } else { %>
+                        <tr>
+                            <td style="border: 1px solid black;padding: 8px;" colspan="5">No Data Found</td>
+                        </tr>
+                    <% } %> 
+
+                    <tr>
+                        <td style="border: 1px solid black;padding: 8px;" colspan="6">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; border: 1px solid black;padding: 8px;font-size: 14px" colspan="2">Grand Total: <br> <%= paymentData.grandTotal %></td>
+                        <td style="text-align: center; border: 1px solid black;padding: 8px;font-size: 14px" colspan="2">Total Paid : <br> <%= paymentData.totalPaid %></td>
+                        <td style="text-align: center; border: 1px solid black;padding: 8px;font-size: 14px" colspan="2">Total Due : <br> <%= paymentData.totalDue %> </td>
+                    </tr>
+            </table>
+            <br>
+
+        </div>
+    </section>
+
+    <div class="row mt-5">
+        <div class="col-xxl-12 mx-auto my-3">
+            <div class="button-group hide-on-print">
+                <ul>
+                    <li class="back-button ">
+                        <a href="/admin/customer/detail/<%= customer.id %>" class="btn btn-primary text-white print-button rounded ms-2"> Back </a>
+                    </li>
+                    <li class="print-button">
+                        <a class="btn btn-primary text-white print-button rounded ms-2" onclick="printInvoice()"> Print </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function printInvoice() {
+  // Hide elements that should not be printed
+  const elementsToHide = document.querySelectorAll('.hide-on-print');
+  elementsToHide.forEach((element) => {
+    element.style.display = 'none';
+  });
+
+  // Get the content within the printable area
+  const printableArea = document.getElementById('printableArea');
+  const tableContent = printableArea.innerHTML; // Get the table content
+
+  // Open a new window for printing
+  const printWindow = window.open('', '', 'width=600,height=600');
+  printWindow.document.open();
+  printWindow.document.write('<html><head><style>table {border-collapse: collapse;width: 100%;}th, td {border: 1px solid black;padding: 8px;} </style> </head><body>');
+  printWindow.document.write(tableContent); // Write the table content
+  printWindow.document.write('</body></html');
+  printWindow.document.close();
+
+  // Print the content
+  printWindow.print();
+
+  // Close the print window
+  printWindow.close();
+
+  // Restore the hidden elements after printing is done
+  elementsToHide.forEach((element) => {
+    element.style.display = '';
+  });
+}
+
+    </script>
+
+<!-- Add this line in your HTML head to include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    function SendInvoice(order_id) {
+        $.ajax({
+            type: "POST",
+            url: `/admin/orders/send-invoice`,
+            data: { order_id: order_id },
+            success: function (response) {
+                // Update the status text
+                window.location.reload();
+                console.log("Email Sent Successfully!");
+            },
+            error: function (error) {
+                console.error("Error sending the email");
+            }
+        });
+    }
+    
+</script>
+</body>
+</html>
+
+

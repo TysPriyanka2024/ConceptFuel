@@ -1,0 +1,276 @@
+
+<%- include('../../partials/main', { pageTitle: "Order's List's " }) %>
+    
+<style>
+    .hidden-row{
+        display: none;
+    }
+</style>
+<!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- All User Table Start -->
+                
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                    <div class="title-header option-title">
+                                        <h5>All Orders ( <%= ordersCount  %> )</h5>
+                                    </div>
+                                    
+
+                                    <div class="table-responsive table-customer">
+                                        <table class="table all-package theme-table" id="table_id">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr No</th>
+                                                    <th>Order</th>
+                                                    <th>Organisation</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total Amount</th>
+                                                    <th>Date</th>
+                                                    <th>Delivery Man Status</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Order Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <% if (orders != '') { %>        
+                                                    <% orders.forEach((row, index) => { %>                                                     
+                                                <tr class="order-row" data-branch="<%= row.branch_id._id %>">
+                                                    <td class="text-center">
+                                                        <%= index+1 %>
+                                                    </td>
+
+                                                    <td>    
+                                                        <div class="user-name">
+                                                            <a href="/branch/order/details/<%= row.id%>"><%= row.order_id %></a>
+                                                        </div>
+                                                    </td>
+
+                                                    <td><%= row.user_id.company %></td>
+
+                                                    <td><%= row.product_items[0].quantity %></td>
+                                                    <td><%= row.grand_total %></td>
+
+
+                                                    <td>
+                                                        <%= row.created_date.toLocaleDateString('en-UK',options) %>
+                                                    </td>
+
+                                                    <td>
+                                                        <% if(row.is_delivery_man_assigned){ %>
+                                                            <div class="status-close" >
+                                                                <span style="background-color:rgba(0, 201, 219, .1);color: #00c9db;;">
+                                                                    <%= row.delivery_id.vehicle_number %>
+                                                                </span>
+                                                            </div>
+                                                        <% } else { %>
+                                                            <div class="status-danger">
+                                                                <span style="background-color:rgba(154,154,154,0.2);color:#9a9a9a;">
+                                                                    <%= row.delivery_man %>
+                                                                </span>
+                                                            </div>
+                                                        <% } %>
+                                                    </td>
+
+                                                    <td>
+                                                            <div class="<%= row.payment_status ? 'status-close' : 'status-danger' %>">
+                                                                <span><%= row.payment_status ? 'Paid' : 'Unpaid' %></span>
+                                                            </div>
+                                                    </td>
+                                                  <td>
+                                                    <div id="orderStatusElement"><span id="orderStatus"><%= row.status%></span></div>
+</td>
+                                                    <td>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="/branch/order/details/<%= row.id%>">
+                                                                    <i class="ri-eye-line"></i>
+                                                                </a>
+                                                            </li>
+
+                                                            <li>
+                                                                <a href="#" class="order-delete-item" data-order-id="<%= row.order_id%>" data-bs-toggle="modal"
+                                                                   data-bs-target="#exampleModalToggle">
+                                                                    <i class="ri-delete-bin-line"></i>
+                                                                </a>
+                                                            </li>                                                            
+                                                        </ul>
+                                                    </td>
+                                                    
+                                                </tr>
+                                                </tr>
+                                                <% }) %>      
+                                                    <% } else { %>
+                                                        <tr class="hidden-row">
+                                                            <td>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td style="width: 100%;text-align:right;padding-right:10%">
+                                                                        Nothing To Show
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </td>
+                                                        </tr>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- All User Table Ends-->
+
+                <div class="container-fluid">
+                    <!-- footer start-->
+                    <%- include('../../partials/footer')%>
+                    <!-- footer end-->
+                </div>
+            </div>
+            <!-- Container-fluid end -->
+
+                        <!-- Container-fluid end -->
+                        
+                    
+                <!-- Delete Modal Box Start -->
+                <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header d-block text-center">
+                                <h5 class="modal-title w-100" id="exampleModalLabel22">Are You Sure ?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="remove-box">
+                                    <p>You want to delete the record.</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                                <button type="button" class="btn btn-animation btn-md fw-bold" id="confirmDeleteBtn" data-bs-target="#exampleModalToggle2"
+                                    data-bs-toggle="modal" data-bs-dismiss="modal">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="remove-box text-center">
+                                    <div class="wrapper">
+                                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-content">It's Removed.</h4>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete Modal Box End -->
+                
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        
+
+                <script>
+                    $(document).ready(function () {
+                        // Add change event listener to the branch dropdown
+                        $('#table_search').change(function () {
+                            var selectedBranch = $(this).val();
+                            
+                            // Show all rows initially
+                            $('.order-row').show();
+                            $('.hidden-row').hide();
+                            
+                            // Flag to check if any match is found
+                            var foundMatch = false;
+                            
+                            // If a branch is selected, hide rows that don't match the selected branch
+                            if (selectedBranch !== '') {
+                                $('.order-row').each(function () {
+                                    var rowBranch = $(this).data('branch');
+                                    if (rowBranch !== selectedBranch) {
+                                        $(this).hide();
+                                    } else {
+                                        foundMatch = true;
+                                    }
+                                });
+                            }
+                            
+                            console.log(foundMatch)
+                            // If no match is found, show the hidden row
+                            if (!foundMatch) {
+                                $('.hidden-row').show();
+                            }
+                        });
+                    });
+                </script>
+
+<script>
+    // Function to handle the order deletion on click
+    function handleOrderDeleteClick(event) {
+        event.preventDefault();
+        const orderId = $(this).data('order-id');
+        
+        // Show the Bootstrap modal
+        $('#exampleModalToggle').modal('show');
+
+        // When the "Yes" button in the modal is clicked
+        $('#confirmDeleteBtn').one('click', function () {
+            // Close the modal
+            $('#exampleModalToggle').modal('hide');
+
+            // Make an API request to delete the order
+            deleteOrder(orderId);
+        });
+    }
+
+    // Function to delete the order via API
+    function deleteOrder(orderId) {
+        $.ajax({
+            type: 'POST',
+            url: `/branch/order/delete-order/${orderId}`, // Replace with your API endpoint for order deletion
+            success: function (response) {
+                // Assuming successful deletion, you can handle the response as needed
+                console.log('Order deleted successfully');
+                window.location.reload();
+            },
+            error: function (error) {
+                // Handle errors
+                console.error('Error deleting order:', error);
+            }
+        });
+    }
+
+    // Attach click event to order delete items
+    $('.order-delete-item').on('click', handleOrderDeleteClick);
+</script>
+
+<%- include('../../partials/end')%>

@@ -1,0 +1,62 @@
+<%- include('../../partials/main', { pageTitle: "Update Customer Care" }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-10 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Update Customer Care</h5>
+                                </div>
+
+                                <form action="/admin/auth/settings/update-customer-care/<%= care.id %>" method="POST" class="theme-form theme-form-2 mega-form">
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Name</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="name" value="<%= care.name %>" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Phone no.</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="phone" value="<%= care.phone %>" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Whatsapp no.</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="whatsapp" value="<%= care.whatsapp %>" required>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Submit
+                                        </button>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+
+
+
+<%- include('../../partials/end')%>

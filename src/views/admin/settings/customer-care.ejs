@@ -1,0 +1,114 @@
+<%- include('../../partials/main', { pageTitle: "Customer Care" }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-10 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Customer Care</h5>
+                                </div>
+
+                                <form action="/admin/auth/settings/add-customer-care" method="POST" class="theme-form theme-form-2 mega-form">
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Name</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="name" placeholder="Enter The Contact Person's Name..." required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Phone No.</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="phone" placeholder="Enter the contact number..." required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Whatsapp No.</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="whatsapp" placeholder="Enter the whatsapp number..." required>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Submit
+                                        </button>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="col-12 overflow-visible">
+                                <div class="tracker-table">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="table-head">
+                                                    <th scope="col">Sr.No</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Phone No.</th>
+                                                    <th scope="col">Whatsapp No.</th>
+                                                    <th scope="col">Option</th> 
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <% if (care != '') { %>        
+                                                    <% care.forEach((row, index) => { %> 
+                                                        <tr>
+                                                            <td>
+                                                                <h6><%= index+1 %></h6>
+                                                            </td>
+                                                            <td>
+                                                                <h6><%= row.name %></h6>
+                                                            </td>
+                                                            <td>
+                                                                <h6><%= row.phone %></h6>
+                                                            </td>
+                                                            <td>
+                                                                <h6><%= row.whatsapp %></h6>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/admin/auth/settings/update-customer-care/<%= row.id%>">
+                                                                    <i class="ri-pencil-line"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    <% }) %>      
+                                                <% } else { %>
+                                                    <tr class="text-center">
+                                                        <td class="text-center" style="padding-right: 10%;">
+                                                            Nothing To Show
+                                                        </td>
+                                                    </tr>
+                                                <% } %> 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+
+
+
+<%- include('../../partials/end')%>

@@ -1,0 +1,426 @@
+<%- include('../../partials/main', { pageTitle: 'JoshFuels - New-Products' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <form class="theme-form theme-form-2 mega-form" id="productForm" method="POST" action="/admin/product/add" enctype="multipart/form-data">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Information</h5>
+                                    </div>
+
+                                        <input type="hidden" name="branch_id" value="123456">
+                                        <div class="mb-4 row align-items-center">
+                                            <input class="form-control" type="hidden" name="branch_id">
+                                            <label class="form-label-title col-sm-3 mb-0">Product
+                                                Name</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Product Name" name="name">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <input class="form-control" type="hidden" name="branch_id">
+                                            <label class="form-label-title col-sm-3 mb-0">Product
+                                                HSN/SAC</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Product HSN/SAC" name="hsn">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Category</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="category" id="category">
+                                                    <option value="none">-- Select Category --</option>
+                                                    <% if (categories != '') { %>        
+                                                        <% categories.forEach(category => { %>
+                                                            <option value="<%= category._id %>"><%= category.name %></option>
+                                                        <% }); %>
+                                                    <% } else { %>
+                                                        <option value="none">--- Nothing To Show ---</option>
+                                                    <% } %>      
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Subcategory</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="sub_category" id="sub_category">
+                                                    <option value="none">-- Select a Category First --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                    
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Available time Starts</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" name="available_time_starts" class="form-control" value="" placeholder="Ex : 10:30 am" required="">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Available time ends</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" name="available_time_ends" class="form-control" value="" placeholder="Ex : 10:30 am" required="">
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Description</h5>
+                                    </div>
+
+                                    
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <label class="form-label-title col-sm-3 mb-0">Product Description</label>
+                                                    <div class="col-sm-9">
+                                                       <textarea name="description" id="" cols="50" rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Image</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Image</label>
+                                                <div class="custom-file">
+                                                    <input class="form-control" type="hidden" name="maincategory" value="Admin">
+                                                    <input class="form-control" type="hidden" name="subcategory" value="Products">
+                                                    <input type="file" name="image" id="customFileEg1" class="form-control form-choose"
+                                                            accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" required
+                                                            oninvalid="document.getElementById('en-link').click()">
+                                                    <div class="custom-file">
+                                                        <div class="text-center">
+                                                            <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 80%;margin-top:2rem;" id="viewer" src="/public/images/img2.jpg" alt="image" />    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Price</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">price</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" placeholder="0" name="price" id="numberInput" oninput="validateInput(this)">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Tax</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" placeholder="0" name="tax" id="numberInput" oninput="validateInput(this)">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Tax type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="tax_type">
+                                                    <option disabled>Tax Type</option>
+                                                    <option value="Amount">Amount</option>
+                                                    <option value="Percent">Percent</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Discount</h5>
+                                    </div>
+
+                                    
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Discount</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" placeholder="0" name="discount" id="numberInput" oninput="validateInput(this)">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Discount type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="discount_type">
+                                                    <option disabled>Discount Type</option>
+                                                    <option value="amount">Amount</option>
+                                                    <option value="percentage">Percent</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+    
+
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Allow Branches</h5>
+                                    </div>  
+
+                                    
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Branches</label>
+                                            <div class="col-sm-9">
+                                                <select id="countries" name="branches[]" multiple>
+                                                    <% if (branch != '') { %>        
+                                                        <% branch.forEach(branch => { %>
+                                                            <option value="<%= branch._id %>"><%= branch.name %></option>
+                                                        <% }); %>
+                                                    <% } else { %>
+                                                    <option value="none">--- Nothing To Show ---</option>
+                                                    <% } %>    
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+    
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="mb-4 row align-items-center">
+                                            <button class="btn btn-solid" type="submit">Add Product</button>
+                                        </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+  <!-- Container-fluid End -->
+
+  
+  <!-- footer start-->
+  <%- include('../../partials/footer')%>
+  <!-- footer End--> 
+  
+  
+  
+  
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // This script will execute on the client-side after the page loads
+
+    // Add an event listener to the form submission event
+    document.querySelector('form').addEventListener('submit', function (event) {
+        const selectElement = document.getElementById('countries');
+        const selectedOptions = [...selectElement.selectedOptions];
+
+        // Map selected options to branch IDs and create the format needed by the server
+        const selectedBranches = selectedOptions.map(option => ({
+            branch_id: option.value,
+            status: true  // You can set the status as needed
+        }));
+
+        // Attach the selected branches data to a hidden input field in the form
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'selectedBranches';
+        hiddenInput.value = JSON.stringify(selectedBranches);
+        this.appendChild(hiddenInput);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#category").change(function () {
+            var selectedCategoryId = $(this).val();
+            
+            $.ajax({
+                url: "/admin/product/getSubcategories",
+                method: "GET",
+                data: { category_id: selectedCategoryId },
+                success: function (data) {
+                    var subcategoryDropdown = $("#sub_category");
+                    subcategoryDropdown.empty();
+                    
+                    if (data.length > 0) {
+                        data.forEach(function (row) {
+                            subcategoryDropdown.append(
+                                $("<option>").val(row._id).text(row.name)
+                            );
+                        });
+                    } else {
+                        subcategoryDropdown.append(
+                            $("<option>").text("No Subcategories Available")
+                        );
+                    }
+                },
+                error: function () {
+                    console.log("Error fetching subcategories");
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    function validateInput(inputField) {
+        // Remove any non-numeric characters and excess periods from the input
+        inputField.value = inputField.value.replace(/[^0-9.]/g, '');
+    
+        // Ensure only one period is allowed
+        var parts = inputField.value.split('.');
+        if (parts.length > 2) {
+            // More than one period found, keep only the first part
+            inputField.value = parts[0] + '.' + parts.slice(1).join('');
+        }
+
+        // Display an error message if input is empty
+        var errorMessage = document.getElementById("errorMessage");
+        if (inputField.value === "") {
+            errorMessage.textContent = "Please enter a number.";
+        } else {
+            errorMessage.textContent = "";
+        }
+    }
+</script>
+
+    
+
+    <script>    
+        new MultiSelectTag('countries', {
+            rounded: true,    // default true
+            shadow: true,      // default false
+            placeholder: 'Search',  // default Search...
+            onChange: function(values) {
+                console.log(values)
+            }
+        })
+    </script>
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const tagInput = document.getElementById("tagInput");
+          const tagContainer = document.getElementById("tagContainer");
+          let tags = [];
+    
+          tagInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter" || event.key === ",") {
+              event.preventDefault();
+              const productName = tagInput.value.trim();
+    
+              if (productName) {
+                addTag(productName);
+              }
+    
+              tagInput.value = ""; // Clear the input
+            }
+          });
+    
+          function addTag(productName) {
+            if (!tags.includes(productName)) {
+              tags.push(productName);
+              renderTags();
+            }
+          }
+    
+          function removeTag(tag) {
+            tags = tags.filter(t => t !== tag);
+            renderTags();
+          }
+    
+          function renderTags() {
+            tagContainer.innerHTML = "";
+            tags.forEach(tag => {
+              tagContainer.innerHTML += `
+                <span class="tag">
+                  ${tag}
+                  <span class="close" onclick="removeTag('${tag}')">&times;</span>
+                </span>`;
+            });
+          }
+        });
+      </script>
+    
+      <style>
+        .tag {
+          display: inline-block;
+          margin: 5px;
+          padding: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #f2f2f2;
+        }
+    
+        .close {
+          margin-left: 5px;
+          cursor: pointer;
+        }
+    
+        .form-control {
+          padding:2px 12px;
+          border: 1px solid #f9f9f6;
+          border-radius: 4px;
+          outline: none;
+          width: 100%;
+        }
+      </style>
+
+<script>
+    function readURL(input, viewer_id) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+viewer_id).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#customFileEg1").change(function () {
+        readURL(this, 'viewer');
+    });
+    $("#customFileEg2").change(function () {
+        readURL(this, 'viewer2');
+    });
+</script>
+
+<%- include('../../partials/end')%>

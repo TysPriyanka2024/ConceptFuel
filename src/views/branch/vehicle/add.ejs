@@ -1,0 +1,86 @@
+<%- include('../../partials/main', { pageTitle: 'Add New Vehicles' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-8 m-auto">
+                                    <div class="card">
+                                        <div class="card-body title-header option-title">
+                                            <h5>Add New Vehicle</h5>
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="theme-form theme-form-2 mega-form" action="/branch/vehicle/add" method="POST">
+                                        <div class="card" >
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Vehicle Information</h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Vehicle Number</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="vehicle_number" placeholder="Enter the Vehicle Number" required>
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="col-sm-3 col-form-labrl form-label-title">Email</label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" type="text" name="email" placeholder="Enter the Email" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="col-sm-3 col-form-labrl form-label-title">Password</label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" type="text" name="password" placeholder="Enter the Password" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Phone Number</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="phone" placeholder="Enter the Vehicle Number" required>
+                                                        </div >
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="col-sm-3 col-form-labrl form-label-title">Deliveryman</label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" type="text" name="deliveryman_id" placeholder="Enter the Deliveryman Name" required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <button class="btn btn-solid" type="submit">Add Vehicle</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                    <%- include('../../partials/footer')%>
+                <!-- footer end -->
+            </div>
+            <!-- Container-fluid end -->
+
+
+<%- include('../../partials/end')%>

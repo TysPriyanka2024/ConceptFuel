@@ -1,0 +1,49 @@
+<%- include('../../partials/main', { pageTitle: 'Change Password' }) %>
+
+<div class="page-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <!-- Details Start -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="title-header option-title">
+                                    <h5>Change Your Password</h5>
+                                </div>
+                                <form class="theme-form theme-form-2 mega-form" method="post" action="/admin/auth/change-password">
+                                    <div class="row">
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-2 mb-0">Password</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="password" name="password"
+                                                    placeholder="Enter Your Password">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-2 mb-0">Confirm
+                                                Password</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="password" name="confirmPassword"
+                                                    placeholder="Enter Your Confirm Passowrd">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <button class="btn btn-solid continue-btn" type="submit">Change Password</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Details End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../../partials/end', { pageTitle: 'Change Password' }) %>

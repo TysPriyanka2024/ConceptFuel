@@ -1,0 +1,394 @@
+    <%- include('../../partials/main', { pageTitle: 'Customer Details' }) %>
+
+    <style>
+        .inline{
+            display: inline-flex;
+        }
+        .table-product .table tbody tr td {
+            text-align: left;
+            padding: 1% 0;
+        }
+        .text-right{
+            text-align: right !important;
+        }
+        .cart-section tbody tr td {
+            vertical-align: middle;
+            color: #212529;
+            border-top: 0;
+            border-bottom: 0px !important;
+            min-width: 175px;
+        }
+        .cart-section tbody tr td {
+            vertical-align: middle;
+            color: #212529;
+            border-top: 0;
+            border-bottom: 0px !important;
+            min-width: 100%;
+        }
+        .modal-content{
+            padding: 2%;
+        }
+
+        .modal-dialog {
+            max-width: 76%;
+        }
+    </style>
+
+<div class="page-body">
+    <!-- tracking table start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="title-header title-header-block package-card">
+                                        <div>
+                                            <h5>Customer Id  #<%= customer._id %></h5>
+                                        </div>
+                                        <div class="card-order-section">
+                                        <ul>
+                                            <li>
+                                                <a href="/admin/customer/list">
+                                                    Customer Details
+                                                </a>
+                                            </li>
+                                            <li class="text-selected"><%= customer.first_name %></li>
+                                        </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="row">
+                                        <div class="col-sm-6 mb-2">
+                                            <div class="theme-form theme-form-2 mega-form" style="font-size: 13px !important;">    
+                                                <div class="onhover-dropdown">
+                                                    <div class="notification-box">                                                        
+                                                        <a href="/admin/customer/ledger/<%= customer._id %>" class="btn btn-outline-primary w-100 dropdown-toggle" type="button" id="deliveryManStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ledger</a>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="theme-form theme-form-2 mega-form" style="font-size: 13px !important;">    
+                                                <div class="notification-box">
+                                                    <a class="btn btn-outline-primary w-100 dropdown-toggle" type="button" id="paymentStatus" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModalToggle">
+                                                        Payment In
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-12 mb-2">
+                                            <div class="table-responsive table-details">
+                                                <table class="table cart-table table-borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align: center; border: 1px solid black;padding: 8px;font-size: 14px">Grand Total: <br> <%= paymentData.grandTotal %></th>
+                                                            <th style="text-align: center; border: 1px solid black;padding: 8px;font-size: 14px">Total Paid : <br> <%= paymentData.totalPaid %></th>
+                                                            <th style="text-align: center; border: 1px solid black;padding: 8px;font-size: 14px">Total Due : <br> <%= paymentData.totalDue %> </th>
+                                                        </tr> 
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="bg-inner cart-section order-details-table">
+                    <div class="row g-4">
+                        <div class="col-xl-8">
+                            <div class="card">
+                            
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="pills-home-tab"
+                                            data-bs-toggle="pill" data-bs-target="#pills-home"
+                                            type="button">Orders lists</button>
+                                    </li>
+                                    
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-profile-tab"
+                                            data-bs-toggle="pill" data-bs-target="#pills-profile"
+                                            type="button">Payment In</button>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
+                                        <div class="row">
+                                            <div class="table-responsive table-product" style="padding: 0%;">
+                                                <table class="table all-package theme-table" id="table_id">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align: center;">Sr No</th>
+                                                            <th style="text-align: center;">Order Id</th>
+                                                            <th style="text-align: center;">Amount</th>
+                                                        </tr>
+                                                    </thead>
+                
+                                                    <tbody>
+                                                        <% if (orders != '') { %>        
+                                                            <% orders.forEach((row, index) => { %> 
+                                                                <tr> 
+                                                                    <td style="text-align: center;"><%= index+1 %></td>
+                                                                    <td style="text-align: center;"><%= row.order_id %></td>
+                                                                    <td style="text-align: center;"><%= row.grand_total %></td>
+                                                                </tr>
+                                                            <% }) %>      
+                                                        <% } else { %>
+                                                            <tr class="text-center">
+                                                                <td class="text-center" style="padding-right: 10%;">
+                                                                    Nothing To Show
+                                                                </td>
+                                                            </tr>
+                                                        <% } %> 
+                                                    </tbody>
+                                                    
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="pills-profile" role="tabpanel">
+                                        <div class="row">
+                                            <div class="table-responsive table-product" style="padding: 0%;">
+                                                <table class="table all-package theme-table" id="table_id">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align: center;">Sr No</th>
+                                                            <th style="text-align: center;">Date</th>
+                                                            <th style="text-align: center;">Transaction Id</th>
+                                                            <th style="text-align: center;">Payment Mode</th>
+                                                            <th style="text-align: center;">Amount</th>
+                                                            <th style="text-align: center;">Option</th>
+                                                        </tr>
+                                                    </thead>
+                
+                                                    <tbody>
+                                                        <% if (payments != '') { %>        
+                                                            <% payments.forEach((row, index) => { %> 
+                                                                <tr> 
+                                                                    <td style="text-align: center;"><%= index+1 %></td>
+                                                                    <td style="text-align: center;"><%= row.date %></td>
+                                                                    <td style="text-align: center;"><%= row.payment_id %></td>
+                                                                    <td style="text-align: center;"><%= row.payment_type %></td>
+                                                                    <td style="text-align: center;"><%= row.amount %></td>
+                                                                    <td style="text-align: center;">
+                                                                        <a>
+                                                                            <i  class="ri-delete-bin-line delete-payment" 
+                                                                            data-payment-id="<%= row._id %>" 
+                                                                            title="Delete Payment" 
+                                                                            style="cursor: pointer;">
+                                                                            </i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            <% }) %>      
+                                                        <% } else { %>
+                                                            <tr class="text-center">
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td class="text-right">No Payments Made</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                            </tr>
+                                                        <% } %> 
+                                                    </tbody>
+                                                    
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Customer</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <div class="media align-items-center" href="javascript:">
+                                        <div class="media profile-media mr-3" style="width: 15% !important;height:40% !important">
+                                            <img class="user-profile rounded-circle" src="/images/<%= customer.profile %>" onerror="this.src='/public/images/img2.jpg'" style="width: 100%;" alt="Image Description">
+                                        </div>
+                                        <div class="media-body">
+                                        <span class="text-body text-hover-primary m-3"> <%= customer.first_name %> <%= customer.last_name %></span>
+
+                                        </div>
+                                        <div class="media-body text-right">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <% if (orders != '') { %>        
+                                        <div class="media align-items-center" href="javascript:">
+                                            <div class="media profile-media mr-3" style="width: 15% !important;height:40% !important">
+                                                <img class="user-profile rounded-circle" src="/images/defaults/fuel_default.jpg" onerror="this.src='/public/images/img2.jpg'" style="width: 100%;" alt="Image Description">    
+                                            </div>
+                                            <div class="media-body">
+                                                <span class="text-body text-hover-primary m-3"><%= orders.length %> Orders</span>
+
+                                            </div>
+                                            <div class="media-body text-right">
+                                                
+                                            </div>
+                                        </div>
+                                    <% } %>
+
+                                    <hr>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5>#Contact Info</h5>
+                                    </div>
+
+                                    <ul class="list-unstyled list-unstyled-py-2">
+                                        <li>
+                                            <span>Email : - </span>
+                                            <span><%= customer.email %></span>
+                                        </li>
+                                        <li>
+                                            <span>Phone Number : - </span>
+                                            <span><%= customer.phone %></span>
+                                        </li>
+                                        <li>
+                                            <% if(address) {%>
+                                                <span>Address: -</span>
+                                                <span><%= address.address_1%></span>
+                                                <span><%= address.address_2 %></span>
+                                                <span><%= address.city %></span>
+                                                <span><%= address.state %></span>
+                                                <span><%= address.pincode %></span>
+                                            <% }else {%>
+                                                No address stored
+                                            <% } %>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                                        <!-- End Body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <!-- tracking table end -->
+
+    <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title w-100" id="exampleModalLabel22">Add a Payment In</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/customer/payment-in/<%= customer._id %>" method="POST" class="theme-form theme-form-2 mega-form">                                    
+
+                        <div class="mb-4 row align-items-center">
+                            <label class="form-label-title col-sm-3 mb-0">Payment Mode</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" name="payment_method" placeholder="Enter The Payment Mode" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 row align-items-center">
+                            <label class="form-label-title col-sm-3 mb-0">Transaction ID / Cheque Number</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" name="transaction_id" placeholder="Enter The City..." required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 row align-items-center">
+                            <label class="form-label-title col-sm-3 mb-0">Date</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="date" name="date" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 row align-items-center">
+                            <label class="form-label-title col-sm-3 mb-0">Amount</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" name="amount" required>
+                            </div>
+                        </div>
+
+                        <div class="d-inline-flex">
+                            <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                        <i data-feather="plus-square"></i> Submit
+                            </button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+                // Attach click event listener to delete buttons
+                $('.delete-payment').click(function () {
+                    const paymentId = $(this).data('payment-id');
+                    const customerId = '<%= customer._id %>'; // Pass customerId dynamically if needed
+
+                    // Confirm deletion
+                    if (!confirm('Are you sure you want to delete this payment?')) return;
+
+                    // Make AJAX request to delete payment
+                    $.ajax({
+                        url: `/admin/customer/${paymentId}/deletePayment/${customerId}`, // Update this route as per your backend
+                        method: 'DELETE',
+
+                        success: function (response) {
+                            if (response.success) {
+                                alert(response.message);
+
+                                $('#totalPaid').text(response.paymentData.totalPaid);
+                                $('#totalDue').text(response.paymentData.totalDue);
+                                $('#grandTotal').text(response.paymentData.grandTotal);
+
+                                // Remove the row from the table
+                                $(`#payment-row-${paymentId}`).remove();
+                                // Redirect to the customer details page
+                                window.location.href = response.redirectUrl;
+                            } else {
+                                alert('Error: ' + response.message);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error('AJAX Error:', textStatus, errorThrown, jqXHR.responseText);
+                            alert('An error occurred while deleting the payment.');
+                        }
+
+                    });
+                });
+            });
+
+    </script>
+
+    <div class="container-fluid">
+        <!-- footer start-->
+        <%- include('../../partials/footer')%>
+    </div>
+</div>
+
+<%- include('../../partials/end')%>
+

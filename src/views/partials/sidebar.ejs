@@ -1,0 +1,527 @@
+<div class="sidebar-wrapper">
+    <div id="sidebarEffect"></div>
+    <div>
+        <div class="logo-wrapper logo-wrapper-center">
+            <a href="/admin/auth/dashboard" data-bs-original-title="" title="">
+                <img class="img-fluid for-white" src="/images/login/logos/logo-white.png" alt="logo">
+            </a>
+            <div class="back-btn">
+                <i class="fa fa-angle-left"></i>
+            </div>
+            <div class="toggle-sidebar">
+                <i class="ri-apps-line middle sidebar-toggle"></i>
+            </div>
+        </div>
+        <nav class="sidebar-main">
+            <div class="left-arrow" id="left-arrow">
+                <i data-feather="arrow-left"></i>
+            </div>
+
+            <div id="sidebar-menu">
+                <ul class="sidebar-links" id="simple-bar">
+                    <li class="back-btn"></li>
+
+                    <% if (user.usertype === 'Admin') { %>
+                        
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="/admin/auth/dashboard">
+                                <i class="ri-home-line"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-list-check-2"></i>
+                                <span>Category</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/category/all">Category</a>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/category/sub-category">Sub Category</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <!-- <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-list-settings-line"></i>
+                                <span>Attributes</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/attribute/list">Attributes</a>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/attribute/add">Add Attributes</a>
+                                </li>
+                            </ul>
+                        </li> -->
+
+                        <!-- <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="white" d="M16 13q.425 0 .713-.288T17 12q0-.425-.288-.713T16 11h-4q-.425 0-.713.288T11 12q0 .425.288.713T12 13h4Zm0-4q.425 0 .713-.288T17 8q0-.425-.288-.713T16 7h-4q-.425 0-.713.288T11 8q0 .425.288.713T12 9h4Zm1 11h-2q-.425 0-.713-.288T14 19q0-.425.288-.713T15 18h2v-2q0-.425.288-.713T18 15q.425 0 .713.288T19 16v2h2q.425 0 .713.288T22 19q0 .425-.288.713T21 20h-2v2q0 .425-.288.713T18 23q-.425 0-.713-.288T17 22v-2Zm-9-3q.425 0 .713-.288T9 16q0-.425-.288-.713T8 15q-.425 0-.713.288T7 16q0 .425.288.713T8 17Zm0-4q.425 0 .713-.288T9 12q0-.425-.288-.713T8 11q-.425 0-.713.288T7 12q0 .425.288.713T8 13Zm0-4q.425 0 .713-.288T9 8q0-.425-.288-.713T8 7q-.425 0-.713.288T7 8q0 .425.288.713T8 9ZM5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h14q.825 0 1.413.588T21 5v8.825q-.675-.4-1.438-.6t-1.562-.2q-1.325 0-2.475.525T13.55 15H12q-.425 0-.713.288T11 16q0 .425.288.713T12 17h.35q-.175.475-.263.975T12 19q0 .5.075 1t.25 1H5Z"/></svg>
+                                <span>Addon</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/addon/lists">Add-on</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/addon/add">Add Add-on</a>
+                                </li>
+                            </ul>
+                        </li> -->
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 20 20"><path fill="white" d="M17 8h1v11H2V8h1V6c0-2.76 2.24-5 5-5c.71 0 1.39.15 2 .42A4.94 4.94 0 0 1 12 1c2.76 0 5 2.24 5 5v2zM5 6v2h2V6c0-1.13.39-2.16 1.02-3H8C6.35 3 5 4.35 5 6zm10 2V6c0-1.65-1.35-3-3-3h-.02A4.98 4.98 0 0 1 13 6v2h2zm-5-4.22C9.39 4.33 9 5.12 9 6v2h2V6c0-.88-.39-1.67-1-2.22z"/></svg>
+                                <span>Product</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/product/lists">List</a>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/product/add">Add New Products</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-store-3-line"></i>
+                                <span>Branch</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/branch/all">All Branches</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/branch/branch-products">Branch Product Lists</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/branch/add">Add new Branches</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-archive-line"></i>
+                                <span>Orders</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/orders/list/all">
+                                        All  <span class="all" id="all"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/list/pending">
+                                        Pending  <span class="pending" id="pending"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/list/confirmed">
+                                        Confirmed  <span class="confirmed" id="confirmed"></span>
+                                    </a>
+                                </li>
+                                <!-- <li>
+                                    <a href="/admin/orders/list/processing">
+                                        Processing  <span class="processing" id="processing"></span>
+                                    </a>
+                                </li> -->
+                                <li>
+                                    <a href="/admin/orders/list/out_for_delivery">
+                                        Out for delivery  <span class="out_for_delivery" id="delivery"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/list/delivered">
+                                        Delivered  <span class="delivered" id="delivered"></span>
+                                    </a>
+                                </li>
+                                <!-- <li>
+                                    <a href="/admin/orders/list/returned">
+                                        Returned <span class="returned" id="returned"></span> 
+                                    </a>
+                                </li> -->
+                                <!-- <li>
+                                    <a href="/admin/orders/list/failed">
+                                        Failed  <span class="failed" id="failed"></span>
+                                    </a>
+                                </li> -->
+                                <li>
+                                    <a href="/admin/orders/list/cancelled">
+                                        Cancelled  <span class="cancelled" id="cancelled"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/list/scheduled">
+                                        Scheduled  <span class="scheduled" id="scheduled"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/list/rejected">
+                                        Rejected  <span class="cancelled" id="rejected"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-user-3-line"></i>
+                                <span>Customers</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/customer/list">Customer List</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/customer/add">Add Customer</a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="white" d="M5.75 7a.75.75 0 0 0 0 1.5h4a.75.75 0 0 0 0-1.5h-4Z"/><path fill="white" fill-rule="evenodd" d="M21.188 8.004C21.126 8 21.058 8 20.988 8h-2.773C15.944 8 14 9.736 14 12c0 2.264 1.944 4 4.215 4h2.773c.07 0 .138 0 .2-.004c.923-.056 1.739-.757 1.808-1.737c.004-.064.004-.133.004-.197V9.938c0-.064 0-.133-.004-.197c-.069-.98-.885-1.68-1.808-1.737Zm-3.217 5.063c.584 0 1.058-.478 1.058-1.067c0-.59-.474-1.067-1.058-1.067c-.585 0-1.06.478-1.06 1.067c0 .59.475 1.067 1.06 1.067Z" clip-rule="evenodd"/><path fill="white" d="M21.14 8.002c0-1.181-.044-2.448-.798-3.355a3.773 3.773 0 0 0-.233-.256c-.749-.748-1.698-1.08-2.87-1.238C16.099 3 14.644 3 12.806 3h-2.112C8.856 3 7.4 3 6.26 3.153c-1.172.158-2.121.49-2.87 1.238c-.748.749-1.08 1.698-1.238 2.87C2 8.401 2 9.856 2 11.694v.112c0 1.838 0 3.294.153 4.433c.158 1.172.49 2.121 1.238 2.87c.749.748 1.698 1.08 2.87 1.238c1.14.153 2.595.153 4.433.153h2.112c1.838 0 3.294 0 4.433-.153c1.172-.158 2.121-.49 2.87-1.238a3.81 3.81 0 0 0 .526-.66c.45-.72.504-1.602.504-2.45l-.15.001h-2.774C15.944 16 14 14.264 14 12c0-2.264 1.944-4 4.215-4h2.773c.052 0 .103 0 .151.002Z" opacity=".5"/></svg>
+                                <span>Wallets</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/customer/wallets/list">Wallets List</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="#fff" d="M20 8h-5v6H2v3h1c0 1.7 1.3 3 3 3s3-1.3 3-3h6c0 1.7 1.3 3 3 3s3-1.3 3-3h2v-5l-3-4M6 18.5c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5s1.5.7 1.5 1.5s-.7 1.5-1.5 1.5m12 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5s1.5.7 1.5 1.5s-.7 1.5-1.5 1.5M17 12V9.5h2.5l2 2.5H17m-3-2.5c0 1.9-1.6 3.5-3.5 3.5h-6C2.6 13 1 11.4 1 9.5S2.6 6 4.5 6H5V5H4V4h4v1H7v1h3.5C12.4 6 14 7.6 14 9.5Z"/></svg>
+                                <span>Delivery Vehicle</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/vehicle/list">Vehicle List</a>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/vehicle/add">Add vehicle</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-archive-line"></i>
+                                <span>Reports</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/orders/reports/list/all">
+                                        All  <span class="all" id="reportsall"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/reports/list/pending">
+                                        Pending  <span class="pending" id="reportspending"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/reports/list/confirmed">
+                                        Confirmed  <span class="confirmed" id="reportsconfirmed"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/reports/list/out_for_delivery">
+                                        Out for delivery  <span class="out_for_delivery" id="reportsdelivery"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/reports/list/delivered">
+                                        Delivered  <span class="delivered" id="reportsdelivered"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/reports/list/cancelled">
+                                        Cancelled  <span class="cancelled" id="reportscancelled"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/reports/list/scheduled">
+                                        Scheduled  <span class="scheduled" id="reportsscheduled"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/admin/orders/reports/list/rejected">
+                                        Rejected  <span class="cancelled" id="reportsrejected"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-settings-line"></i>
+                                <span>Settings</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/auth/settings/customer-care">Customer Care</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/auth/settings/notification">Notification</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/auth/settings/vehicle-control">Vehicle Control</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/auth/settings/company-lists">Company's List</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/auth/settings/serving-states">States List</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/auth/settings/serving-districts">District's List</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/auth/settings/serving-cities">Cities List</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/auth/settings/serving-areas">Area's List</a>
+                                </li>
+                            </ul>
+                        </li>
+                    
+                    <% } else if(user.usertype === 'Branch') { %>
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="/branch/auth/dashboard">
+                                <i class="ri-home-line"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="white" d="M7 2H3a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1ZM5 21a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm2-9H3V3h4Zm-1 7a1 1 0 1 1-1-1a1 1 0 0 1 1 1Zm8-17h-4a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Zm-2 19a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm2-9h-4V3h4Zm-1 7a1 1 0 1 1-1-1a1 1 0 0 1 1 1Zm8-17h-4a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Zm-2 19a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm2-9h-4V3h4Zm-1 7a1 1 0 1 1-1-1a1 1 0 0 1 1 1Z"/></svg>
+                                <span>Catalogue</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/branch/catalogue/products">Products</a>
+                                </li>
+
+                                <li>
+                                    <!-- <a href="/branch/catalogue/addons">Add-Ons</a> -->
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-store-3-line"></i>
+                                <span>Product</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/branch/product/lists">Products</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-archive-line"></i>
+                                <span>Orders</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/branch/order/list/all">
+                                        All  <span class="all" id="branch_all"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/branch/order/list/pending">
+                                        Pending  <span class="pending" id="branch_pending"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/branch/order/list/confirmed">
+                                        Confirmed  <span class="confirmed" id="branch_confirmed"></span>
+                                    </a>
+                                </li>
+                                <!-- <li>
+                                    <a href="/branch/order/list/processing">
+                                        Processing  <span class="processing" id="branch_processing"></span>
+                                    </a>
+                                </li> -->
+                                <li>
+                                    <a href="/branch/order/list/out_for_delivery">
+                                        Out for delivery  <span class="out_for_delivery" id="branch_delivery"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/branch/order/list/delivered">
+                                        Delivered  <span class="delivered" id="branch_delivered"></span>
+                                    </a>
+                                </li>
+                                <!-- <li>
+                                    <a href="/branch/order/list/returned">
+                                        Returned <span class="returned" id="branch_returned"></span> 
+                                    </a>
+                                </li> -->
+                                <!-- <li>
+                                    <a href="/branch/order/list/failed">
+                                        Failed  <span class="failed" id="branch_failed"></span>
+                                    </a>
+                                </li> -->
+                                <li>
+                                    <a href="/branch/order/list/cancelled">
+                                        Cancelled  <span class="cancelled" id="branch_cancelled"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/branch/order/list/scheduled">
+                                        Scheduled  <span class="scheduled" id="branch_scheduled"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/branch/order/list/rejected">
+                                        Rejected  <span class="rejected" id="branch_rejected"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="#fff" d="M20 8h-5v6H2v3h1c0 1.7 1.3 3 3 3s3-1.3 3-3h6c0 1.7 1.3 3 3 3s3-1.3 3-3h2v-5l-3-4M6 18.5c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5s1.5.7 1.5 1.5s-.7 1.5-1.5 1.5m12 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5s1.5.7 1.5 1.5s-.7 1.5-1.5 1.5M17 12V9.5h2.5l2 2.5H17m-3-2.5c0 1.9-1.6 3.5-3.5 3.5h-6C2.6 13 1 11.4 1 9.5S2.6 6 4.5 6H5V5H4V4h4v1H7v1h3.5C12.4 6 14 7.6 14 9.5Z"/></svg>
+                                <span>Vehicle</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/branch/vehicle/list">Vehicle List</a>
+                                </li>
+
+                                <li>
+                                    <a href="/branch/vehicle/add">Add vehicle</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    <% } else { %>
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="/customer/auth/track-order">
+                                <i class="ri-home-line"></i>
+                                <span>Tracking</span>
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+
+            <div class="right-arrow" id="right-arrow">
+                <i data-feather="arrow-right"></i>
+            </div>
+        </nav>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<% if (user.usertype === 'Admin') { %>
+    <!-- Reports Daily-->
+    <script>
+        $(document).ready(function () {
+            // Make an AJAX GET request to fetch order counts
+            $.ajax({
+            type: 'GET',
+            url: '/admin/orders/daily-counts', // Replace with the actual route
+            dataType: 'json',
+            success: function (data) {
+                // Update the HTML content with the received data
+                $('#all').text(data.all);
+                $('#pending').text(data.pending);
+                $('#confirmed').text(data.confirmed);
+                $('#processing').text(data.processing);
+                $('#delivery').text(data.out);
+                $('#delivered').text(data.delivered);
+                $('#returned').text(data.returned);
+                $('#failed').text(data.failed);
+                $('#cancelled').text(data.cancelled);
+                $('#scheduled').text(data.scheduled);
+                $('#rejected').text(data.rejected);
+            },
+            error: function (error) {
+                console.error(error);
+            },
+            });
+        });
+    </script>
+
+    <!-- Reports -->
+    <script>
+        $(document).ready(function () {
+            // Make an AJAX GET request to fetch order counts
+            $.ajax({
+            type: 'GET',
+            url: '/admin/orders/counts', // Replace with the actual route
+            dataType: 'json',
+            success: function (data) {
+                // Update the HTML content with the received data
+                $('#reportsall').text(data.all);
+                $('#reportspending').text(data.pending);
+                $('#reportsconfirmed').text(data.confirmed);
+                $('#reportsprocessing').text(data.processing);
+                $('#reportsdelivery').text(data.out);
+                $('#reportsdelivered').text(data.delivered);
+                $('#reportsreturned').text(data.returned);
+                $('#reportsfailed').text(data.failed);
+                $('#reportscancelled').text(data.cancelled);
+                $('#reportsscheduled').text(data.scheduled);
+                $('#reportsrejected').text(data.rejected);
+            },
+            error: function (error) {
+                console.error(error);
+            },
+            });
+        });
+    </script>
+<% } else { %>
+    <script>
+        $(document).ready(function () {
+        // Make an AJAX GET request to fetch order counts
+            $.ajax({
+            type: 'GET',
+            url: '/branch/order/counts', // Replace with the actual route
+            dataType: 'json',
+            success: function (data) {
+                // Update the HTML content with the received data
+                $('#branch_all').text(data.all);
+                $('#branch_pending').text(data.pending);
+                $('#branch_confirmed').text(data.confirmed);
+                $('#branch_processing').text(data.processing);
+                $('#branch_delivery').text(data.out);
+                $('#branch_delivered').text(data.delivered);
+                $('#branch_returned').text(data.returned);
+                $('#branch_failed').text(data.failed);
+                $('#branch_cancelled').text(data.cancelled);
+                $('#branch_scheduled').text(data.scheduled);
+                $('#branch_rejected').text(data.rejected);
+            },
+            error: function (error) {
+                console.error(error);
+            },
+            });
+        });
+    </script>
+<% } %>

@@ -1,0 +1,177 @@
+
+</div>
+<!-- Page Body End -->
+</div>
+<!-- page-wrapper End-->
+
+<div id="notificationContainer" class="col-xs-11 col-sm-4 alert alert-theme notify-alert animated fadeOutUp" role="alert" data-notify-position="top-right" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031; top: 20px; right: 20px;" data-closing="true">
+    <button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>
+    <span data-notify="icon" class="0"></span>
+    <span data-notify="title"></span> 
+    <span data-notify="message">
+        <i class="fas fa-bell"></i>
+        <strong>Loading</strong> Inner Data.
+    </span>
+    <div class="progress" data-notify="progressbar">
+        <div class="progress-bar progress-bar-theme" role="progressbar" aria-valuenow="112.5" aria-valuemin="0" aria-valuemax="100" style="width: 112.5%;"></div>
+    </div>
+    <a href="#" target="_blank" data-notify="url" data-bs-original-title="" title=""></a>
+</div>
+
+<!-- Modal Start -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body">
+            <h5 class="modal-title" id="staticBackdropLabel">Logging Out</h5>
+            <p>Are you sure you want to log out?</p>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="button-box">
+                <button type="button" class="btn btn--no" data-bs-dismiss="modal">No</button>
+                <button type="button" id="confirmLogoutBtn" class="btn  btn--yes btn-primary" onclick="(logoutAndClearToken())">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal End -->
+<script>
+    const date = new Date();
+    document.querySelector('.year').innerHTML = date.getFullYear();
+</script>
+
+
+<script>
+    function logoutAndClearToken() {
+        // Make an API request to clear the JWT token on the server
+        fetch('/admin/auth/logout', {
+          method: 'POST', // or 'GET' depending on your server's route configuration
+          credentials: 'same-origin', // Send cookies with the request if your JWT is stored in cookies
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              // Successfully logged out, now clear the JWT token from local storage
+              localStorage.removeItem('jwt');
+      
+              // Redirect to the login page or perform other post-logout actions as needed
+              window.location.reload();
+              window.location.href = '/admin/auth/login'; // Replace with your login page URL
+            } else {
+              // Handle the response in case of an error
+              console.error('Logout failed:', response.statusText);
+              // You can show an error message to the user or handle the error in another way
+            }
+          })
+          .catch((error) => {
+            console.error('Logout error:', error);
+          });
+      }
+      
+  </script>
+  
+
+<!-- latest js -->
+<script src="/public/js/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap js -->
+<script src="/public/js/bootstrap/bootstrap.bundle.min.js"></script>
+
+<!-- feather icon js -->
+<script src="/public/js/icons/feather-icon/feather.min.js"></script>
+<script src="/public/js/icons/feather-icon/feather-icon.js"></script>
+
+
+<!-- select2 js -->
+<script src="/public/js/select2.min.js"></script>
+<script src="/public/js/select2-custom.js"></script>
+
+<!-- scrollbar simplebar js -->
+<script src="/public/js/scrollbar/simplebar.js"></script>
+<script src="/public/js/scrollbar/custom.js"></script>
+
+<!-- Sidebar jquery -->
+<script src="/public/js/config.js"></script>
+
+<!-- bootstrap tag-input js
+<script src="/public/js/bootstrap-tagsinput.min.js"></script> -->
+
+<!-- tooltip init js -->
+<script src="/public/js/tooltip-init.js"></script>
+
+<!-- Plugins JS -->
+<script src="/public/js/sidebar-menu.js"></script>
+
+<script src="/public/js/notify/bootstrap-notify.min.js"></script>
+<script>
+  'use strict';
+  var notify = $.notify('<i class="fas fa-bell"></i><strong>Loading</strong> page. Do not close this page...', {
+      type: 'theme',
+      allow_dismiss: true,
+      delay: 4000,
+      showProgressbar: true,
+      timer: 300,
+      animate: {
+          enter: 'animated fadeInDown',
+          exit: 'animated fadeOutUp'
+      }
+  });
+
+  // Get the query parameter values from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const successMessage = urlParams.get('success');
+  const errorMessage = urlParams.get('error'); // Add this line to get error message
+  const error = '<%= error %>';
+
+  // Display the success, error, or regular message in the notification
+  if (successMessage) {
+      setTimeout(function () {
+          notify.update('message', `<i class="fas fa-bell"></i><strong>${successMessage}</strong>`);
+      }, 1000);
+  } else if (errorMessage) { // Add this condition for error message
+      setTimeout(function () {
+          notify.update('message', `<i class="fas fa-bell"></i><strong>Error: ${errorMessage}</strong>`);
+      }, 1000);
+  } else {
+      setTimeout(function () {
+          notify.update('message', '<i class="fas fa-bell"></i><strong>'+ error +'</strong>');
+      }, 1000);
+  }
+</script>
+
+<!-- Apexchar js -->
+<script src="/public/js/chart/apex-chart/apex-chart1.js"></script>
+<script src="/public/js/chart/apex-chart/moment.min.js"></script>
+<script src="/public/js/chart/apex-chart/apex-chart.js"></script>
+<script src="/public/js/chart/apex-chart/stock-prices.js"></script>
+<script src="/public/js/chart/apex-chart/chart-custom1.js"></script>
+
+<!-- slick slider js -->
+<script src="/public/js/slick.min.js"></script>
+<script src="/public/js/custom-slick.js"></script>
+
+<!-- ratio js -->
+<script src="/public/js/ratio.js"></script>
+
+<!-- sidebar effect -->
+<script src="/public/js/sidebareffect.js"></script>
+
+<!-- Theme js -->
+<script src="/public/js/script.js"></script>
+
+
+<!-- Data table js -->
+<script src="/public/js/jquery.dataTables.js"></script>
+<script src="/public/js/custom-data-table.js"></script>
+
+<!-- sidebar effect -->
+<script src="/public/js/sidebareffect.js"></script>
+
+</body>
+
+</html>
+
+
+
+

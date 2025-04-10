@@ -1,0 +1,100 @@
+<%- include('../../partials/main', { pageTitle: 'Vehicle Stats' }) %>
+
+<!-- Container-fluid starts-->
+    <div class="page-body">
+        <!-- New User start -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-sm-12 m-auto">
+                            <div class="card">
+                                <div class="card-body title-header option-title">
+                                    <h5>Vehicle Stats (Demo)</h5>
+                                </div>
+                            </div>
+                            
+                            
+                        <!-- Sales / Purchase chart start -->
+                        <div class="col-12">
+                            <div class="card o-hidden">
+                                <div class="card-header border-0 pb-1">
+                                    <div class="card-header-title">
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div id="sales-purchase-return-cart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sales / Purchase chart end -->
+                            
+                        </div>
+
+                        <!-- Booking history start-->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-0 pb-1">
+                                    <div class="card-header-title">
+                                        <h4>Dispensed History</h4>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div>
+                                        <div class="table-responsive">
+                                            <table class="user-table list-table table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr. No</th>
+                                                        <th>Machine</th>
+                                                        <th>Rate</th>
+                                                        <th>Volume</th>
+                                                        <th>Amount</th>
+                                                        <th>Date Time</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if (businessContacts != '') { %>        
+                                                        <% businessContacts.forEach((row, index) => { %> 
+                                                            <tr>
+                                                                <td><%= index+1 %></td>
+                                                                <td><%= row.Machine %></td>
+                                                                <td><%= row.Rate %></td>
+                                                                <td><%= row.Volume %></td>
+                                                                <td><%= row.Amount %></td>
+                                                                <td><%= row.DispensedDateTime %></td>
+
+                                                            </tr>
+                                                        <% }) %>      
+                                                    <% } else { %>    
+                                                        <tr>
+                                                            <td>No Data Found</td>
+                                                        </tr>
+                                                    <% } %>      
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Booking history  end-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- New User End -->
+
+        <!-- footer start -->
+            <%- include('../../partials/footer')%>
+        <!-- footer end -->
+    </div>
+<!-- Container-fluid end -->
+<script src="/public/js/chart/apex-chart/apex-chart1.js"></script>
+<script src="/public/js/chart/apex-chart/moment.min.js"></script>
+<script src="/public/js/chart/apex-chart/apex-chart.js"></script>
+<script src="/public/js/chart/apex-chart/stock-prices.js"></script>
+<script src="/public/js/chart/apex-chart/chart-custom.js"></script>
+
+<%- include('../../partials/end')%>

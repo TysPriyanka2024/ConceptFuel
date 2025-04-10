@@ -1,0 +1,173 @@
+<% if (user.usertype === 'Customer') { %>
+                                <!-- Page Header Start-->
+    <div class="page-header">
+        <div class="header-wrapper m-0">
+            <div class="header-logo-wrapper p-0">
+                <div class="logo-wrapper">
+                    <a href="">
+                        <img class="img-fluid main-logo" src="/images/login/logos/logo.png" alt="logo">
+                        <img class="img-fluid white-logo" src="/images/login/logos/logo.png" alt="logo">
+                    </a>
+                </div>
+                <div class="toggle-sidebar">
+                    <i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>
+                    <a href="">
+                        <img src="/images/login/logos/logo.png" class="img-fluid" alt="">
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="nav-right col-6 pull-right right-header p-0">
+
+            </div>
+        </div>
+    </div>
+    <!-- Page Header Ends-->
+<% } else if(user.usertype === 'Admin') { %>
+    <!-- Page Header Start-->
+    <div class="page-header">
+        <div class="header-wrapper m-0">
+            <div class="header-logo-wrapper p-0">
+                <div class="logo-wrapper">
+                    <a href="">
+                        <img class="img-fluid main-logo" src="/images/login/logos/logo.png" alt="logo">
+                        <img class="img-fluid white-logo" src="/images/login/logos/logo.png" alt="logo">
+                    </a>
+                </div>
+                <div class="toggle-sidebar">
+                    <i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>
+                    <a href="">
+                        <img src="/images/login/logos/logo.png" class="img-fluid" alt="">
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="nav-right col-6 pull-right right-header p-0">
+                <ul class="nav-menus">
+                    <li style="display: list-item !important;" class="profile-nav onhover-dropdown pe-0 me-0">
+                        <div class="media profile-media">
+                            <% if (user.usertype === 'Admin') { %>
+                                <img class="user-profile rounded-circle" src="/images/user/<%= user.profile %>" alt="">
+                                <div class="user-name-hide media-body">
+                                    <span><%= user.first_name %> <%= user.last_name %></span>
+                                    <p class="mb-0 font-roboto">Admin<i class="middle ri-arrow-down-s-line"></i></p>
+                                </div>
+                            <% } else { %>
+                                <img class="user-profile rounded-circle" src="/images/<%= user.profile %>" alt="">
+                                <div class="user-name-hide media-body">
+                                    <span><%= user.name %></span>
+                                    <p class="mb-0 font-roboto">Branch Admin<i class="middle ri-arrow-down-s-line"></i></p>
+                                </div>
+                            <% } %>
+                        </div>
+                        <ul class="profile-dropdown onhover-show-div">
+                            <li style="display: list-item !important;">
+                                <a href="/admin/customer/list">
+                                    <i data-feather="users"></i>
+                                    <span>Users</span>
+                                </a>
+                            </li>
+                            <li style="display: list-item !important;">
+                                <a href="/admin/orders/list/all">
+                                    <i data-feather="archive"></i>
+                                    <span>Orders</span>
+                                </a>
+                            </li>
+                    
+                            <li style="display: list-item !important;">
+                                <a class="pass-btn" 
+                                    href="/admin/auth/change-password">
+                                    <i data-feather="log-out"></i>
+                                    <span>Forgot Password</span>
+                                </a>
+                            </li>
+                            
+                            <li style="display: list-item !important;">
+                                <a class="logout-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                    href="/admin/auth/logout">
+                                    <i data-feather="log-out"></i>
+                                    <span>Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header Ends-->
+<% } else{ %>
+    <div class="page-header">
+        <div class="header-wrapper m-0">
+            <div class="header-logo-wrapper p-0">
+                <div class="logo-wrapper">
+                    <a href="">
+                        <img class="img-fluid main-logo" src="/images/login/logos/logo.png" alt="logo">
+                        <img class="img-fluid white-logo" src="/images/login/logos/logo.png" alt="logo">
+                    </a>
+                </div>
+                <div class="toggle-sidebar">
+                    <i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>
+                    <a href="">
+                        <img src="/images/login/logos/logo.png" class="img-fluid" alt="">
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="nav-right col-6 pull-right right-header p-0">
+                <ul class="nav-menus">
+                    <li style="display: list-item !important;" class="profile-nav onhover-dropdown pe-0 me-0">
+                        <div class="media profile-media">
+                            <% if (user.usertype === 'Admin') { %>
+                                <img class="user-profile rounded-circle" src="/images/user/<%= user.profile %>" alt="">
+                                <div class="user-name-hide media-body">
+                                    <span><%= user.first_name %> <%= user.last_name %></span>
+                                    <p class="mb-0 font-roboto">Admin<i class="middle ri-arrow-down-s-line"></i></p>
+                                </div>
+                            <% } else { %>
+                                <img class="user-profile rounded-circle" src="/images/<%= user.profile %>" alt="">
+                                <div class="user-name-hide media-body">
+                                    <span><%= user.name %></span>
+                                    <p class="mb-0 font-roboto">Branch Admin<i class="middle ri-arrow-down-s-line"></i></p>
+                                </div>
+                            <% } %>
+                        </div>
+                        <ul class="profile-dropdown onhover-show-div">
+                            <li style="display: list-item !important;">
+                                <a href="/branch/catalogue/products">
+                                    <i data-feather="users"></i>
+                                    <span>Catalogue</span>
+                                </a>
+                            </li>
+                            <li style="display: list-item !important;">
+                                <a href="/branch/orders/list/all">
+                                    <i data-feather="archive"></i>
+                                    <span>Orders</span>
+                                </a>
+                            </li>
+                    
+                            <li style="display: list-item !important;">
+                                <a class="logout-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                    href="/branch/auth/change-password">
+                                    <i data-feather="log-out"></i>
+                                    <span>Forgot Password</span>
+                                </a>
+                            </li>
+                            
+                            <li style="display: list-item !important;">
+                                <a class="logout-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                    href="/branch/auth/logout">
+                                    <i data-feather="log-out"></i>
+                                    <span>Log out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<% } %>
