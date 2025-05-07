@@ -9,11 +9,7 @@ const ejs = require('ejs');
 const fs = require('fs'); // Import the 'fs' module for file operations
 const path = require("path");  
 const puppeteer = require('puppeteer-core');
-<<<<<<< HEAD
-const { NumberHelper } = require("../../../managers/helpers");
-=======
 const { NumberHelper , OtpHelper } = require("../../../managers/helpers");
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
 const { promisify } = require('util');  
 const options = { day: '2-digit', month: 'short', year: 'numeric' };
 const options2 = { timeZone: 'UTC' }
@@ -665,12 +661,8 @@ module.exports = {
                     });
                     const page = await browser.newPage();
                     await page.setContent(minifiedHtml);
-<<<<<<< HEAD
-                    const pdfBuffer = await page.pdf({ format: 'A4' });
-=======
                     // const pdfBuffer = await page.pdf({ format: 'A4' });
                     const pdfBuffer = await page.pdf({width: '800px',height: `1200px`, printBackground: true});   
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
                     await browser.close();
         
                     let upload = false;
@@ -687,8 +679,6 @@ module.exports = {
                         console.log("Location which sending",invoiceLocations)
                         const emailResult = await Mailer.sendCustomMail(recipientEmail, subject, renderedEmailContent, invoiceLocations, invoiceName);
                         console.log(emailResult);
-<<<<<<< HEAD
-=======
 
                         const serverBaseUrl = process.env.SERVER_BASE_URL || 'https://doorstepservices.joshfuels.com';
                         const invoiceURL = `${serverBaseUrl}/invoice/${invoiceName}`;
@@ -702,7 +692,6 @@ module.exports = {
                             }
                             const response = await Whatsapp.elseCase(params, existingOrder.user_id.phone);
                         }
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
         
                         if (emailResult.success === true) {
                             console.log('Email sent successfully');

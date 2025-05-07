@@ -94,11 +94,7 @@
                             </div>
                             <div class="card-order-section"style="padding: 2px">
                                 <ul style="padding: 2px 0 0 ;margin: -1px 0 0 0;">
-<<<<<<< HEAD
-                                    <li><%= order.created_date.toLocaleDateString('en-UK', options)%></li>
-=======
                                     <li><%= order.created_date.toLocaleDateString('en-IN', options)%></li>
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
                                     <li>Total: ₹<%= order.grand_total%></li>
                                 </ul>
                             </div>
@@ -186,11 +182,7 @@
                                             <h4>summary</h4>
                                             <ul class="order-details">
                                                 <li>Customer: <%= order.user_id.first_name %> <%= order.user_id.last_name %> </li>
-<<<<<<< HEAD
-                                                <li>Order Date: <%= order.created_date.toLocaleDateString('en-UK', options)%> </li>
-=======
                                                 <li>Order Date: <%= order.created_date.toLocaleDateString('en-IN', options)%> </li>
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
                                                 <!-- <li>Total Orders: <%= order.total_orders %></li> -->
                                             </ul>
 

@@ -26,11 +26,7 @@ module.exports = {
       if (err) {
         if (err.name === 'TokenExpiredError') {
           // You can handle token expiration here, e.g., refresh token logic
-<<<<<<< HEAD
-          return res.status(303).json({
-=======
           return res.status(401).json({
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
             status: false,
             message: 'Session has expired. Please Login Again.',
           });

@@ -15,16 +15,11 @@ const {
 const { generateAccessToken} = require('../middlewares/auth.middleware');
 const models = require('../../../managers/models');
 const { deleteMe } = require('../../../managers/utils/s3Delete')
-<<<<<<< HEAD
-
-// This would be your token blacklist storage
-=======
 const { Validator } = require('../../../managers/utils');
 const { model } = require('mongoose');
 const { Whatsapp } = require('../../../managers/whatsapp');
 
 // This would be your token blacklist storage 
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
 const tokenBlacklist = new Set();
 
 
@@ -242,11 +237,8 @@ module.exports = {
         productToUpdate.image = `${req.body.maincategory}/${req.body.subcategory}/${req.files['image'][0].filename}`;
       }
   
-<<<<<<< HEAD
-=======
       const oldPrice = productToUpdate.price;
 
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
       // Update the product fields
       productToUpdate.name = name;
       productToUpdate.hsn = hsn;
@@ -279,8 +271,6 @@ module.exports = {
   
       // Save the updated product to the database
       await productToUpdate.save();
-<<<<<<< HEAD
-=======
 
       if(oldPrice != price){
 
@@ -358,7 +348,6 @@ module.exports = {
         }
         
       }
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
   
       res.redirect('/admin/product/lists'); // Redirect to a suitable page after a successful update
     } catch (error) {

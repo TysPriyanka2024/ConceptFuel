@@ -452,12 +452,8 @@ module.exports = {
                         addressDistrict = branchInfo.district.substring(0, 3);
                     }
 
-<<<<<<< HEAD
-                    nextOrderId = `${addressState}-${addressDistrict}-${vehicle_number}-${order_number}`
-=======
                     // nextOrderId = `${addressState}-${addressDistrict}-${vehicle_number}-${order_number}`
                     nextOrderId = `${addressState}-${addressDistrict}-${order_number}`
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
 
                     console.log("nextorderid----",nextOrderId);
                     
@@ -1102,8 +1098,6 @@ module.exports = {
                 return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ error: MessageConstants.INTERNAL_SERVER_ERROR });
             }
         },
-<<<<<<< HEAD
-=======
 
         lastOrder: async (req, res) => {
             try{
@@ -1137,7 +1131,6 @@ module.exports = {
                 return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ error: MessageConstants.INTERNAL_SERVER_ERROR });  
             }
         }
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
 }  
   
   

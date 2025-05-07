@@ -472,10 +472,7 @@ module.exports = {
           name : "John Doe",
           order_id : order_id,
         }
-<<<<<<< HEAD
-=======
-        let Name = `${updatedOrder.user_id.first_name} ${updatedOrder.user_id.last_name}`; 
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
+        // let Name = `${updatedOrder.user_id.first_name} ${updatedOrder.user_id.last_name}`; 
 
         // Send email notification
         if (updatedOrder.is_delivered === true) {
@@ -510,12 +507,8 @@ module.exports = {
           });
           const page = await browser.newPage();
           await page.setContent(minifiedHtml);
-<<<<<<< HEAD
-          const pdfBuffer = await page.pdf({ format: 'A4' });
-=======
           // const pdfBuffer = await page.pdf({ format: 'A4' });
           const pdfBuffer = await page.pdf({width: '800px',height: `1200px`, printBackground: true});
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
           await browser.close();
 
           console.log(`PDF uploaded to S3 bucket`);
@@ -529,18 +522,12 @@ module.exports = {
           } catch (error) {
               console.error('File write failed:', error);
           }
-<<<<<<< HEAD
-
-=======
           
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
           if (upload === true) {
               console.log("Location which sending",invoiceLocations)
               const emailResult = await Mailer.sendCustomMail(recipientEmail, subject, renderedEmailContent, invoiceLocations, invoiceName);
               console.log(emailResult);
 
-<<<<<<< HEAD
-=======
               const serverBaseUrl = process.env.SERVER_BASE_URL || 'https://doorstepservices.joshfuels.com';
               const invoiceURL = `${serverBaseUrl}/invoice/${invoiceName}`;
               if(invoiceURL){
@@ -554,7 +541,6 @@ module.exports = {
                   const response = await Whatsapp.elseCase(params, phone);
               }
               
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
               if (emailResult.success === true) {
                   console.log('Email sent successfully');
 
@@ -577,11 +563,7 @@ module.exports = {
           body: "This is a sample template for message"
         }
         let userIds = [];
-<<<<<<< HEAD
-        let Name = `${updatedOrder.user_id.first_name} ${updatedOrder.user_id.last_name}`; 
-=======
         // let Name = `${updatedOrder.user_id.first_name} ${updatedOrder.user_id.last_name}`; 
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
         let status = "Status";
         let trackingLink = "---";
         description.name = Name;
@@ -1393,12 +1375,8 @@ module.exports = {
               } else { addressDistrict = branchInfo.district.substring(0, 3);
               }
               
-<<<<<<< HEAD
-              nextOrderId = `${addressState}-${addressDistrict}-${vehicle_number}-${order_number}`
-=======
               // nextOrderId = `${addressState}-${addressDistrict}-${vehicle_number}-${order_number}`
               nextOrderId = `${addressState}-${addressDistrict}-${order_number}`
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
               
               console.log(nextOrderId);    
 

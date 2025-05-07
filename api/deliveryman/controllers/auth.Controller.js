@@ -270,11 +270,7 @@ module.exports = {
       const session = req.user;
       const user_id = session.userId;
 
-<<<<<<< HEAD
-      console.log(user_id);
-=======
       console.log("add location in deliveryman app",user_id);
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
       if(!user_id){
         return res.status(StatusCodesConstants.BAD_REQUEST).json({
           status: false,
@@ -344,10 +340,6 @@ module.exports = {
         message: MessageConstants.INTERNAL_SERVER_ERROR,
       });
   }},
-<<<<<<< HEAD
-=======
-
->>>>>>> 50bc8428eba644b356898945a2134b8590826159
   // Add Device Data
   addDevice : async (req, res) => {
     try {
