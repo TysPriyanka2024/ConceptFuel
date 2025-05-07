@@ -1,0 +1,120 @@
+<%- include('../../partials/main', { pageTitle: 'Add new Banner' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Add New Banner</h5>
+                                </div>
+
+                                <form action="/admin/banner/add" method="POST" class="theme-form theme-form-2 mega-form" enctype="multipart/form-data">
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Title</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="hidden" name="token">
+                                            <input class="form-control" type="text" name="title" placeholder="Banner Title" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="col-sm-3 col-form-label form-label-title">Product</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="hidden" name="token">
+                                            <select class="js-example-basic-single w-100" name="product">
+                                                <option disabled>--- Select Any One ---</option>
+                                                <% if (product != '') { %>        
+                                                    <% product.forEach((row, index) => { %> 
+                                                        <option value="<%= row.id %>"> <%= row.name %></option>
+                                                <% }) %>      
+                                                <% } else { %>
+                                                    <option>Nothing To Show</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="col-sm-3 col-form-label form-label-title">Banner Image</label>
+                                            <small style="color: red">* ( Ratio 3:1 )</small>
+                                        <div class="form-group col-sm-12">
+                                            <div class="box-wrapper">
+                                                <!-- The text field will be displayed here -->
+                                                <div id="textFieldValueBanner2"></div>
+                                            </div>
+                                            <div class="dropzone-wrapper" id="viewer">
+                                                <div class="dropzone-desc">
+                                                    <i class="ri-upload-2-line"></i>
+                                                    <p>Choose an image file or drag it here.</p>
+                                                </div>
+                                                <!-- Assign a unique ID to the file input for banner image -->
+                                                <input type="file" class="dropzone" name="image" id="viewer" required accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Submit
+                                        </button>
+                                    </div>
+
+
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                        
+                                        $(document).ready(function() {
+                                            // Listen for changes in the banner image file input
+                                            $('#bannerImageInput').on('change', function() {
+                                                // Get the selected file name for banner image
+                                                var fileNamebanner = $(this).val().split('\\').pop();
+                                                // Update the content of the additional box for banner image with the file name
+                                                $('#textFieldValueBanner2').text('Selected Banner Image: ' + fileNamebanner);
+                                            });
+                                        });
+                                    </script>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+
+<script>
+                function readURL(input, viewer_id) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+            
+                        reader.onload = function (e) {
+                            $('#'+viewer_id).attr('src', e.target.result);
+                        }
+            
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+            
+                $("#customFileEg1").change(function () {
+                    readURL(this, 'viewer');
+                });
+                $("#customFileEg2").change(function () {
+                    readURL(this, 'viewer2');
+                });
+            </script>
+
+
+<%- include('../../partials/end')%>

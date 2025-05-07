@@ -1,0 +1,517 @@
+[33mcommit 00b22984c15393ffbe557c85fcb2b30b2d7650b6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mjosh_testing[m[33m, [m[1;31morigin/secondary[m[33m, [m[1;31morigin/josh_testing[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 1b9e06a 30bf0a8
+Author: ChavanPriya97 <priya971110@gmail.com>
+Date:   Mon Jan 6 11:23:33 2025 +0530
+
+    Merge branch 'secondary' of https://github.com/shivamrvgupta/Jetway_Prod into josh_testing
+
+[33mcommit 1b9e06a1b822d34754c532348fc84fd13bc36174[m
+Author: ChavanPriya97 <priya971110@gmail.com>
+Date:   Mon Jan 6 11:03:47 2025 +0530
+
+    push code from josh_tesing to secondary
+
+[33mcommit 30bf0a88fe3a587f6caf7eb7135eafe52e2fe131[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Jan 6 10:50:51 2025 +0530
+
+    Updated
+
+[33mcommit cf77f6f9183ca1565f20695e670a97e187432dfa[m[33m ([m[1;32msecondary[m[33m)[m
+Merge: a87ab03 ffcf4e6
+Author: TysPriyanka2024 <tys.priyanka@gmail.com>
+Date:   Sat Jan 4 18:00:52 2025 +0530
+
+    Merge pull request #11 from shivamrvgupta/devp
+    
+    Devp
+
+[33mcommit ffcf4e6d34b86594aec3df2328c5edd0e127a19a[m[33m ([m[1;31morigin/devp[m[33m, [m[1;32mdevp[m[33m)[m
+Author: ChavanPriya97 <priya971110@gmail.com>
+Date:   Sat Jan 4 17:53:47 2025 +0530
+
+     add filter display orders which is not cancelled
+
+[33mcommit 14cc8b8b636979fb8119b4d026c4c94d9065c69d[m
+Author: ChavanPriya97 <priya971110@gmail.com>
+Date:   Sat Jan 4 17:42:40 2025 +0530
+
+     grand total done
+
+[33mcommit a87ab030f1114565f0140c9f25f549c34ebdbf63[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Sat Jan 4 16:39:51 2025 +0530
+
+    Updated the grand total
+
+[33mcommit c24ca9f9495efd141a4ff2a6c7733bddf1d21476[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Dec 26 13:33:27 2024 +0530
+
+    Added Vehicle
+
+[33mcommit 8082120924cbae5c090417f6343cf42c17dbd2b5[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Wed Dec 18 12:57:23 2024 +0530
+
+    Updated the delivery man
+
+[33mcommit 19ae2ba67ea4917b25c3783e1346c0665cb7954d[m
+Author: ChavanPriya97 <priya971110@gmail.com>
+Date:   Tue Dec 17 11:45:26 2024 +0530
+
+    devp_demofuel
+
+[33mcommit f182d42e8068c618d54c1e6664d4b4859994962d[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Dec 16 17:22:17 2024 +0530
+
+    Updated the otp fields
+
+[33mcommit bddf9922bbcf42b8277dee8da09072622e5c0121[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Dec 16 17:00:29 2024 +0530
+
+    Updated the otp fields
+
+[33mcommit dc61219f6ed7dd404c8f47ef65f49132a0e7e46c[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Dec 16 16:47:44 2024 +0530
+
+    Updated the otp fields
+
+[33mcommit 76d99b9ecdcba2cc6d6fb37421e8d19d0fb9275f[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Dec 13 16:40:51 2024 +0530
+
+    Updated the OTP PART
+
+[33mcommit 0822c7f289a44ff04625f95f426698588b18b7e6[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Dec 13 16:34:21 2024 +0530
+
+    Updated the OTP PART
+
+[33mcommit 5625237fea8ab07f010738cd60da6740ecd738de[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Dec 13 16:32:05 2024 +0530
+
+    Updated the OTP PART
+
+[33mcommit f1b88749da4387dfaeaae1348fc052d724cdd69c[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Dec 13 15:57:20 2024 +0530
+
+    Updated the otp field
+
+[33mcommit 08c9e2c6b24edfff009033d26a68fba3fc3df5a5[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Dec 12 17:03:56 2024 +0530
+
+    Fixing the error
+
+[33mcommit 9f540d05e4ba9bf034937a872733a7115ecf3b93[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Dec 12 17:00:24 2024 +0530
+
+    Fixing the error
+
+[33mcommit 987852c3743a8c3cfc77a55e666f4f7b7f3786fd[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Nov 26 13:26:49 2024 +0530
+
+    Updated the Validations
+
+[33mcommit 5441d0f9618915e0857f0fa98407ea59e2546a77[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Nov 19 11:42:19 2024 +0530
+
+    Added the defaults
+
+[33mcommit 65ed0e64437bb3b13b06d41dc44d2f05ca2b0f5d[m
+Merge: 0455cd1 73803a2
+Author: shivamrvgupta <shivamrvgupta@gmail.com>
+Date:   Tue Nov 19 06:06:56 2024 +0000
+
+    Merge branch 'secondary' of https://github.com/shivamrvgupta/Jetway_Prod into secondary
+
+[33mcommit 0455cd16d25f8e0c46fcf0b559d5612f4d9f70ae[m
+Merge: 832697a 8a660a2
+Author: shivamrvgupta <shivamrvgupta@gmail.com>
+Date:   Tue Nov 19 06:06:51 2024 +0000
+
+    Changes from Server
+
+[33mcommit 73803a2682982e25c3f28b35cd116b40d5079c03[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Nov 19 11:35:37 2024 +0530
+
+    Upadted The organisation in the branch
+
+[33mcommit ef922c65171dd603876037178d86f8bcad9f4b65[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Nov 15 12:42:42 2024 +0530
+
+    Updated the grand total
+
+[33mcommit 9db09728dd3ae52b63d96fa8056f5d3fed361d41[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Wed Nov 13 17:22:36 2024 +0530
+
+    UPdate
+
+[33mcommit 832697aaaa8f6ba19497b3758765134340dd79cd[m
+Author: shivamrvgupta <shivamrvgupta@gmail.com>
+Date:   Tue Oct 22 14:09:19 2024 +0000
+
+    init
+
+[33mcommit 8a660a2b97efa223260ea905a1873807f4caad61[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Oct 22 19:37:56 2024 +0530
+
+    [Push]
+
+[33mcommit 65f4471af91dc7f1d242052093c261fbe93b8566[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Aug 22 14:47:34 2024 +0530
+
+    updated assigment constant
+
+[33mcommit abffda82762248a7691f6fbc096f0b9485e50b98[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Wed Aug 7 15:10:34 2024 +0530
+
+    updated the cart
+
+[33mcommit 89848b9d09aff7fb7c84495c97ee12678830d08f[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Aug 6 16:21:31 2024 +0530
+
+    restart
+
+[33mcommit 869f88da90104631304693e29a760da968dcc75f[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Aug 6 13:12:11 2024 +0530
+
+    enter the prices
+
+[33mcommit e96fe801f06b5c273185d02f7d4ba26aee42a13f[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Jul 29 16:32:56 2024 +0530
+
+    updated the api
+
+[33mcommit e051d726ac7e54c0a73975a28860173c3b4d006a[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Sun Jul 21 03:21:50 2024 +0530
+
+    updated
+
+[33mcommit f2473bda28e09f1b6641dc6248111ac750142703[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Sun Jul 21 03:21:29 2024 +0530
+
+    updated again
+
+[33mcommit 17bf50e8060514bcc815ff248b55cff59c6bb0c2[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Sun Jul 21 03:19:51 2024 +0530
+
+    updated the hook
+
+[33mcommit 013867d9251fed008dd82c5eea605142ed0fbef7[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jul 19 20:32:52 2024 +0530
+
+    updated git
+
+[33mcommit dd0e3a4cbee2ba79eca01451ac6728c9abf9b597[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jul 19 19:27:32 2024 +0530
+
+    updated the whatsapp
+
+[33mcommit 86de0755b541ff34d5dcc81165f04f37806a84f0[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jul 19 19:12:30 2024 +0530
+
+    updated the issue
+
+[33mcommit 9589a56517df0add8979feb7e03ad38549fb6a5e[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jul 19 12:20:39 2024 +0530
+
+    updated routes
+
+[33mcommit e2ce1b493a2b9373d0f6867ab159cd7bb3c5d04f[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Jul 18 18:07:27 2024 +0530
+
+    updated
+
+[33mcommit d6a58233c6ce69870d1a4e89f8dbe6adb3dc5c2b[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Jul 18 18:01:09 2024 +0530
+
+    updated the bill
+
+[33mcommit 0457d2c81998a74210b9d91a83bf1648a7247218[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Wed Jul 17 15:37:37 2024 +0530
+
+    updated
+
+[33mcommit 26012f86e108d7904edead49553db202c3ab0644[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Wed Jul 17 15:33:45 2024 +0530
+
+    updated
+
+[33mcommit 4fa3233086b28b1c162721c014bce882d949801d[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jul 5 17:08:07 2024 +0530
+
+    updated invoice
+
+[33mcommit 3bee07b9fcb0118c2020d7926c248773a0099337[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Wed Jul 3 16:39:30 2024 +0530
+
+    added tracking
+
+[33mcommit b55c49d99edc3fc3c720629e2ad1f90f2bd6e9cd[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Jul 2 15:19:01 2024 +0530
+
+    updated token
+
+[33mcommit 72fee339fda0617f23b6b51ce0c0a7479d815b35[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Jun 27 17:32:11 2024 +0530
+
+    updated push notifications
+
+[33mcommit 11c240b7256c9155b5fab0885c44622cb6b67380[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Jun 27 16:34:46 2024 +0530
+
+    updated push notification in customer
+
+[33mcommit 8e5b294f50213143012d59e5ed8e731a94c35f90[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Thu Jun 27 12:37:42 2024 +0530
+
+    updated notify for customer
+
+[33mcommit e8c658906e9c647dd896c0c8031cc66618debb64[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Wed Jun 26 15:32:13 2024 +0530
+
+    updated the notify
+
+[33mcommit ad71c3ac7ea322d4e1ec99e3401229f408a54ee2[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Jun 25 16:39:41 2024 +0530
+
+    order status
+
+[33mcommit 859386b78d8257f7f2f254ac7e90a7de7cce27d6[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Jun 25 16:36:07 2024 +0530
+
+    updated notify
+
+[33mcommit cac62ff5a2fd8994f425edb2e0a2abca9460be03[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Jun 25 16:31:48 2024 +0530
+
+    updated notify
+
+[33mcommit d806c040de8275d673ee14d6d939e1eb0525b9e7[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Tue Jun 25 16:04:10 2024 +0530
+
+    updated order sort
+
+[33mcommit 042279b2046bf805e39c69b2c9ef146361fe0a4f[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Jun 24 16:49:47 2024 +0530
+
+    updated image
+
+[33mcommit 817482d541c33ed466dcb6b4d2145009893f279f[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Jun 24 14:53:35 2024 +0530
+
+    updated
+
+[33mcommit 268ef0dd4627b00f11d92becb79b2f45d338701b[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Jun 24 14:48:44 2024 +0530
+
+    added count
+
+[33mcommit 365b47deaf25e8ff74c51c37079bc3e1b22c8876[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Jun 24 14:12:21 2024 +0530
+
+    added api for notify
+
+[33mcommit 04f3ded5f137500119351437d15520b04a68ec86[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Mon Jun 24 12:09:57 2024 +0530
+
+    added fcm token
+
+[33mcommit 0e0539fd26d93666703d4c4beb88253a035bd726[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Sat Jun 22 16:51:52 2024 +0530
+
+    updated branch
+
+[33mcommit fd98f1d2322de33d8e4d917a5cba2ecfa6b01b54[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Sat Jun 22 15:55:54 2024 +0530
+
+    updated whatsapp
+
+[33mcommit 2f8f532134e41b3a0fd8a75a85415f681d30ada2[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Sat Jun 22 15:48:09 2024 +0530
+
+    updated what
+
+[33mcommit b8a5e7e672b9b92c206b38f7a7677d7528eb8b43[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Sat Jun 22 14:34:21 2024 +0530
+
+    updated the gst number
+
+[33mcommit f3afcbe70df90d4e5ee4b7f1cbb1dd4ba64b5b76[m
+Merge: f469d48 dd59a03
+Author: root <root@ubuntu-cloudpanel.localhost>
+Date:   Fri Jun 21 07:21:43 2024 +0000
+
+    Merge branch 'secondary' of https://github.com/shivamrvgupta/Jetway_Prod into secondary
+
+[33mcommit f469d487aba0402c78b5553efc38b35aaa1b3a82[m
+Author: root <root@ubuntu-cloudpanel.localhost>
+Date:   Fri Jun 21 07:21:35 2024 +0000
+
+    updated
+
+[33mcommit dd59a032b45538040592d722bc495b14b1da5256[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jun 21 12:51:14 2024 +0530
+
+    updated
+
+[33mcommit 5eca3b502069452ce36697711ed822fc9be4d9c2[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jun 21 12:50:50 2024 +0530
+
+    updated status
+
+[33mcommit b49f14b7cc3de240fad98f08aa6283b3a2bdd768[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jun 21 12:34:25 2024 +0530
+
+    updated bills
+
+[33mcommit 01c6c98e8ac6a11f2061ffa43274e9d3c6486b15[m[33m ([m[1;31morigin/tes[m[33m)[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jun 21 12:31:47 2024 +0530
+
+    added spilt udpate
+
+[33mcommit 52891272d68866e5c5d7f1413a8a653124c086a7[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jun 21 11:33:28 2024 +0530
+
+    resolved commits
+
+[33mcommit 4a4a3347d9067fcad3041f9cc4519e43785606a3[m
+Merge: 6c35866 c3bc2a3
+Author: Kumar-Gupta <kumargupta24102000@gmail.com>
+Date:   Thu Jun 20 18:53:20 2024 +0530
+
+    Merge branch 'secondary' of https://github.com/shivamrvgupta/Jetway_Prod into secondary
+
+[33mcommit 6c35866194c46e85d98f428bce28ce3aef937c32[m
+Author: Kumar-Gupta <kumargupta24102000@gmail.com>
+Date:   Thu Jun 20 18:52:49 2024 +0530
+
+    deleted logs
+
+[33mcommit c3bc2a3f9e31c02f913671a2506142b7fbfe4660[m
+Merge: 88f6edd f01deb9
+Author: root <root@ubuntu-cloudpanel.localhost>
+Date:   Thu Jun 20 13:10:36 2024 +0000
+
+    deleted the log files
+
+[33mcommit 88f6edda60840e43805af95deb5d4ff6d114ff01[m
+Author: root <root@ubuntu-cloudpanel.localhost>
+Date:   Thu Jun 20 13:03:29 2024 +0000
+
+    a commit from terminal
+
+[33mcommit f01deb95776010d98756896bf5786a646231fbf2[m
+Author: Kumar-Gupta <kumargupta24102000@gmail.com>
+Date:   Thu Jun 20 18:25:12 2024 +0530
+
+    fixed the api
+
+[33mcommit f49fe188a8c242830ea7b985d86e8c6b5acbb17b[m
+Merge: 6dced81 7321266
+Author: Kumar-Gupta <kumargupta24102000@gmail.com>
+Date:   Thu Jun 20 16:14:17 2024 +0530
+
+    Merge branch 'secondary' of https://github.com/shivamrvgupta/Jetway_Prod into secondary
+
+[33mcommit 6dced8114a7fd1dbc81df8b5679f8fa2e02cf1c0[m
+Author: Kumar-Gupta <kumargupta24102000@gmail.com>
+Date:   Thu Jun 20 16:14:01 2024 +0530
+
+    fixed 1rupee issue
+
+[33mcommit 7321266bc47f3150c4ba0dfa6ca33394a868f4d1[m
+Merge: d598cc1 2c8a2dd
+Author: root <root@ubuntu-cloudpanel.localhost>
+Date:   Thu Jun 20 08:47:11 2024 +0000
+
+    a commit from terminal
+
+[33mcommit d598cc14bb5aa9c6754f52f9805fddc351416a71[m
+Author: root <root@ubuntu-cloudpanel.localhost>
+Date:   Fri Jun 14 11:39:22 2024 +0000
+
+    updated logs
+
+[33mcommit 2c8a2dd38cc6fdce498527c200f9082570a78776[m
+Merge: f21a074 8e08ee6
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jun 14 17:08:49 2024 +0530
+
+    udpated merge
+
+[33mcommit f21a0748d6380cc748cdb6b0fec9c2b3cfe07655[m
+Author: shivamrvgupta <65163093+shivamrvgupta@users.noreply.github.com>
+Date:   Fri Jun 14 17:07:25 2024 +0530
+
+    added customer care
+
+[33mcommit 8e08ee6b7549277f0d4f801ef00472963d3c2efe[m
+Merge: 8620e70 816ec62
+Author: root <root@ubuntu-cloudpanel.localhost>
+Date:   Thu Jun 6 22:52:26 2024 +0000
+
+    Merge branch 'secondary' of https://github.com/shivamrvgupta/Jetway_Prod into secondary
+
+[33mcommit 8620e701566a7064e30ad538b07fca90cfac1e37[m
+Merge: 95a1d94 062b31c
+Author: root <root@ubuntu-cloudpanel.localhost>
+Date:   Thu Jun 6 22:52:22 2024 +0000
+
+    access log

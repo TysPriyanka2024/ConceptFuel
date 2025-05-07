@@ -1,0 +1,119 @@
+<%- include('../../partials/main', { pageTitle: 'Update Category' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Update Category</h5>
+                                </div>
+
+                                <form action="/admin/category/update/<%= category.id %>" method="POST" class="theme-form theme-form-2 mega-form" enctype="multipart/form-data">
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Category Name</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="hidden" name="token">
+                                            <input class="form-control" type="hidden" name="maincategory" value="Admin">
+                                            <input class="form-control" type="hidden" name="subcategory" value="Category">
+                                            <input class="form-control" type="text" name="name" placeholder="Category Name" value="<%= category.name %>" required>
+                                        </div>
+                                    </div>
+
+                                    
+                                    
+                                    <div class="mb-4 row align-items-center">    
+                                        <label class="col-sm-3 col-form-label form-label-title">Category Image</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="image" id="customFileEg1" class="form-control form-choose"
+                                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                                    oninvalid="document.getElementById('en-link').click()">
+                                            <div class="custom-file">
+                                                <div class="text-center">
+                                                    <% if ( category.image ){ %>
+                                                        <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/images/<%= category.image %>" onerror="this.src='/public/images/img2.jpg'" alt="image" />
+                                                    <% } else { %>
+                                                        <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/public/images/img2.jpg" alt="image" />
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Update Category
+                                        </button>
+                                    </div>
+
+
+                                    
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Listen for changes in the category image file input
+                                            $('#categoryImageInput').on('change', function() {
+                                                // Get the selected file name for category image
+                                                var fileNameCategory = $(this).val().split('\\').pop();
+                                                // Update the content of the additional box for category image with the file name
+                                                $('#textFieldValueCategory').text('Selected Category Image: ' + fileNameCategory);
+                                            });
+                                        });
+                                        
+                                        $(document).ready(function() {
+                                            // Listen for changes in the banner image file input
+                                            $('#bannerImageInput').on('change', function() {
+                                                // Get the selected file name for banner image
+                                                var fileNamebanner = $(this).val().split('\\').pop();
+                                                // Update the content of the additional box for banner image with the file name
+                                                $('#textFieldValueBanner2').text('Selected Banner Image: ' + fileNamebanner);
+                                            });
+                                        });
+                                    </script>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+
+
+
+
+<script>
+    function readURL(input, viewer_id) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+viewer_id).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#customFileEg1").change(function () {
+        readURL(this, 'viewer');
+    });
+    $("#customFileEg2").change(function () {
+        readURL(this, 'viewer2');
+    });
+</script>
+
+
+<%- include('../../partials/end')%>

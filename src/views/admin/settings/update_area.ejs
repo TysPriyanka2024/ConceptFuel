@@ -1,0 +1,259 @@
+<%- include('../../partials/main', { pageTitle: "City's Lists" }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-10 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Area's Lists</h5>
+                                    <span>Note - These Price will be shown to the user's as per the user's City </span>
+                                </div>
+
+                                <form action="/admin/auth/settings/update-serving-areas/<%= area.id %>" method="POST" class="theme-form theme-form-2 mega-form">                                    
+
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">State Name</label>
+                                        <div class="col-sm-9">
+                                            <select class="js-example-basic-single w-100" name="state" id="state">
+                                                <option value="none">-- All States  --</option>
+                                                <% if (stateLists != '') { %>        
+                                                    <% stateLists.forEach((row, index) => { %> 
+                                                        <option value="<%= row.id %>"> <%= row.name %></option>
+                                                <% }) %>      
+                                                <% } else { %>
+                                                    <option>Nothing To Show</option>
+                                                <% } %>
+                                            </select>
+                                                
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">District Name</label>
+                                        <div class="col-sm-9">
+                                            <select class="js-example-basic-single w-100" name="district" id="sub_category">
+                                                <option value="none">-- Select a State First --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Area's Name</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="area" placeholder="Enter The Area..." value="<%= area.name%>" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">
+                                            Price
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="price" id="numberInput" oninput="validateFloat(this)" placeholder="Enter The Price..." value="<%= area.price%>" required>
+                                            <span id="errorMessage" style="color: red;"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Submit
+                                        </button>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+
+ <!-- Delete Modal Box Start -->
+ <div class="modal fade theme-modal remove-coupon" id="confirmationModal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header d-block text-center">
+                <h5 class="modal-title w-100" id="exampleModalLabel22">Please Set the Discussed Price ......</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+                <!-- Add this input field inside your confirmationModal body -->
+                <div class="modal-body container">
+                    <h4 id="text-false"></h4>
+                    <div id="confirmationContainer" >
+                        <label
+                            class="form-label-title">
+                            Updated Price
+                        </label>
+                        <div class="">
+                            <input class="form-control" type="text" name="updated_price" id="numberInput" oninput="validateFloat(this)" placeholder="Enter Your Price...." required>
+                        </div>
+                        <span id="errorMessage" style="color: red;"></span>
+                    </div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-animation btn-md fw-bold" id="confirmStatusChange" data-bs-target="#exampleModalToggle2"
+                    data-bs-toggle="modal" data-bs-dismiss="modal" disabled>Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="remove-box text-center">
+                    <div class="wrapper">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                    </div>
+                    <h4 class="text-content">It's Updated.</h4>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Function to open the modal and handle data
+        function openConfirmationModal(cityId) {
+            // Set the data-customer-id and is-privilaged in the modal
+            $('#confirmationModal').attr('data-city-id', cityId);
+
+            // Show/hide the input box based on the isPrivilaged value
+            // Change the modal title to "Are you sure?"
+            $('#exampleModalLabel22').text('Are you sure?');
+
+            // Open the confirmation modal
+            $('#confirmationModal').modal('show');
+        }
+
+        // Function to handle the confirmation and make API call
+        function confirmStatusChange() {
+            // Get data-customer-id and is-privilaged from the modal
+            var areaId = $('#confirmationModal').attr('data-city-id');
+
+            // Get the discussed price from the input field (only if it's visible)
+            var updated_price = $('#numberInput:visible').val();
+
+
+            // Make an API call using AJAX (Assuming you have an API endpoint to handle this)
+            $.ajax({
+                url: '/admin/auth/settings/update-area-price',
+                method: 'POST',
+                data: {
+                    areaId: areaId,
+                    updated_price: updated_price,
+                },
+                success: function (response) {
+                    // Update the status text
+                    window.location.reload();
+                },
+                error: function (error) {
+                    console.error("Error updating database value");
+                }
+            });
+        }
+
+        // Event listener for the click button
+        $('.clickable-cell').on('click', function () {
+            // Get the data-customer-id and is-privilaged attribute values
+            var cityId = $(this).data('city-id');
+
+            // Open the confirmation modal with the customer ID and is-privilaged value
+            openConfirmationModal(cityId);
+        });
+
+        // Event listener for the confirmStatusChange button
+        $('#confirmStatusChange').on('click', function () {
+            // Call the function to confirm status change and make API call
+            confirmStatusChange();
+        });
+    });
+</script>
+
+<script>
+function validateFloat(floatField) {
+    // Remove any non-numeric characters (including '.') from the input
+    floatField.value = floatField.value.replace(/[^0-9.]/g, '');
+
+    // Parse the entered value as a float
+    var enteredValue = parseFloat(floatField.value);
+
+    // Display an error message if the entered value is not a valid number or less than or equal to 0
+    var errorMessage = document.getElementById("errorMessage");
+    if (isNaN(enteredValue) || enteredValue <= 0) {
+        errorMessage.textContent = "Please enter a valid number greater than 0.";
+        document.getElementById("confirmStatusChange").disabled = true;
+    } else {
+        errorMessage.textContent = "";
+        document.getElementById("confirmStatusChange").disabled = false;
+    }
+}
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#state").change(function () {
+            var selectedCategoryId = $(this).val();
+            $.ajax({
+                url: "/admin/auth/settings/getDistricts",
+                method: "GET",
+                data: { state_id: selectedCategoryId },
+                success: function (data) {
+                    var subcategoryDropdown = $("#sub_category");
+                    subcategoryDropdown.empty();
+                    
+                    if (data.length > 0) {
+                        data.forEach(function (row) {
+                            subcategoryDropdown.append(
+                                $("<option>").val(row._id).text(row.name)
+                            );
+                        });
+                    } else {
+                        subcategoryDropdown.append(
+                            $("<option>").text("We Don't Server in this area")
+                        );
+                    }
+                },
+                error: function () {
+                    console.log("Error fetching cities");
+                }
+            });
+        });
+    });
+</script>
+
+
+<%- include('../../partials/end')%>

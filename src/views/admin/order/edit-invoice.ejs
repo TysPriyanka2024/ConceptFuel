@@ -1,0 +1,392 @@
+<%- include('../../partials/main', { pageTitle: 'Upadate Invoice' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-10 m-auto">
+                                    <div class="card">
+                                        <div class="card-body title-header option-title">
+                                            <h5 style="font-size: calc(20px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));">Update Invoice (<%= order.order_id %>)</h5>
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="theme-form theme-form-2 mega-form" action="/admin/orders/update-invoice/<%= order.id %>" method="post">
+                                        <div class="card" >
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Customer Information </h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Organisation Name
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input type="text" class="form-control" name="organsation_name" value="<%= order.user_id.company %>" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Contact Person's First Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="first_name" value="<%= order.user_id.first_name %>" required>
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Contact Person's Last Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" value="<%= order.user_id.last_name %>" name="last_name" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Email
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="email" name="email" value="<%= order.user_id.email %>" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Phone
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="phone" value="<%= order.user_id.phone %>" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card" >
+                                            <div class="card-body ">
+                                                <div class="card-header-2">
+                                                    <h5>Customer Shipping Address</h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 1
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="shipping_address_1" value="<%= order.address_id.address_1 %>" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 2
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="shipping_address_2" value="<%= order.address_id.address_2 %>" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">State
+                                                            </label>
+                                                            <input type="text" class="form-control" name="shipping_address_state" required value="<%= order.address_id.state %>">
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">City
+                                                            </label >
+                                                            <input type="text" class="form-control" name="shipping_address_city" required value="<%= order.address_id.city %>">
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">Area
+                                                            </label>
+                                                            <input type="text" class="form-control" name="shipping_address_area" required value="<%= order.address_id.area %>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">                                                        
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">PinCode
+                                                            </label>
+                                                            <input class="form-control" type="text" value="<%= order.address_id.pincode %>" name="shipping_address_pincode" id="numberInput" oninput="validateInput(this)" required>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">Country
+                                                            </label>
+                                                            <input class="form-control" type="text" name="shipping_address_country" value="<%= order.address_id.country %>" value="India" required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card" >
+                                            <div class="card-body ">
+                                                <div class="card-header-2">
+                                                    <h5>Customer Billing Address</h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 1
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="billing_address_1" value="<%= order.billing_id.address_1 %>" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 2
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="billing_address_2" value="<%= order.billing_id.address_2 %>" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">State
+                                                            </label>
+                                                            <input type="text" class="form-control" name="billing_address_state" required value="<%= order.billing_id.state %>">
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">City
+                                                            </label >
+                                                            <input type="text" class="form-control" name="billing_address_city" required value="<%= order.billing_id.city %>">
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">Area
+                                                            </label>
+                                                            <input type="text" class="form-control" name="billing_address_area" required value="<%= order.billing_id.area %>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">                                                        
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">PinCode
+                                                            </label>
+                                                            <input class="form-control" type="text" value="<%= order.billing_id.pincode %>" name="billing_address_pincode" id="numberInput" oninput="validateInput(this)" required>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">Country
+                                                            </label>
+                                                            <input class="form-control" type="text" name="billing_address_country" value="<%= order.billing_id.country %>" value="India" required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <% order.product_items.forEach(function(item, index){ %>
+                                                <div class="card-body">
+                                                    <div class="card-header-2">
+                                                        <h5>Product Information</h5>
+                                                    </div>
+                                                        <input type="hidden" name="product_id" value="<%= item.product_id._id %>">
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label class="form-label-title col-sm-3 mb-0">Product
+                                                                Name</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" type="text"
+                                                                    value="<%= item.product_id.name %>" name="name" readonly>
+                                                            </div>
+                                                        </div>
+                
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label class="form-label-title col-sm-3 mb-0">Product
+                                                                HSN/SAC</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" type="text"
+                                                                value="<%= item.product_id.hsn %>" name="hsn" readonly>
+                                                            </div>
+                                                        </div>
+                
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label class="form-label-title col-sm-3 mb-0">Price</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" type="text"
+                                                                value="<%= item.price %>" name="price" required>
+                                                            </div>
+                                                        </div>
+                
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label class="form-label-title col-sm-3 mb-0">Quantity</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" type="text"
+                                                                value="<%= item.quantity %>" name="quantity" required>
+                                                            </div>
+                                                        </div>
+                
+                
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label class="form-label-title col-sm-3 mb-0">Discount Given</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" type="text"
+                                                                value="<%= order.discount %>" name="discount" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label class="form-label-title col-sm-3 mb-0">Delivery Fees</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" type="text"
+                                                                value="<%= order.delivery_fee %>" name="delivery_fee" required>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                </div>
+                                            <% }) %>
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="form-label-title col-sm-3 mb-0">Mode of Payment</label>
+                                                <div class="col-sm-9">
+                                                    <select class="js-example-basic-single w-100" name="payment_method" id="payment_method">
+                                                        <% if(order.payment_method === "Cash on Delivery") { %>
+                                                            <option value="<%= order.payment_method %>" selected><%= order.payment_method %></option>                                                            
+                                                            <option value="Debit Card">Debit Card</option>
+                                                            <option value="Bank Transfer">Bank Transfer</option>
+                                                        <% }else if(order.payment_method === "Bank Transfer"){%>
+                                                            <option value="<%= order.payment_method %>" selected><%= order.payment_method %></option>                                                            
+                                                            <option value="Debit Card">Debit Card</option>
+                                                            <option value="Cash on Delivery">Cash on Delivery</option>
+                                                        <% }else if(order.payment_method === "Debit Card"){%>
+                                                            <option value="<%= order.payment_method %>" selected><%= order.payment_method %></option>                                                            
+                                                            <option value="Bank Transfer">Bank Transfer</option>
+                                                            <option value="Cash on Delivery">Cash on Delivery</option>
+                                                        <% }else{%>
+                                                            <option value="Debit Card">Debit Card</option>
+                                                            <option value="Bank Transfer">Bank Transfer</option>
+                                                            <option value="Cash on Delivery">Cash on Delivery</option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <button class="btn btn-solid" type="submit">Update Invoice</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                    <%- include('../../partials/footer')%>
+                <!-- footer end -->
+            </div>
+            <!-- Container-fluid end -->
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                
+            <script>
+                function readURL(input, viewer_id) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+            
+                        reader.onload = function (e) {
+                            $('#'+viewer_id).attr('src', e.target.result);
+                        }
+            
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+            
+                $("#customFileEg1").change(function () {
+                    readURL(this, 'viewer');
+                });
+                $("#customFileEg2").change(function () {
+                    readURL(this, 'viewer2');
+                });
+            </script>
+            <script>
+                function validateInput(inputField) {
+                    // Remove any non-numeric characters from the input
+                    inputField.value = inputField.value.replace(/[^0-9]/g, '');
+                
+                    // Display an error message if input is empty
+                    var errorMessage = document.getElementById("errorMessage");
+                    if (inputField.value === "") {
+                        errorMessage.textContent = "Please enter a number.";
+                    } else {
+                        errorMessage.textContent = "";
+                    }
+                }
+            </script>
+
+<script>
+    function validateFloat(floatField) {
+        // Remove any non-numeric characters (including '.') from the input
+        floatField.value = floatField.value.replace(/[^0-9.]/g, '');
+
+        // Parse the entered value as a float
+        var enteredValue = parseFloat(floatField.value);
+
+        // Display an error message if the entered value is not a valid number or less than or equal to 0
+        var errorMessage = document.getElementById("errorMessage");
+        if (isNaN(enteredValue) || enteredValue <= 0) {
+            errorMessage.textContent = "Please enter a valid number greater than 0.";
+            document.getElementById("confirmStatusChange").disabled = true;
+        } else {
+            errorMessage.textContent = "";
+            document.getElementById("confirmStatusChange").disabled = false;
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Event listener for form submission
+        $("form").submit(function (event) {
+            // Get the selected value from the "select" element
+            var selectedValue = $("#selectOption").val();
+
+            // Check if the selected value is 'none' (you can replace 'none' with the actual value you want to check)
+            if (selectedValue === 'none') {
+                // Prevent form submission
+                event.preventDefault();
+
+                // Display an error message or perform any other actions to indicate the validation failure
+                alert('Please select a valid option.');
+            }
+        });
+    });
+</script>
+
+            
+
+<%- include('../../partials/end')%>

@@ -1,0 +1,288 @@
+<%- include('../partials/main', { pageTitle: 'JoshFuels - Dashboard' }) %>
+<link rel="stylesheet" href="/public/css/style2.css">
+
+<style>
+    .item-box {
+        width: 150px;
+        border: #0000003d 1px solid;
+    }
+    
+    .product-card-item{
+            border: #0000003d 1px solid;
+            border-radius: 12px;
+            justify-content: center;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            cursor: pointer;
+            margin: 1rem;
+    }
+    
+    .upper-card-body {  
+        justify-content: center;
+        overflow-x: auto;
+        -webkit-overflow-scrolling :touch;
+        
+    }
+    
+    .product-card-title {
+        color: #140606bd;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+    
+    .product-card-text {
+        margin-bottom: 0.5rem;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 600;
+    }
+</style>
+            <!-- index body start -->
+            <div class="page-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- chart caard section start -->
+                        <div class="col-sm-6 col-xxl-3 col-lg-6">
+                            <div class="main-tiles border-5 border-0 card o-hidden">
+                                <div class="custome-1-bg b-r-4 card-body">
+                                    <div class="media align-items-center static-top-widget">
+                                        <div class="media-body p-0">
+                                            <span class="m-0">Total Revenue</span>
+                                            <h4 class="mb-0 counter">₹<%= totalRevenue.toFixed(2) %>
+                                            </h4>
+                                        </div>
+                                        <div class="align-self-center text-center">
+                                            <i class="ri-database-2-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xxl-3 col-lg-6">
+                            <div class="main-tiles border-5 border-0 card o-hidden">
+                                <div class="custome-2-bg b-r-4 card-body">
+                                    <div class="media static-top-widget">
+                                        <div class="media-body p-0">
+                                            <span class="m-0">Total Orders</span>
+                                            <h4 class="mb-0 counter"><%= allOrders %>
+                                            </h4>
+                                        </div>
+                                        <div class="align-self-center text-center">
+                                            <i class="ri-shopping-bag-3-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xxl-3 col-lg-6">
+                            <div class="main-tiles border-5 border-0  card o-hidden">
+                                <div class="custome-3-bg b-r-4 card-body">
+                                    <div class="media static-top-widget">
+                                        <div class="media-body p-0">
+                                            <span class="m-0">Total Products</span>
+                                            <h4 class="mb-0 counter"> <%= allProducts %>
+                                                <a href="/admin/product/add" class="badge badge-light-secondary grow">
+                                                    ADD NEW</a>
+                                            </h4>
+                                        </div>
+
+                                        <div class="align-self-center text-center">
+                                            <i class="ri-chat-3-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xxl-3 col-lg-6">
+                            <div class="main-tiles border-5 border-0 card o-hidden">
+                                <div class="custome-4-bg b-r-4 card-body">
+                                    <div class="media static-top-widget">
+                                        <div class="media-body p-0">
+                                            <span class="m-0">Total Customers</span>
+                                            <h4 class="mb-0 counter"> <%= allCustomers%>
+                                            </h4>
+                                        </div>
+
+                                        <div class="align-self-center text-center">
+                                            <i class="ri-user-add-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sales / Purchase chart start -->
+                            <div class="col-xl-7 col-lg-12 col-md-6">
+                                <div class="card">
+                                    <div class="card-header border-0 pb-1">
+                                        <div class="card-header-title">
+                                            <h4>Sales / Purchase</h4>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div id="sales-purchase-chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- Sales / Purchase chart end -->
+                       
+                        <div class="col-xl-5">
+                            <div class="card o-hidden card-hover">
+                                <div class="card-header card-header-top card-header--2">
+                                    <div class="card-header-title">
+                                        <h4>Vehicle Stats</h4>
+                                    </div>
+
+                                    <div class="best-selling-box">
+                                        <span>Sort By:</span>
+                                        <div class="dropdown">
+                                            <button class="btn p-0 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" data-bs-auto-close="true" data-bs-original-title="" title="">Today</button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item" href="#" data-bs-original-title="" title="">Yesterday</a></li>
+                                                <li><a class="dropdown-item" href="#" data-bs-original-title="" title="">Day before yesterday</a></li> 
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body p-0">
+                                    <div>
+                                        <div class="table-responsive">
+                                            <table class="best-selling-table table border-0">
+                                                <tbody>
+                                                    <% if (vehicle != '') { %>        
+                                                        <% vehicle.forEach((row, index) => { %> 
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="best-product-box">
+                                                                        <div class="product-name">
+                                                                            <h6>Vehicle Number</h6>
+                                                                            <h5>
+                                                                                <a href="/admin/vehicle/getallstats/<%= row._id %>">
+                                                                                    <%= row.vehicle_number %>
+                                                                                </a>
+                                                                            </h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div class="product-detail-box">
+                                                                        <h6>Branch</h6>
+                                                                        <h5><%= row.branch_id.name %></h5>
+                                                                    </div>
+                                                                </td>
+                                                                
+                                                                <td>
+                                                                    <div class="product-detail-box">
+                                                                        <h6>Delivery Man</h6>
+                                                                        <h5><%= row.deliveryman_id %></h5>
+                                                                    </div>
+                                                                </td>
+
+                                                            </tr>
+                                                        <% }) %>      
+                                                    <% } else { %>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="product-detail-box">
+                                                                    <h6>No Data found</h6>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <% } %>      
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+                <!-- footer start-->
+                <%- include('../partials/footer')%>
+                <!-- footer End-->
+            </div>
+            <!-- index body end -->
+            <!-- Include the necessary ApexCharts and jQuery libraries -->
+            <script src="/public/js/chart/apex-chart/apex-chart1.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+            <script>
+                // Function to get date formatted as 'DD MMM'
+                function getFormattedDate(date) {
+                    return date.toLocaleDateString('en-US', { day: '2-digit', month: 'short' });
+                }
+
+                // Function to update the chart with data
+                function updateChart(data) {
+                    var options = {
+                        series: [{
+                            data: data.map(entry => entry.totalRevenue)
+                        }],
+                        chart: {
+                            height: 250,
+                            type: 'bar',
+                        },
+                        colors: ['#0da487', '#2483e2', '#3d3d3d'],
+                        plotOptions: {
+                            bar: {
+                                columnWidth: '25%',
+                                distributed: true,
+                                fill: {
+                                    colors: ['#0da487', '#2483e2', '#3d3d3d'], // Set solid colors for the bars
+                                }
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        legend: {
+                            show: false
+                        },
+                        xaxis: {
+                            categories: data.map(entry => entry.date),
+                            labels: {
+                                style: {
+                                    colors: ['#0da487', '#2483e2','#3d3d3d', '#3d3d3d', '#3d3d3d', '#3d3d3d', '#3d3d3d'],
+                                    fontSize: '12px'
+                                }
+                            }
+                        },
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#sales-purchase-chart"), options);
+                    chart.render();
+                }
+
+                // Get current date
+                var currentDate = new Date();
+
+                // Generate previous 6-day date range
+                var dateRange = [];
+                for (var i = 6; i >= 0; i--) {
+                    var date = new Date(currentDate);
+                    console.log(date)
+                    date.setDate(currentDate.getDate() - i);
+                    dateRange.push(getFormattedDate(date));
+                }
+
+                // Call your API to get data
+                fetch('/admin/auth/sales-data')
+                    .then(response => response.json())
+                    .then(data => {
+                        updateChart(data);
+                    })
+                    .catch(error => console.error('Error fetching data from API:', error));
+            </script>
+
+<%- include('../partials/end')%>

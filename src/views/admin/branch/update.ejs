@@ -1,0 +1,333 @@
+<%- include('../../partials/main', { pageTitle: 'Update Branch' }) %>
+<style>
+    .position-relative {
+    position: relative;
+}
+
+.eye-btn {
+    position: absolute;
+    right: 10px; /* Adjust as needed to position the eye button */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+</style>
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-8 m-auto">
+                                    <div class="card">
+                                        <div class="card-body title-header option-title">
+                                            <h5 style="font-size: calc(20px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));">Update the Branch</h5>
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="theme-form theme-form-2 mega-form" action="/admin/branch/update/<%= branch._id %>" method="POST" enctype="multipart/form-data">
+                                        <div class="card" >
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Branch Information </h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Branch
+                                                            Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="name" placeholder="Enter Branch Name...." required value="<%= branch.name %>">
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Phone
+                                                            Number</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" placeholder="Enter Phone Number...." name="phone" id="numberInput" oninput="validateInput(this)" required value="<%= branch.phone %>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Email
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="email" name="email" placeholder="Enter Email...." value="<%= branch.email %>" required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Branch Image </h5>
+                                                </div>
+                                                <div class="my-4 align-items-center">
+                                                    <input class="form-control" type="hidden" name="maincategory" value="Admin">
+                                                    <input class="form-control" type="hidden" name="subcategory" value="Branch">
+                                                    <label class="col-sm-3 col-form-label form-label-title">Branch Image</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" name="image" id="customFileEg1" class="form-control form-choose"
+                                                                accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" 
+                                                                oninvalid="document.getElementById('en-link').click()">
+                                                        <div class="custom-file">
+                                                            <div class="text-center">
+                                                                <% if ( branch.image ){ %>
+                                                                    <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="<%= branch.image%>" onerror="this.src='/public/images/img2.jpg'" alt="image" />
+                                                                <% } else { %>
+                                                                    <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/public/images/img2.jpg" alt="image" />
+                                                                <% } %>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card" >
+                                            <div class="card-body ">
+                                                <div class="card-header-2">
+                                                    <h5>Branch Address</h5>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 1
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="address1" placeholder="Enter Address 1...." value="<%= branch.address1 %>" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 2
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="address2" placeholder="Enter Address 2...." required value="<%= branch.address2 %>">
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label class="col-form-label form-label-title">State</label>
+                                                            <!-- Dropdown initially hidden -->
+                                                            <input class="form-control" type="text" name="state" placeholder="Enter State...." required value="<%= branch.state %>">  
+                                                        </div>
+                                                    
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label class="col-form-label form-label-title">District</label>
+                                                            <input class="form-control" type="text" name="district" placeholder="Enter District...." required value="<%= branch.district %>">  
+                                                        </div>
+                                                    
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label class="col-form-label form-label-title">City</label>
+                                                            <input class="form-control" type="text" name="city" placeholder="Enter City...." required value="<%= branch.city %>">  
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">Area
+                                                            </label>
+                                                            <input class="form-control" type="text" name="area" placeholder="Enter Area...." required value="<%= branch.area %>">  
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">Pincode
+                                                            </label>
+                                                            <input class="form-control" type="text" name="pincode" placeholder="Enter State...." required value="<%= branch.pincode %>">
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">Country
+                                                            </label>
+                                                            <input class="form-control" type="text" name="country" placeholder="Enter Your Country...." required value="<%= branch.country %>">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card" >
+                                            <div class="card-body ">
+                                                <div class="card-header-2">
+                                                    <h5>Branch Details</h5>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Account Holder Name 
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="account_holder_name" placeholder="Account Holder Name" value="<%= bank.account_holder_name %>" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Bank Name
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="bank_name" placeholder="Bank Name" required value="<%= bank.bank_name %>">
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">Account No.
+                                                            </label>
+                                                            <input class="form-control" type="text" name="account_no" placeholder="Enter Account Number...." id="numberInput" oninput="validateInput(this)" required value="<%= bank.account_no %>">
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">IFSC Code
+                                                            </label>
+                                                            <input class="form-control" type="text" placeholder="Enter IFSC Code...." name="ifsc_code"  required value="<%= bank.ifsc_code %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">Branch.
+                                                            </label>
+                                                            <input class="form-control" type="text" name="branch_name" placeholder="Enter Account Branch...." required value="<%= bank.branch %>">
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">Gst No.
+                                                            </label>
+                                                            <input class="form-control" type="text" placeholder="Enter GST Number...." name="gst_no"  required value="<%= branch.gst_no %>">
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                    <%- include('../../partials/footer')%>
+                <!-- footer end -->
+            </div>
+            <!-- Container-fluid end -->
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                    $(document).ready(function() {
+                        // Listen for changes in the category image file input
+                        $('#categoryImageInput').on('change', function() {
+                            // Get the selected file name for category image
+                            var fileNameCategory = $(this).val().split('\\').pop();
+                            // Update the content of the additional box for category image with the file name
+                            $('#textFieldValueCategory').text('Selected Category Image: ' + fileNameCategory);
+                        });
+                    });
+                </script>
+            
+            <script>
+                function validateInput(inputField) {
+                    // Remove any non-numeric characters from the input
+                    inputField.value = inputField.value.replace(/[^0-9]/g, '');
+                
+                    // Display an error message if input is empty
+                    var errorMessage = document.getElementById("errorMessage");
+                    if (inputField.value === "") {
+                        errorMessage.textContent = "Please enter a number.";
+                    } else {
+                        errorMessage.textContent = "";
+                    }
+                }
+                </script>
+
+                <script>
+                    function readURL(input, viewer_id) {
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                
+                            reader.onload = function (e) {
+                                $('#'+viewer_id).attr('src', e.target.result);
+                            }
+                
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                
+                    $("#customFileEg1").change(function () {
+                        readURL(this, 'viewer');
+                    });
+                    $("#customFileEg2").change(function () {
+                        readURL(this, 'viewer2');
+                    });
+                </script>
+
+<script>
+    function validateFloat(floatField) {
+        // Remove any non-numeric characters (including '.') from the input
+        floatField.value = floatField.value.replace(/[^0-9.]/g, '');
+
+        // Parse the entered value as a float
+        var enteredValue = parseFloat(floatField.value);
+
+        // Display an error message if the entered value is not a valid number or less than or equal to 0
+        var errorMessage = document.getElementById("errorMessage");
+        if (isNaN(enteredValue) || enteredValue <= 0) {
+            errorMessage.textContent = "Please enter a valid number greater than 0.";
+            document.getElementById("confirmStatusChange").disabled = true;
+        } else {
+            errorMessage.textContent = "";
+            document.getElementById("confirmStatusChange").disabled = false;
+        }
+    }
+</script>
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+    });
+</script>
+
+<%- include('../../partials/end')%>

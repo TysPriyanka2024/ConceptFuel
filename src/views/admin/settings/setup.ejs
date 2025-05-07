@@ -1,0 +1,156 @@
+<%- include('../../partials/main', { pageTitle: 'System Setup' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-8 m-auto">
+                                    <div class="card">
+                                        <div class="card-body title-header option-title">
+                                            <h5 style="font-size: calc(20px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));">Update Profile</h5>
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="theme-form theme-form-2 mega-form" action="/admin/auth/settings/general-settings" method="post" enctype="multipart/form-data">
+                                        <div class="card" >
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>System Information</h5>
+                                                </div>
+                                                <div class="row">
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">App Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" placeholder="Enter your App Name" value="<%= generalData[0].name %>" name="app_name" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">App Email</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="email" placeholder="Enter your App Email" name="app_email" value="<%= generalData[0].email %>" required>
+                                                        </div>
+                                                        <span style="font-size: 15px;color :blueviolet;">*This email is for smtp email setup</span>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Mail Password</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" placeholder="Enter your App Password" value="<%= generalData[0].password %>" name="email_password" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="my-4 row align-items-center">
+                                                        <label class="col-sm-4 col-form-label form-label-title">Login Logo Image</label>
+                                                        <div class="custom-file">
+                                                            <input class="form-control" type="hidden" name="maincategory" value="login">
+                                                            <input class="form-control" type="hidden" name="subcategory" value="banner">
+                                                            <input type="file" name="image" id="customFileEg2" class="form-control form-choose"
+                                                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                                                    oninvalid="document.getElementById('en-link').click()">
+                                                            <div class="custom-file">
+                                                                <div class="text-center">
+                                                                    <img style="height: 200px;border: 1px solid;border-radius: 10px;width: 50%;margin-top:2rem" id="viewer2" src="/public/images/img2.jpg" alt="image" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <button class="btn btn-solid" type="submit">Add Customer</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                    <%- include('../../partials/footer')%>
+                <!-- footer end -->
+            </div>
+            <!-- Container-fluid end -->
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                
+            <script>
+                function readURL(input, viewer_id) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+            
+                        reader.onload = function (e) {
+                            $('#'+viewer_id).attr('src', e.target.result);
+                        }
+            
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+            
+                $("#customFileEg1").change(function () {
+                    readURL(this, 'viewer');
+                });
+                $("#customFileEg2").change(function () {
+                    readURL(this, 'viewer2');
+                });
+            </script>
+
+
+<script>
+    function validateFloat(floatField) {
+        // Remove any non-numeric characters (including '.') from the input
+        floatField.value = floatField.value.replace(/[^0-9.]/g, '');
+
+        // Parse the entered value as a float
+        var enteredValue = parseFloat(floatField.value);
+
+        // Display an error message if the entered value is not a valid number or less than or equal to 0
+        var errorMessage = document.getElementById("errorMessage");
+        if (isNaN(enteredValue) || enteredValue <= 0) {
+            errorMessage.textContent = "Please enter a valid number greater than 0.";
+            document.getElementById("confirmStatusChange").disabled = true;
+        } else {
+            errorMessage.textContent = "";
+            document.getElementById("confirmStatusChange").disabled = false;
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Event listener for form submission
+        $("form").submit(function (event) {
+            // Get the selected value from the "select" element
+            var selectedValue = $("#selectOption").val();
+
+            // Check if the selected value is 'none' (you can replace 'none' with the actual value you want to check)
+            if (selectedValue === 'none') {
+                // Prevent form submission
+                event.preventDefault();
+
+                // Display an error message or perform any other actions to indicate the validation failure
+                alert('Please select a valid option.');
+            }
+        });
+    });
+</script>
+
+            
+
+<%- include('../../partials/end')%>

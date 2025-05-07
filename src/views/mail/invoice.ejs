@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JoshFuels | Invoice</title>
+    <style>
+        .printableArea{
+            font-size: 0.7rem;
+            margin: 5%;
+        }
+    </style> 
+</head>
+<body>
+    <section id="printableArea">
+        <div class="container">
+
+            <% if(order.user_id.payment_method.trim().toLowerCase() == "cash on delivery"){ %>
+                <h2><center>Cash Memo</center></h2>
+            <% } else { %>
+                <h2><center>Invoice</center></h2>
+            <% } %>
+            <table style="border-collapse: collapse;width: 100%;">
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" rowspan="2" colspan="2">
+                        <strong><%= order.branch_id.name %> (<%= order.branch_id.state %>)</strong><br>
+                        <%= order.branch_id.address1 %> <br> <%= order.branch_id.address2 %>, <%= order.branch_id.district %>, <%= order.branch_id.state %><br>
+                        GSTIN/UIN: <%= order.branch_id.gst_no %><br>
+                        State Name: <%= order.branch_id.state %>, Code: <%= order.branch_id.gst_no.slice(0, 2) %>
+                    </td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">Invoice No. <strong><br> <%= order.order_id %></strong></td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">Order Date<strong><br><%= order.created_date.toLocaleString('en-US', options) %></strong></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">Delivery Note<strong><br><%= order.note %></strong></td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">Mode of Payment<strong><br><%= order.user_id.payment_method.trim() %></strong></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" rowspan="2" colspan="2">
+                        Consignee (ship to) <br>
+                        <strong><%= order.user_id.company %> </strong><br>
+                        <%= order.address_id.address_1 %> <br><%= order.address_id.address_2 %> <%= order.address_id.city %> <%= order.address_id.state %>  <br>
+                        GSTIN/UIN: <%= order.user_id.gst_no %><br>
+                        State Name: <%= order.address_id.state %>, Code: <%= order.user_id.gst_no.slice(0, 2) %>
+                    </td>
+
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">Challan Number<strong><br> <%= order.challan_number %> </strong></td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">Other Refrence<strong><br>-----</strong></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">Buyer's Contact Person.<strong><br><%= order.user_id.first_name %> <%= order.user_id.last_name %></strong></td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">
+                        Delivery Date
+                            <strong>
+                                <br>
+                                <% if(order.status === "Out for delivery" || order.status === "Delivered"){ %>
+                                    <%= order.delivery_date.toLocaleString('en-US', options) %>    
+                                <% } else { %>
+                                    ----
+                                <% } %>
+                            </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" rowspan="2" colspan="2">
+                        Buyer's (bill to) <br>
+                        <strong><%= order.user_id.company %> </strong><br>
+                        <%= order.billing_id.address_1 %> <br><%= order.billing_id.address_2 %> <%= order.billing_id.city %> <%= order.billing_id.state %>  <br>
+                        GSTIN/UIN: <%= order.user_id.gst_no %><br>
+                        State Name: <%= order.billing_id.state %>, Code: <%= order.user_id.gst_no.slice(0, 2) %>
+                    </td>
+                    <% if(order.is_delivery_man_assigned){ %>
+                        <td style="border: 1px solid black;padding: 8px;" colspan="2">Dispatched Through <strong><br>   <%= order.delivery_id && order.delivery_id.vehicle_number !== null ? order.delivery_id.vehicle_number : '---' %></strong></td>
+                        <td style="border: 1px solid black;padding: 8px;" colspan="2">Dispatched By <strong><br> <%= order.delivery_id.deliveryman_id %></strong></td>
+                    <% } else { %>
+                        <td style="border: 1px solid black;padding: 8px;" colspan="2">Dispatched Through <strong><br> --- </strong></td>
+                        <td style="border: 1px solid black;padding: 8px;" colspan="2">Dispatched By <strong><br> ---- </strong></td>
+                    <% } %>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="4">Terms of Delivery <strong><br>--- </strong></td>
+                </tr>
+                <tr>
+                    <th style="border: 1px solid black;padding: 8px;">Description of Goods</th>
+                    <th style="border: 1px solid black;padding: 8px;">HSN/SAC</th>
+                    <th style="border: 1px solid black;padding: 8px;">Quantity</th>
+                    <th style="border: 1px solid black;padding: 8px;">Rate </th> 
+                    <th style="border: 1px solid black;padding: 8px;">per</th>
+                    <th style="border: 1px solid black;padding: 8px;">Amount</th>
+                </tr>
+                <% order.product_items.forEach(function(item, index){ %>
+                    <tr>
+                            <td style="border: 1px solid black;padding: 8px;"><%= item.product_id.name %></td>
+                            <td style="border: 1px solid black;padding: 8px;text-align: center;"><%= item.product_id.hsn %></td>    
+                            <td style="border: 1px solid black;padding: 8px;text-align: center;"><strong> <%= item.quantity %> Ltr </strong></td>
+                            <td style="border: 1px solid black;padding: 8px;text-align: center"> <%= (order.product_items[0].price - order.discount).toFixed(2) %> </th> 
+                            <th style="border: 1px solid black;padding: 8px;"> Ltr</td>
+                            <td style="border: 1px solid black;padding: 8px;padding-left: 2.3%;"> <%= ((order.product_items[0].price - order.discount) * item.quantity).toFixed(2) %></td>
+                        
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;padding: 8px;">Less: <span style="text-align: right;">Discount</span></td>
+
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;text-align: center;"><%= (order.discount).toFixed(2) %> </td>
+                        <th style="border: 1px solid black;padding: 8px;text-align: center;">Ltr</th>
+                        <td style="border: 1px solid black;padding: 8px;">(-) <%= (order.discount * item.quantity).toFixed(2) %></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;text-align: end;">Delivery Fee</td>
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;">(+) <%= (order.delivery_fee).toFixed(2) %></td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;padding: 8px;"  style="text-align: right;">Total</td>
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;text-align: center;"><strong> <%= item.quantity %> Ltr </strong></td>
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;"></td>
+                        <td style="border: 1px solid black;padding: 8px;">₹ <%= (order.grand_total).toFixed(2) %></td>
+                    </tr>
+                <% }) %>
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="6">
+                        Amount Chargeable (in words)<br>
+                        <strong> INR <%= totalPriceInWords %></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">
+                        <u>Declaration </u><br>
+                        1.We declare that this Invoice shows the Actual Price of the Goods described and that all Particulars are True and Correct.<br>
+                        2. Bills Strictly to be paid Against the Delivery. Prosecution under MSME Act 2006 will apply on Unpaid Bills.<br>
+                        3. Interest will be charged as per MSME ACT 2006 terms & conditions.<br>
+                        4. No Claim or Complaint Shall be Entertained by us after the Goods are Delivered.
+                    </td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="4">
+                        Company's Bank Details<br>
+                        Account Holder Name : <strong> <%= bank.account_holder_name %> </strong><br>
+                        Bank Name: <strong> <%= bank.bank_name %> </strong><br>
+                        A/C No. <strong> <%= bank.account_no %> </strong><br>
+                        Branch & IFS Code: <strong style="text-transform: capitalize;"> <%= bank.branch %> & <%= bank.ifsc_code %> </strong><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="2">
+                        <img src="" width="150" height="auto" alt="">
+                        Customer's Seal and Signature
+                    </td>
+                    <td style="border: 1px solid black;padding: 8px;" colspan="4">
+                        <img src="https://doorstepservices.joshfuels.com/images/defaults/josh_stamp.png" width="100" height="auto" alt="">
+                        <br>
+                        <%= order.branch_id.name %>
+                    </td>
+                    
+                </tr>
+            </table>
+            <br>
+            <center>THANKS FOR DOING BUSINESS WITH US</center>
+
+        </div>
+    </section>
+<!-- 
+    <div class="row">
+        <div class="col-xxl-12 mx-auto my-3">
+            <div class="button-group hide-on-print">
+                <ul>
+                    <li class="back-button">
+                        <a href="/admin/orders/details/<%= order.id %>" class="btn text-white print-button rounded ms-2" > Back </a>
+                    </li>
+                    <li class="print-button">
+                        <button class="btn text-white print-button rounded ms-2" onclick="printInvoice()" > Print </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+
+    <script>
+        function printInvoice() {
+  // Hide elements that should not be printed
+  const elementsToHide = document.querySelectorAll('.hide-on-print');
+  elementsToHide.forEach((element) => {
+    element.style.display = 'none';
+  });
+
+  // Get the content within the printable area
+  const printableArea = document.getElementById('printableArea');
+  const tableContent = printableArea.innerHTML; // Get the table content
+
+  // Open a new window for printing
+  const printWindow = window.open('', '', 'width=600,height=600');
+  printWindow.document.open();
+  printWindow.document.write('<html><head></head><body>');
+  printWindow.document.write(tableContent); // Write the table content
+  printWindow.document.write('</body></html');
+  printWindow.document.close();
+
+  // Print the content
+  printWindow.print();
+
+  // Close the print window
+  printWindow.close();
+
+  // Restore the hidden elements after printing is done
+  elementsToHide.forEach((element) => {
+    element.style.display = '';
+  });
+}
+
+    </script>
+</body>
+</html>
+
+

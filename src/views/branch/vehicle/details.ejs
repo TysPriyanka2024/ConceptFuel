@@ -1,0 +1,202 @@
+<%- include('../../partials/main', { pageTitle: 'Add New Vehicles' }) %>
+
+<style>
+
+.datatime {
+	border: var(--primary) 1px solid;
+	padding: 8px 16px;
+	border-radius: 10px;
+	background-color: var(--secondary);
+	color: var(--white);
+	font-size: 2rem;
+	&:focus {
+		outline: none;
+	}
+	&::selection {
+		color: #ff0000;
+	}
+	&::-webkit-calendar-picker-indicator {
+		filter: invert(50%);
+	}
+}
+
+.input-data-time {
+	display: flex;
+	flex-direction: column;
+	> label {
+		font-size: 2rem;
+	}
+}
+
+.result-event-data {
+	font-size: 3rem;
+	color: var(--primary);
+	width: 50%;
+}
+
+</style>
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-8 m-auto">
+                                    <div class="card">
+                                        <div class="card-body title-header option-title">
+                                            <h5>Add New Vehicle</h5>
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="theme-form theme-form-2 mega-form" action="/admin/vehicle/post-stats" method="POST">
+                                        <div class="card" >
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Vehicle Stats</h5>
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="col-sm-3 col-form-labrl form-label-title">Vehicle</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="js-example-basic-single w-100" name="vehicle_id" id="vehicle">
+                                                                <option selected>--- Select Any One ---</option>
+                                                                    <% if (vehicle != '') { %>        
+                                                                         <% vehicle.forEach((row, index) => { %> 
+                                                                         <option value="<%= row.id %>"> <%= row.vehicle_number %> </option>
+                                                                    <% }) %>      
+                                                                    <% } else { %>
+                                                                         <option disabled>Nothing To Show</option>
+                                                                    <% } %>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="col-sm-3 col-form-labrl form-label-title">Order</label>
+                                                        <div class="col-sm-9">
+                                                            <select class="js-example-basic-single w-100" name="order_id" id="order">
+                                                                <option value="none" >--- Select Vehicle First ---</option>
+                                                                 
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Fuel Capacity</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="fuel_capacity" placeholder="Enter the Fuel Capacity" required>
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Fuel Dispensed</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="fuel_dispensed" placeholder="Enter the Fuel Dispensed" required>
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Fuel Available</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="fuel_available" placeholder="Enter the Fuel Available" required>
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Dispensed Time</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="datatime form-control" type="datetime-local" name="dispensed_datetime" id="datatime">
+                                                        </div >
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <button class="btn btn-solid" type="submit">Add Vehicle</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                    <%- include('../../partials/footer')%>
+                <!-- footer end -->
+            </div>
+            <!-- Container-fluid end -->
+
+            <script>
+                $(document).ready(function () {
+                    $("#vehicle").change(function () {
+                        var selectedVehicleId = $(this).val();
+                        
+                        $.ajax({
+                            url: "/admin/vehicle/getOrder",
+                            method: "GET",
+                            data: { vehicle_id: selectedVehicleId },
+                            success: function (data) {
+                                var orderDropdown = $("#order");
+                                orderDropdown.empty();
+                                if (data.length > 0) {
+                                    data.forEach(function (row) {
+                                        orderDropdown.append(
+                                            $("<option>").val(row._id).text(`${row.order_id}-- $${row.total_price}`)
+                                        );
+                                    });
+                                } else {
+                                    deliverymanDropdown.append(
+                                        $("<option>").text("No Order Available For DeliveryMan")
+                                    );
+                                }
+                            },
+                            error: function () {
+                                console.log("Error fetching orders");
+                            }
+                        });
+                    });
+                });
+            </script>
+
+            <script>
+                const resultEventData = document.querySelector(".result-event-data");
+                const inputDataTimeClass = document.querySelector(".input-data-time");
+                const inputDataTimeId = document.querySelector("#datatime");
+
+                inputDataTimeId.addEventListener("change", () => {
+                    inputDataTimeClass.style = "display: none;";
+                    resultEventData.innerText = `O evento será realizado na data ${formatDate(
+                        inputDataTimeId.value
+                    )}.`;
+                });
+
+                const formatDate = (element) => {
+                    console.log(element, "ELEMENT");
+                    const splitDate = element.split("T");
+                    const date = splitDate[0].split("-").reverse().join("/");
+                    const hours = splitDate[1];
+
+                    return `${date} às ${hours}`;
+                };
+
+                inputDataTimeId.value = "2023-01-16T09:06:33";
+
+            </script>
+
+<%- include('../../partials/end')%>

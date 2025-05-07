@@ -1,0 +1,96 @@
+<%- include('../../partials/main', { pageTitle: 'Add new Notification' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Notification Template</h5>
+                                </div>
+
+                                <form action="/admin/auth/settings/notification/update/<%= notification._id %>" method="POST"  enctype="multipart/form-data" class="theme-form theme-form-2 mega-form">
+                                    <div class="mb-4 row align-items-center">    
+                                        <label class="col-sm-3 col-form-label form-label-title">Thumbnail</label>
+                                        <div class="custom-file">
+                                            <input class="form-control" type="hidden" name="maincategory" value="Admin">
+                                            <input class="form-control" type="hidden" name="subcategory" value="Notification">
+                                            <input type="file" name="image" id="customFileEg1" class="form-control form-choose"
+                                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" required
+                                                    oninvalid="document.getElementById('en-link').click()">
+                                            <div class="custom-file">
+                                                <div class="text-center">
+                                                    <% if ( notification.image ){ %>
+                                                        <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/images/<%= notification.image %>" onerror="this.src='/public/images/img2.jpg'" alt="image" />
+                                                    <% } else { %>
+                                                        <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/public/images/img2.jpg" alt="image" />
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Title</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="title" placeholder="Title..." value="<%= notification.title %>" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Message</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="text" name="message" placeholder="Message......" value="<%= notification.message %>" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Submit
+                                        </button>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+<script>
+    function readURL(input, viewer_id) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+viewer_id).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#customFileEg1").change(function () {
+        readURL(this, 'viewer');
+    });
+    $("#customFileEg2").change(function () {
+        readURL(this, 'viewer2');
+    });
+</script>
+
+
+
+<%- include('../../partials/end')%>

@@ -1,0 +1,475 @@
+<%- include('../../partials/main', { pageTitle: 'JoshFuels - Update-Products' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <form class="theme-form theme-form-2 mega-form" id="productForm" method="POST" action="/admin/product/update/<%= product.id %>" enctype="multipart/form-data">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Information</h5>
+                                    </div>
+
+                                        <input type="hidden" name="branch_id" value="123456">
+                                        <div class="mb-4 row align-items-center">
+                                            <input class="form-control" type="hidden" name="branch_id">
+                                            <label class="form-label-title col-sm-3 mb-0">Product
+                                                Name</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Product Name" name="name" value="<%= product.name %>">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4 row align-items-center">
+                                            <input class="form-control" type="hidden" name="branch_id">
+                                            <label class="form-label-title col-sm-3 mb-0">Product
+                                                HSN/SAC</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Product HSN/SAC" name="hsn" value="<%= product.hsn %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Category</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="category" id="category">
+                                                    <% categories.forEach(category => { %>
+                                                        <option value="<%= category._id %>" <%= product.category && product.category.toString() === category._id.toString() ? 'selected' : '' %>><%= category.name %></option>
+                                                    <% }); %>
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Subcategory</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="sub_category" id="sub_category">
+                                                    <% subCategories.forEach(sub => { %>
+                                                        <option value="<%= sub._id %>" <%= product.sub && product.sub.toString() === sub._id.toString() ? 'selected' : '' %>><%= sub.name %></option>
+                                                    <% }); %>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Available time Starts</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" name="available_time_starts" class="form-control" value="<%= product.available_time_starts %>" placeholder="Ex : 10:30 am" required="">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Available time ends</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" name="available_time_ends" class="form-control" value="<%= product.available_time_ends %>" placeholder="Ex : 10:30 am" required="">
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Description</h5>
+                                    </div>
+
+                                    
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <label class="form-label-title col-sm-3 mb-0">Product Description</label>
+                                                    <div class="col-sm-9">
+                                                       <textarea name="description" id="" cols="50" rows="2">
+                                                        <%= product.description %>
+                                                       </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Image</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Image</label>
+                                                <div class="custom-file">
+                                                    <input class="form-control" type="hidden" name="maincategory" value="Admin">
+                                                    <input class="form-control" type="hidden" name="subcategory" value="Products">
+                                                    <input type="file" name="image" id="customFileEg1" class="form-control form-choose"
+                                                            accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                                            oninvalid="document.getElementById('en-link').click()">
+                                                    <div class="custom-file">
+                                                        <div class="text-center">
+                                                            <% if ( product.image ){ %>
+                                                                <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/images/<%= product.image%>"  onerror="this.src='/public/images/img2.jpg'"  alt="image" />
+                                                            <% } else { %>
+                                                                <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/public/images/img2.jpg" alt="image" />
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Price</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">price</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="string" placeholder="0" name="price" id="numberInput" value="<%= product.price %>" oninput="validateInput(this)">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Tax</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="string" placeholder="0" name="tax" id="numberInput" value="<%= product.tax %>" oninput="validateInput(this)">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Tax type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="tax_type">
+                                                    <option disabled>Tax Type</option>
+                                                    <option value="amount" <%= product.tax_type === 'amount' ? 'selected' : '' %>>Amount</option>
+                                                    <option value="percentage" <%= product.tax_type === 'percentage' ? 'selected' : '' %>>Percent</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Discount</h5>
+                                    </div>
+
+                                    
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Discount</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" placeholder="0" name="discount" value="<%= product.discount %>" id="numberInput" oninput="validateInput(this)">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Discount type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="discount_type">
+                                                    <option disabled>Discount Type</option>
+                                                    <option value="amount" <%= product.discount_type === 'amount' ? 'selected' : '' %>>Amount</option>
+                                                    <option value="percentage" <%= product.discount_type === 'percentage' ? 'selected' : '' %>>Percent</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Discounted Price</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" placeholder="0" readonly value="<%= product.discounted_price %>"  >
+                                            </div>
+                                        </div>
+    
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Availabe At Stores</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <% product.branch_status.forEach((branchStatus) => { %>
+                                                <div class="col-sm-6 mb-3">
+                                                    <div class="row">
+                                                        <label class="col-sm-6 form-label-title"><%= branchStatus.branch_id.name %></label>
+                                                        <div class="col-sm-6">
+                                                            <div onclick="updateStatus('<%= branchStatus.id %>')">
+                                                                <div class="legend-indicator <%= branchStatus.status ? 'status-close' : 'status-danger' %>">
+                                                                    <span id="statusText_<%= branchStatus.id %>"><%= branchStatus.status ? 'Active' : 'Disabled' %></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <% }); %>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Add Branches</label>
+                                            <div class="col-sm-9">
+                                                <select id="countries" name="branches[]" multiple>
+                                                    <% if (branch != '') { %>        
+                                                        <% branch.forEach(branch => { %>
+                                                            <option value="<%= branch._id %>"><%= branch.name %></option>
+                                                        <% }); %>
+                                                    <% } else { %>
+                                                    <option value="none">--- Nothing To Show ---</option>
+                                                    <% } %>    
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="mb-4 row align-items-center">
+                                            <button class="btn btn-solid" type="submit">Update Product</button>
+                                        </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+  <!-- Container-fluid End -->
+
+  
+  <!-- footer start-->
+  <%- include('../../partials/footer')%>
+  <!-- footer End--> 
+  
+  
+  
+  
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <script>
+    // This script will execute on the client-side after the page loads
+
+    // Add an event listener to the form submission event
+    document.querySelector('form').addEventListener('submit', function (event) {
+        const selectElement = document.getElementById('countries');
+        const selectedOptions = [...selectElement.selectedOptions];
+
+        // Map selected options to branch IDs and create the format needed by the server
+        const selectedBranches = selectedOptions.map(option => ({
+            branch_id: option.value,
+            status: true  // You can set the status as needed
+        }));
+
+        // Attach the selected branches data to a hidden input field in the form
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'selectedBranches';
+        hiddenInput.value = JSON.stringify(selectedBranches);
+        this.appendChild(hiddenInput);
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#category").change(function () {
+            var selectedCategoryId = $(this).val();
+            
+            $.ajax({
+                url: "/admin/product/getSubcategories",
+                method: "GET",
+                data: { category_id: selectedCategoryId },
+                success: function (data) {
+                    var subcategoryDropdown = $("#sub_category");
+                    subcategoryDropdown.empty();
+                    
+                    if (data.length > 0) {
+                        data.forEach(function (row) {
+                            subcategoryDropdown.append(
+                                $("<option>").val(row._id).text(row.name)
+                            );
+                        });
+                    } else {
+                        subcategoryDropdown.append(
+                            $("<option>").text("No Subcategories Available")
+                        );
+                    }
+                },
+                error: function () {
+                    console.log("Error fetching subcategories");
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    function validateInput(inputField) {
+        // Remove any non-numeric characters and excess periods from the input
+        inputField.value = inputField.value.replace(/[^0-9.]/g, '');
+    
+        // Ensure only one period is allowed
+        var parts = inputField.value.split('.');
+        if (parts.length > 2) {
+            // More than one period found, keep only the first part
+            inputField.value = parts[0] + '.' + parts.slice(1).join('');
+        }
+
+        // Display an error message if input is empty
+        var errorMessage = document.getElementById("errorMessage");
+        if (inputField.value === "") {
+            errorMessage.textContent = "Please enter a number.";
+        } else {
+            errorMessage.textContent = "";
+        }
+    }
+</script>
+    
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const tagInput = document.getElementById("tagInput");
+          const tagContainer = document.getElementById("tagContainer");
+          let tags = [];
+    
+          tagInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter" || event.key === ",") {
+              event.preventDefault();
+              const productName = tagInput.value.trim();
+    
+              if (productName) {
+                addTag(productName);
+              }
+    
+              tagInput.value = ""; // Clear the input
+            }
+          });
+    
+          function addTag(productName) {
+            if (!tags.includes(productName)) {
+              tags.push(productName);
+              renderTags();
+            }
+          }
+    
+          function removeTag(tag) {
+            tags = tags.filter(t => t !== tag);
+            renderTags();
+          }
+    
+          function renderTags() {
+            tagContainer.innerHTML = "";
+            tags.forEach(tag => {
+              tagContainer.innerHTML += `
+                <span class="tag">
+                  ${tag}
+                  <span class="close" onclick="removeTag('${tag}')">&times;</span>
+                </span>`;
+            });
+          }
+        });
+      </script>
+
+      <script>    
+        new MultiSelectTag('countries', {
+            rounded: true,    // default true
+            shadow: true,      // default false
+            placeholder: 'Search',  // default Search...
+            onChange: function(values) {
+                console.log(values)
+            }
+        })
+    </script>
+    
+    
+      <style>
+        .tag {
+          display: inline-block;
+          margin: 5px;
+          padding: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #f2f2f2;
+        }
+    
+        .close {
+          margin-left: 5px;
+          cursor: pointer;
+        }
+    
+        .form-control {
+          padding:2px 12px;
+          border: 1px solid #f9f9f6;
+          border-radius: 4px;
+          outline: none;
+          width: 100%;
+        }
+      </style>
+
+        
+
+    
+<script>
+    function readURL(input, viewer_id) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+viewer_id).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#customFileEg1").change(function () {
+        readURL(this, 'viewer');
+    });
+    $("#customFileEg2").change(function () {
+        readURL(this, 'viewer2');
+    });
+</script>
+
+<script>
+    function updateStatus(productId) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/product/update/availability",
+            data: { productId: productId },
+            success: function (response) {
+                // Update the status text
+                const statusTextElement = $(`#statusText_${productId}`);
+                statusTextElement.text(response.status ? 'Active' : 'Disabled');
+    
+                // Update the class of the legend-indicator span for the clicked Branch only
+                const clickedBranchIndicator = $(`#statusText_${productId}`).siblings('.legend-indicator');
+                clickedBranchIndicator.removeClass('bg-success bg-disabled');
+                clickedBranchIndicator.addClass(response.status ? 'bg-success' : 'bg-disabled');
+                window.location.reload();
+                console.log("Database value updated successfully!");
+            },
+            error: function (error) {
+                console.error("Error updating database value");
+            }
+        });
+    }
+    
+</script>
+
+
+<%- include('../../partials/end')%>

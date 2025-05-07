@@ -1,0 +1,54 @@
+<%- include('../../partials/main', { pageTitle: 'Upadte Sub Category' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Update Sub-Category</h5>
+                                </div>
+
+                                <form action="/admin/category/sub/update/<%= subcategory._id %>" method="POST" class="theme-form theme-form-2 mega-form">
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Sub Category </label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="hidden" name="token">
+                                            <input class="form-control" type="text" name="name" placeholder="SubCategory Name" value="<%= subcategory.name %>" required>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Submit
+                                        </button>
+                                    </div>
+
+
+                                
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+
+
+
+<%- include('../../partials/end')%>

@@ -1,0 +1,262 @@
+<%- include('../../partials/main', { pageTitle: 'Notification List' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- All User Table Start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                    <div class="title-header option-title">
+                                        <h5>All Notification (<%= notifyCount -%>)</h5>
+                                        <form class="d-inline-flex">
+                                            <a href="/admin/auth/settings/notification/add"
+                                                class="align-items-center btn btn-theme d-flex">
+                                                <i data-feather="plus-square"></i>Add New
+                                            </a>
+                                        </form>
+                                    </div>
+
+                                    <div class="table-responsive category-table">
+                                        <div>
+                                            <table class="table all-package theme-table" id="table_id">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th>Thumbnail</th>
+                                                        <th>Title</th>
+                                                        <th>Message</th>
+                                                        <th>Status</th>
+                                                        <th>Send</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <% if (notify != '') { %>        
+                                                        <% notify.forEach((row, index) => { %> 
+                                                    <tr>
+                                                        <td><%= index + 1 -%></td>
+                                                        <td>
+                                                            <div class="table-image">
+                                                                <% if( row.image ){ %>   
+                                                                    <img src="/images/<%= row.image %>" class="img-fluid"  onerror="this.src='/public/images/img2.jpg'"  alt="">
+                                                                
+                                                                <% }else{ %>  
+                                                                    <img src="public/images/product/1.png" class="img-fluid" alt="">
+                                                                <% }%>  
+                                                            </div>
+                                                        </td>
+                                                        <td><%= row.title -%></td>
+                                                        <td><%= row.message -%></td>
+
+                                                        <td>
+                                                            <div onclick="updateStatus('<%= row._id %>')">
+                                                                <div class="legend-indicator <%= row.status ? 'status-close' : 'status-danger' %>">
+                                                                    <span id="statusText_<%= row._id %>"><%= row.status ? 'Active' : 'Disabled' %></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div class="d-inline-flex">
+                                                                <form action="/admin/auth/settings/notification/send/<%= row._id %>">
+                                                                    <input type="hidden" value="<%= row._id %>">
+                                                                    <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                                                <i data-feather="plus-square"></i> Submit
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <ul>
+                                                                <li>
+                                                                    <a href="/admin/auth/settings/notification/update/<%= row._id %>">
+                                                                        <i class="ri-pencil-line"></i>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li>
+                                                                    <a href="/admin/auth/settings/notification/delete/<%= row._id %>" data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModalToggle">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>      
+                                                    <% } else { %>
+                                                            <td>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td style="width: 100%;text-align:right;padding-right:10%">
+                                                                        Nothing To Show
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </td>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="remove-box text-center">
+                                    <div class="wrapper">
+                                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-content">It's Removed.</h4>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete Modal Box End -->
+
+                <!-- All User Table Ends-->
+                <%- include('../../partials/footer')%>
+            </div>
+            <!-- Container-fluid end -->
+
+
+            <script>
+                function updateStatus(categoryId) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/category/update-status",
+                        data: { categoryId: categoryId },
+                        success: function (response) {
+                            // Update the status text
+                            const statusTextElement = $(`#statusText_${categoryId}`);
+                            statusTextElement.text(response.status ? 'Active' : 'Disabled');
+                
+                            // Update the class of the legend-indicator span for the clicked category only
+                            const clickedCategoryIndicator = $(`#statusText_${categoryId}`).siblings('.legend-indicator');
+                            clickedCategoryIndicator.removeClass('bg-success bg-disabled');
+                            clickedCategoryIndicator.addClass(response.status ? 'bg-success' : 'bg-disabled');
+                            window.location.reload();
+                            console.log("Database value updated successfully!");
+                        },
+                        error: function (error) {
+                            console.error("Error updating database value");
+                        }
+                    });
+                }
+                
+            </script>
+            
+        
+
+    <!-- Delete Modal Box Start -->
+    <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title w-100" id="exampleModalLabel22">Are You Sure ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="remove-box">
+                        <p>You want to delete the record.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-animation btn-md fw-bold" id="confirmDeleteBtn" data-bs-target="#exampleModalToggle2"
+                        data-bs-toggle="modal" data-bs-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="remove-box text-center">
+                        <div class="wrapper">
+                            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                            </svg>
+                        </div>
+                        <h4 class="text-content">It's Removed.</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal Box End -->
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+          // Handle click event on the "Delete" link
+          $('a[data-bs-toggle="modal"]').on('click', function () {
+            // Get the category ID from the link's href attribute
+            const categoryId = this.href.split('/').pop();
+      
+            // Update the "Yes" button's data attribute with the category ID for reference when confirming deletion
+            $('#confirmDeleteBtn').data('category-id', categoryId);
+          });
+      
+          // Handle click event on the "Yes" button inside the modal
+          $('#confirmDeleteBtn').on('click', function () {
+            // Get the category ID from the data attribute
+            const categoryId = $(this).data('category-id');
+      
+            // Make an AJAX request to the server to delete the category
+            $.ajax({
+              method: 'DELETE',
+              url: `/admin/category/delete/${categoryId}`,
+              success: function (data) {
+                // If the deletion is successful, you can handle the response or reload the page
+                console.log(data); // Optional: Log the server response
+                window.location.reload(); // Reload the page to reflect the changes
+              },
+              error: function (error) {
+                // Handle errors if any
+                console.error(error);
+              },
+            });
+          });
+        });
+      </script>
+
+
+<%- include('../../partials/end')%>

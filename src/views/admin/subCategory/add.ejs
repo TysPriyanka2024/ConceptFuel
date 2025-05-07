@@ -1,0 +1,70 @@
+<%- include('../../partials/main', { pageTitle: 'Add New Sub-Category' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Sub Category Information</h5>
+                                </div>
+
+                                <form action="/admin/category/sub-category/add" method="POST" class="theme-form theme-form-2 mega-form">
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Sub Category </label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="hidden" name="token">
+                                            <input class="form-control" type="text" name="name" placeholder="SubCategory Name" required>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="col-sm-3 col-form-label form-label-title">Main Category *</label>
+                                        <div class="col-sm-9">
+                                            <select class="js-example-basic-single w-100" name="parent_id">
+                                                <option disabled>--- Select Any One ---</option>
+                                                <% if (category != '') { %>        
+                                                    <% category.forEach((row, index) => { %> 
+                                                        <option value="<%= row.id %>"> <%= row.name %></option>
+                                                <% }) %>      
+                                                <% } else { %>
+                                                    <option disabled>Nothing To Show</option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Submit
+                                        </button>
+                                    </div>
+
+
+                                
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+
+
+
+<%- include('../../partials/end')%>

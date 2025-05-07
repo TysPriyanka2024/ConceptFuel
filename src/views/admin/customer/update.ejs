@@ -1,0 +1,584 @@
+<%- include('../../partials/main', { pageTitle: 'Add new Customer' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-8 m-auto">
+                                    <div class="card">
+                                        <div class="card-body title-header option-title">
+                                            <h5 style="font-size: calc(20px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));">Update Organisation details</h5>
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="theme-form theme-form-2 mega-form" action="/admin/customer/update/<%= customer.id %>" method="post" enctype="multipart/form-data">
+                                        <div class="card" >
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Personal Information </h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Organisation Name
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="company" placeholder="Enter Organisation Name" value="<%= customer.company%>" >
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Contact Person's First Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="first_name" placeholder="Enter your first Name" value="<%= customer.first_name%>">
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Contact Person's Last Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" placeholder="Enter your last name" name="last_name" value="<%= customer.last_name%>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Email
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="email" name="email" placeholder="Enter Email" value="<%= customer.email %>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Phone
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="phone" placeholder="Enter Phone Number" value="<%= customer.phone%>">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            GST No.
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="gst_no"
+                                                                value="<%= customer.gst_no %>"
+                                                                placeholder="Enter GST Number...." required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="my-4 row align-items-center">
+                                                        <label class="col-sm-3 col-form-label form-label-title">Customer Image</label>
+                                                        <div class="custom-file">
+                                                            <input class="form-control" type="hidden" name="maincategory" value="Admin">
+                                                            <input class="form-control" type="hidden" name="subcategory" value="Customers">
+                                                            <input type="file" name="image" id="customFileEg1" class="form-control form-choose"
+                                                                    accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                                                    oninvalid="document.getElementById('en-link').click()">
+                                                            <div class="custom-file">
+                                                                <div class="text-center">
+                                                                    <img style="height: 200px;border: 1px solid;border-radius: 10px;width: 50%;margin-top:2rem" id="viewer" src="/images/<%= customer.profile %>"  onerror="this.src='/public/images/img2.jpg'"  alt="image" value="<%= customer.profile %>"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <% if(address) {%>
+                                            <div class="card" >
+                                                <div class="card-body ">
+                                                    <div class="card-header-2">
+                                                        <h5>Customer Address</h5>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label
+                                                                class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                                Address Line 1
+                                                            </label>
+                                                            <div class="col-md-9 col-lg-9">
+                                                                <input class="form-control" type="text" name="address1" placeholder="Enter Address 1...." value="<%= address.address_1%>" required>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label
+                                                                class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                                Address Line 2
+                                                            </label>
+                                                            <div class="col-md-9 col-lg-9">
+                                                                <input class="form-control" type="text" name="address2" placeholder="Enter Address 2...." value="<%= address.address_2%>" required>
+                                                            </div>
+                                                        </div>
+                                                        
+
+                                                        <div class="mb-4 row align-items-center">
+                                                            <div class="col-lg-6 col-md-6">
+                                                                <label
+                                                                    class="col-form-label form-label-title">Area
+                                                                </label>
+                                                                <input class="form-control" type="text" name="area" placeholder="Enter Area...." value="<%= address.area %>" required>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-6 col-md-6">
+                                                                <label
+                                                                    class="col-form-label form-label-title">PinCode
+                                                                </label>
+                                                                <input class="form-control" type="text" placeholder="Enter Pincode...." name="pincode" id="numberInput" oninput="validateInput(this)" value="<%= address.pincode%>" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-4 row align-items-center">
+                                                            <div class="col-lg-4 col-md-4">
+                                                                <label
+                                                                    class="col-form-label form-label-title">City
+                                                                </label>
+                                                                <input class="form-control" type="text" name="city" placeholder="Enter City...." value="<%= address.city%>" required>  
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-4 col-md-4">
+                                                                <label
+                                                                    class="col-form-label form-label-title">State
+                                                                </label>
+                                                                <input class="form-control" type="text" name="state" placeholder="Enter State...." value="<%= address.state%>" required>                                                        
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-4 col-md-4">
+                                                                <label
+                                                                    class="col-form-label form-label-title">Country
+                                                                </label>
+                                                                <input class="form-control" type="text" name="country" placeholder="Enter Your Country...." value="<%= address.country%>" required>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% }else {%>
+                                            <div class="card" >
+                                                <div class="card-body ">
+                                                    <div class="card-header-2">
+                                                        <h5>Customer Address</h5>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label
+                                                                class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                                Address Line 1
+                                                            </label>
+                                                            <div class="col-md-9 col-lg-9">
+                                                                <input class="form-control" type="text" name="address1" placeholder="Enter Address 1...." required>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label
+                                                                class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                                Address Line 2
+                                                            </label>
+                                                            <div class="col-md-9 col-lg-9">
+                                                                <input class="form-control" type="text" name="address2" placeholder="Enter Address 2...." required>
+                                                            </div>
+                                                        </div>
+                                                        
+
+                                                        <div class="mb-4 row align-items-center">
+                                                            <div class="col-lg-6 col-md-6">
+                                                                <label
+                                                                    class="col-form-label form-label-title">Area
+                                                                </label>
+                                                                <input class="form-control" type="text" name="area" placeholder="Enter Area...." required>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-6 col-md-6">
+                                                                <label
+                                                                    class="col-form-label form-label-title">PinCode
+                                                                </label>
+                                                                <input class="form-control" type="text" placeholder="Enter Pincode...." name="pincode" id="numberInput" oninput="validateInput(this)" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-4 row align-items-center">
+                                                            <div class="col-lg-4 col-md-4">
+                                                                <label
+                                                                    class="col-form-label form-label-title">State
+                                                                </label>
+                                                                <select class="js-example-basic-single w-100" name="state" id="state">
+                                                                    <option value="none">-- All States  --</option>
+                                                                    <% if (states != '') { %>        
+                                                                        <% states.forEach((row, index) => { %> 
+                                                                            <option value="<%= row.name %>"> <%= row.name %></option>
+                                                                    <% }) %>      
+                                                                    <% } else { %>
+                                                                        <option>Nothing To Show</option>
+                                                                    <% } %>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-4 col-md-4">
+                                                                <label
+                                                                    class="col-form-label form-label-title">City
+                                                                </label >
+                                                                <select class="js-example-basic-single w-100" name="city" id="cities" required>
+                                                                    <option value="none">-- Select a State First --</option>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-4 col-md-4">
+                                                                <label
+                                                                    class="col-form-label form-label-title">Country
+                                                                </label>
+                                                                <input class="form-control" type="text" name="country" placeholder="Enter Your Country...." required>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                        
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="mb-4 row align-items-center">
+                                                    <label class="form-label-title col-sm-3 mb-0">Mode of Payment</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="js-example-basic-single w-100" name="payment_method" id="payment_method">
+                                                            <% if(customer.payment_method === "Cash on Delivery") { %>
+                                                                <option value="<%= customer.payment_method %>" selected><%= customer.payment_method %></option>                                                            
+                                                                <option value="Debit Card">Debit Card</option>
+                                                                <option value="Bank Transfer">Bank Transfer</option>
+                                                            <% }else if(customer.payment_method === "Bank Transfer"){%>
+                                                                <option value="<%= customer.payment_method %>" selected><%= customer.payment_method %></option>                                                            
+                                                                <option value="Debit Card">Debit Card</option>
+                                                                <option value="Cash on Delivery">Cash on Delivery</option>
+                                                            <% }else if(customer.payment_method === "Debit Card"){%>
+                                                                <option value="<%= customer.payment_method %>" selected><%= customer.payment_method %></option>                                                            
+                                                                <option value="Bank Transfer">Bank Transfer</option>
+                                                                <option value="Cash on Delivery">Cash on Delivery</option>
+                                                            <% }else{%>
+                                                                <option value="Debit Card">Debit Card</option>
+                                                                <option value="Bank Transfer">Bank Transfer</option>
+                                                                <option value="Cash on Delivery">Cash on Delivery</option>
+                                                            <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Discount
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="discount" id="floatField" oninput="validateFloat(this, 'errorMessage2')"  value="<%= customer.discount %>"  required >                                                        
+                                                        <span id="errorMessage2" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Volume Discount
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="volume_discount" id="floatField" oninput="validateFloat(this, 'errorMessage3')"  value="<%= customer.volume_discount %>"  required >                                                        
+                                                        <span id="errorMessage3" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Card Discount
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="card_discount" id="floatField" oninput="validateFloat(this, 'errorMessage4')"  value="<%= customer.card_discount %>"  required >                                                        
+                                                        <span id="errorMessage4" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-4 row align-items-center">
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Delivery Fees
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="delivery_fee" id="floatField" oninput="validateFloat(this, 'errorMessage5')"  value="<%= customer.delivery_fee %>"  required >                                                        
+                                                        <span id="errorMessage5" style="color: red;"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <button class="btn btn-solid" type="submit">Update Customer</button>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                    <%- include('../../partials/footer')%>
+                <!-- footer end -->
+            </div>
+            <!-- Container-fluid end -->
+
+
+                            <!-- Make Customer Privilaged -->
+                                            <!-- Make Customer Privilaged -->
+                <div class="modal fade theme-modal remove-coupon" id="confirmationModal" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header d-block text-center">
+                                <h5 class="modal-title w-100" id="exampleModalLabel22">Please Set the Discussed Price ......</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                                <!-- Add this input field inside your confirmationModal body -->
+                                <div class="modal-body container">
+                                    <h4 id="text-false"></h4>
+                                    <div id="confirmationContainer" >
+                                        <label
+                                            class="form-label-title">
+                                            Discussed Price
+                                        </label>
+                                        <div class="">
+                                            <input class="form-control" type="text" name="discussed_price" id="floatInput" oninput="validateFloat(this)" placeholder="Enter Your Price...." required>
+                                        </div>
+                                        <span id="errorMessage" style="color: red;"></span>
+                                    </div>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                                <button type="button" class="btn btn-animation btn-md fw-bold" id="confirmStatusChange" data-bs-target="#exampleModalToggle2"
+                                    data-bs-toggle="modal" data-bs-dismiss="modal" disabled>Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="remove-box text-center">
+                                    <div class="wrapper">
+                                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-content">It's Updated.</h4>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                
+
+<script>
+    $(document).ready(function () {
+        $("#state").change(function () {
+            var selectedCategoryId = $(this).val();
+            $.ajax({
+                url: "/admin/customer/getCityList",
+                method: "GET",
+                data: { state: selectedCategoryId },
+                success: function (data) {
+                    var subcategoryDropdown = $("#cities");
+                    subcategoryDropdown.empty();
+                    
+                    // Add a default or selected option
+                    subcategoryDropdown.append(
+                        $("<option>").text('Select City')
+                    );
+
+                    if (data.length > 0) {
+                        data.forEach(function (row) {
+                            subcategoryDropdown.append(
+                                $("<option>").val(row.name).text(row.name)
+                            );
+                        });
+                    } else {
+                        subcategoryDropdown.append(
+                            $("<option>").text("We Don't Server in this city")
+                        );
+                    }
+                },
+                error: function () {
+                    console.log("Error fetching cities");
+                }
+            });
+        });
+    });
+</script>
+
+            <script>
+                function readURL(input, viewer_id) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+            
+                        reader.onload = function (e) {
+                            $('#'+viewer_id).attr('src', e.target.result);
+                        }
+            
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+            
+                $("#customFileEg1").change(function () {
+                    readURL(this, 'viewer');
+                });
+                $("#customFileEg2").change(function () {
+                    readURL(this, 'viewer2');
+                });
+            </script>
+            <script>
+                function validateInput(inputField) {
+                    // Remove any non-numeric characters from the input
+                    inputField.value = inputField.value.replace(/[^0-9]/g, '');
+                
+                    // Display an error message if input is empty
+                    var errorMessage = document.getElementById("errorMessage");
+                    if (inputField.value === "") {
+                        errorMessage.textContent = "Please enter a number.";
+                    } else {
+                        errorMessage.textContent = "";
+                    }
+                }
+                </script>
+            
+
+            <script>
+                function validateFloat(floatField , errorMessageId) {
+                    // Remove any non-numeric characters (including '.') from the input
+                    floatField.value = floatField.value.replace(/[^0-9.+-]/g, '');
+            
+                    // Parse the entered value as a float
+                    var enteredValue = parseFloat(floatField.value);
+            
+                    // Display an error message if the entered value is not a valid number or less than or equal to 0
+                    var errorMessage = document.getElementById(errorMessageId);
+                    if (isNaN(enteredValue)) {
+                        document.getElementById("confirmStatusChange").disabled = true;
+                    } else {
+                        errorMessage.textContent = "";
+                        document.getElementById("confirmStatusChange").disabled = false;
+                    }
+                }
+            </script>
+
+                <!-- <script>
+                    $(document).ready(function () {
+                        // Function to open the modal and handle data
+                        function openConfirmationModal(customerId, isPrivilaged) {
+                            // Set the data-customer-id and is-privilaged in the modal
+                            $('#confirmationModal').attr('data-customer-id', customerId);
+                            $('#confirmationModal').attr('data-is-privilaged', isPrivilaged);
+
+                            // Show/hide the input box based on the isPrivilaged value
+                            if (isPrivilaged === 'Click here to Unprivilage this Customer') {
+                                // If isPrivilaged is true, hide the input box
+                                $('#exampleModalLabel22').text('Are you sure?');
+                                $('#text-false').text('You want to Unprivilage the User');
+                                $('#confirmationContainer').hide();
+                                document.getElementById("confirmStatusChange").disabled = false;
+
+                            } else {
+                                // If isPrivilaged is false, show the input box
+                                $('#exampleModalLabel22').text(''); // Empty the text
+                                $('#text-false').text('');
+                                $('#confirmationContainer').show();
+                            }
+
+                            // Change the modal title to "Are you sure?"
+                            $('#exampleModalLabel22').text('Are you sure?');
+
+                            // Open the confirmation modal
+                            $('#confirmationModal').modal('show');
+                        }
+
+                        // Function to handle the confirmation and make API call
+                        function confirmStatusChange() {
+                            // Get data-customer-id and is-privilaged from the modal
+                            var customerId = $('#confirmationModal').attr('data-customer-id');
+                            var isPrivilaged = $('#confirmationModal').attr('data-is-privilaged');
+
+                            // Get the discussed price from the input field (only if it's visible)
+                            var discussedPrice = $('#floatInput:visible').val();
+
+                            // Determine the opposite of isPrivilaged
+                            var oppositeIsPrivilaged = isPrivilaged === 'True' ? 'False' : 'True';
+
+                            // Make an API call using AJAX (Assuming you have an API endpoint to handle this)
+                            $.ajax({
+                                url: '/admin/customer/update-prime',
+                                method: 'POST',
+                                data: {
+                                    customerId: customerId,
+                                    discussedPrice: discussedPrice,
+                                    isPrivilaged: oppositeIsPrivilaged // Send the opposite value
+                                },
+                                success: function (response) {
+                                    // Update the status text
+                                    const statusTextElement = $(`#privalgeText_${customerId}`);
+                                    statusTextElement.text(response.is_privilaged ? 'True' : 'False');
+
+                                    // Update the class of the legend-indicator span for the clicked category only
+                                    const clickedProductIndicator = $(`#privalgeText_${customerId}`).siblings('.legend-indicator');
+                                    clickedProductIndicator.removeClass('bg-success bg-disabled');
+                                    clickedProductIndicator.addClass(response.is_privilaged ? 'bg-success' : 'bg-disabled');
+                                    window.location.reload();
+                                },
+                                error: function (error) {
+                                    console.error("Error updating database value");
+                                }
+                            });
+                        }
+
+                        // Event listener for the click button
+                        $('.clickable-cell').on('click', function () {
+                            // Get the data-customer-id and is-privilaged attribute values
+                            var customerId = $(this).data('customer-id');
+                            var isPrivilaged = $('#privalgeText_' + customerId).text().trim();
+                            console.log(isPrivilaged)
+                            // Open the confirmation modal with the customer ID and is-privilaged value
+                            openConfirmationModal(customerId, isPrivilaged);
+                        });
+
+                        // Event listener for the confirmStatusChange button
+                        $('#confirmStatusChange').on('click', function () {
+                            // Call the function to confirm status change and make API call
+                            confirmStatusChange();
+                        });
+                    });
+                </script> -->
+
+<%- include('../../partials/end')%>

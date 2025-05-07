@@ -1,0 +1,86 @@
+<%- include('../../partials/main', { pageTitle: 'Add new Banner' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header-2">
+                                    <h5>Update Banner</h5>
+                                </div>
+
+                                <form action="/admin/banner/update/<%= banner._id %>" method="PUT" class="theme-form theme-form-2 mega-form" enctype="multipart/form-data">
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="form-label-title col-sm-3 mb-0">Title</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" type="hidden" name="token">
+                                            <input class="form-control" type="text" name="name" placeholder="Banner Name" value="<%= banner.title %>" required>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="mb-4 row align-items-center">
+                                        <label class="col-sm-3 col-form-label form-label-title">Banner Image</label>
+                                            <small style="color: red">* ( Ratio 3:1 )</small>
+                                        <div class="form-group col-sm-9">
+                                            <div class="box-wrapper">
+                                                <!-- The text field will be displayed here -->
+                                                <div id="textFieldValueBanner2">
+                                                    <img src="<%= banner.image %>" onerror="this.src='/public/images/img2.jpg'" alt="<%= banner.image %>" class="img-fluid">
+                                                </div>
+                                            </div>
+                                            <div class="dropzone-wrapper">
+                                                <div class="dropzone-desc">
+                                                    <i class="ri-upload-2-line"></i>
+                                                    <p>Choose an image file or drag it here.</p>
+                                                </div>
+                                                <!-- Assign a unique ID to the file input for banner image -->
+                                                <input type="file" class="dropzone" name="image" id="bannerImageInput" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-inline-flex">
+                                        <button class="align-items-center btn btn-theme d-flex" type="submit">
+                                                    <i data-feather="plus-square"></i> Submit
+                                        </button>
+                                    </div>
+
+
+                                    
+                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                    <script>
+                                        
+                                        $(document).ready(function() {
+                                            // Listen for changes in the banner image file input
+                                            $('#bannerImageInput').on('change', function() {
+                                                // Get the selected file name for banner image
+                                                var fileNamebanner = $(this).val().split('\\').pop();
+                                                // Update the content of the additional box for banner image with the file name
+                                                $('#textFieldValueBanner2').text('Selected Banner Image: ' + fileNamebanner);
+                                            });
+                                        });
+                                    </script>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+    <!-- footer Start -->
+    <%- include('../../partials/footer')%>
+    <!-- footer En -->
+</div>
+<!-- Container-fluid End -->
+
+
+
+<%- include('../../partials/end')%>

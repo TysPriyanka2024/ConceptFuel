@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./a-login.ejs" type="image/x-icon">
+    <link rel="shortcut icon" href="/public/images/favicon.png" type="image/x-icon">
+    <title style="text-transform:capitalize;"> Josh - <%= title %> log In</title>
+    
+    <!-- Google font-->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Linear Icon css -->
+    <link rel="stylesheet" href="/public/css/linearicon.css">
+
+    <!-- fontawesome css -->
+    <link rel="stylesheet" type="text/css" href="/public/css/vendors/font-awesome.css">
+
+    <!-- Themify icon css-->
+    <link rel="stylesheet" type="text/css" href="/public/css/vendors/themify.css">
+
+    <!-- ratio css -->
+    <link rel="stylesheet" type="text/css" href="/public/css/ratio.css">
+
+    <!-- remixicon css -->
+    <link rel="stylesheet" type="text/css" href="/public/css/remixicon.css">
+
+    <!-- Feather icon css-->
+    <link rel="stylesheet" type="text/css" href="/public/css/vendors/feather-icon.css">
+
+    <!-- Plugins css -->
+    <link rel="stylesheet" type="text/css" href="/public/css/vendors/scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/vendors/animate.css">
+
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="/public/css/vendors/bootstrap.css">
+
+    <!-- vector map css -->
+    <link rel="stylesheet" type="text/css" href="/public/css/vector-map.css">
+
+    <!-- Slick Slider Css -->
+    <link rel="stylesheet" href="/public/css/vendors/slick.css">
+
+    <!-- App css -->
+    <link rel="stylesheet" type="text/css" href="/public/css/style.css">
+</head>
+
+<body>
+
+    <!-- login section start -->
+    <section class="log-in-section section-b-space">
+        <a href="" class="logo-login"><img src="/images/login/logos/logo.png" class="img-fluid"></a>
+        <div class="container w-100">
+            <div class="row">
+
+                <div class="col-xl-5 col-lg-6 me-auto">
+                    <div class="log-in-box">
+                        <div class="log-in-title">
+                            <h3>Welcome To Josh DoorStep Services</h3>
+                            <h5>Log In Your Account</h4>
+                        </div>
+
+                        <div class="input-box">
+                            <form action="/<%= title %>/auth/login" method="post" class="row g-4">
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating log-in-form">
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="Email Address">
+                                        <label for="email">Email Address</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating log-in-form">
+                                        <input type="password" name="password" class="form-control" id="password"
+                                            placeholder="Password">
+                                        <label for="password">Password</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="forgot-box">
+                                        <div class="form-check ps-0 m-0 remember-box">
+                                            <input class="checkbox_animated check-box" name="remember" type="checkbox"
+                                                id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">Remember me</label>
+                                        </div>
+                                        <a href="/forgot" class="forgot-password">Forgot Password?</a>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-animation w-100 justify-content-center" type="submit">Log
+                                        In</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="other-log-in">
+                            <h6>or</h6>
+                        </div>
+
+                        <div class="log-in-button">
+                            <h4>Want to login your <span style="text-transform:capitalize;"><%= redirect %></span> <a href="/<%= redirect %>/auth/login"> Login </a></h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- login section end -->
+</body>
+
+<!-- latest js -->
+<script src="/public/js/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap js -->
+<script src="/public/js/bootstrap/bootstrap.bundle.min.js"></script>
+
+<!-- feather icon js -->
+<script src="/public/js/icons/feather-icon/feather.min.js"></script>
+<script src="/public/js/icons/feather-icon/feather-icon.js"></script>
+
+<!-- scrollbar simplebar js -->
+<script src="/public/js/scrollbar/simplebar.js"></script>
+<script src="/public/js/scrollbar/custom.js"></script>
+
+<!-- Sidebar jquery -->
+<script src="/public/js/config.js"></script>
+
+<!-- tooltip init js -->
+<script src="/public/js/tooltip-init.js"></script>
+
+<!-- Plugins JS -->
+<script src="/public/js/sidebar-menu.js"></script>
+<script src="/public/js/notify/bootstrap-notify.min.js"></script>
+<script>
+    'use strict';
+    var notify = $.notify('<i class="fas fa-bell"></i><strong>Loading</strong> page. Do not close this page...', {
+        type: 'theme',
+        allow_dismiss: true,
+        delay: 4000,
+        showProgressbar: true,
+        timer: 300,
+        animate: {
+            enter: 'animated fadeInDown',
+            exit: 'animated fadeOutUp'
+        }
+    });
+
+    // Get the query parameter values from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const successMessage = urlParams.get('success');
+    const errorMessage = urlParams.get('error'); // Add this line to get error message
+    const error = '<%= error %>';
+
+    // Display the success, error, or regular message in the notification
+    if (successMessage) {
+        setTimeout(function () {
+            notify.update('message', `<i class="fas fa-bell"></i><strong>${successMessage}</strong>`);
+        }, 1000);
+    } else if (errorMessage) { // Add this condition for error message
+        setTimeout(function () {
+            notify.update('message', `<i class="fas fa-bell"></i><strong>Error: ${errorMessage}</strong>`);
+        }, 1000);
+    } else {
+        setTimeout(function () {
+            notify.update('message', '<i class="fas fa-bell"></i><strong>'+ error +'</strong>');
+        }, 1000);
+    }
+</script>
+
+<!-- Apexchar js -->
+<script src="/public/js/chart/apex-chart/apex-chart1.js"></script>
+<script src="/public/js/chart/apex-chart/moment.min.js"></script>
+<script src="/public/js/chart/apex-chart/apex-chart.js"></script>
+<script src="/public/js/chart/apex-chart/stock-prices.js"></script>
+<script src="/public/js/chart/apex-chart/chart-custom1.js"></script>
+
+<!-- slick slider js -->
+<script src="/public/js/slick.min.js"></script>
+<script src="/public/js/custom-slick.js"></script>
+
+
+<!-- ratio js -->
+<script src="/public/js/ratio.js"></script>
+
+<!-- sidebar effect -->
+<script src="/public/js/sidebareffect.js"></script>
+
+<!-- Theme js -->
+<script src="/public/js/script.js"></script>
+</html>
