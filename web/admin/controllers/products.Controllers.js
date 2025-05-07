@@ -15,8 +15,16 @@ const {
 const { generateAccessToken} = require('../middlewares/auth.middleware');
 const models = require('../../../managers/models');
 const { deleteMe } = require('../../../managers/utils/s3Delete')
+<<<<<<< HEAD
 
 // This would be your token blacklist storage
+=======
+const { Validator } = require('../../../managers/utils');
+const { model } = require('mongoose');
+const { Whatsapp } = require('../../../managers/whatsapp');
+
+// This would be your token blacklist storage 
+>>>>>>> 50bc8428eba644b356898945a2134b8590826159
 const tokenBlacklist = new Set();
 
 
@@ -234,6 +242,11 @@ module.exports = {
         productToUpdate.image = `${req.body.maincategory}/${req.body.subcategory}/${req.files['image'][0].filename}`;
       }
   
+<<<<<<< HEAD
+=======
+      const oldPrice = productToUpdate.price;
+
+>>>>>>> 50bc8428eba644b356898945a2134b8590826159
       // Update the product fields
       productToUpdate.name = name;
       productToUpdate.hsn = hsn;
@@ -266,6 +279,86 @@ module.exports = {
   
       // Save the updated product to the database
       await productToUpdate.save();
+<<<<<<< HEAD
+=======
+
+      if(oldPrice != price){
+
+        const customers = await models.UserModel.User.find({usertype : "Customer", status: true});
+        const priceChange = price - oldPrice;
+        console.log(`Price of ${productToUpdate.name} has been changed by ${priceChange} from ${oldPrice} to ${price}`)
+
+        const areas = await models.SettingModel.Area.find({});
+        const branchProducts = await models.BranchModel.BranchProduct.find({});
+
+        branchProducts.forEach((branchProduct) => {   
+          const branchProductName = branchProduct.name;
+          const branchProductPrice = branchProduct.branch_price + priceChange;
+          // branchProduct.branch_price = branchProductPrice; 
+          // branchProduct.save(); 
+          console.log(`Branch Product name: ${branchProductName}, New Price: ${branchProductPrice}`);
+        })
+  
+        areas.forEach((area) => {
+          const areaName = area.name;
+          const oldPrice = parseFloat(area.price);        
+          const newPrice = (oldPrice + priceChange).toFixed(2);
+          // area.price = newPrice; 
+          // area.save(); 
+          console.log(`Area name: ${areaName},old price ${area.price} ,New Price: ${newPrice}`); 
+        })
+
+        const description = {
+          type : "Price Change",
+          name : "Priyanka",
+          newPrice : "89.30",
+          oldPrice : "90.30",
+          priceChange : "1.00",
+        }
+        const custPhone = "+917039917500"
+        await Whatsapp.elseCase(description, custPhone);
+
+        for (const customer of customers) {
+          try {
+            const customerName = customer.first_name;
+            let customerPhone = customer.phone;
+        
+            if (!customerPhone.startsWith('+')) {
+              customerPhone = '+91' + customerPhone;
+            }
+        
+            const address = await models.UserModel.Address.findOne({ user_id: customer._id, primary: true });
+            if (!address || !address.area) {
+              console.warn(`Skipping customer ${customerName}: address or area missing`);
+              continue;
+            }
+        
+            const customerArea = await models.SettingModel.Area.findOne({ name: address.area });
+            if (!customerArea || typeof customerArea.price === 'undefined') {
+              console.warn(`Skipping customer ${customerName}: area price not found`);
+              continue;
+            }
+        
+            const areaPrice = customerArea.price;
+            const oldPrice = (areaPrice - priceChange).toFixed(2);
+        
+            console.log(`customer name : ${customerName} \nphone number : ${customerPhone}\ncustomer area : ${customerArea.name} \narea new price : ${areaPrice} \nold price : ${oldPrice} \nprice Diff : ${priceChange}`);
+            
+            // const description = {
+            //   type : "Price Change",
+            //   name : customerName,
+            //   newPrice : areaPrice,
+            //   oldPrice : oldPrice,
+            //   priceChange : priceChange,
+            // }
+            // await Whatsapp.elseCase(description, customerPhone);
+          } catch (err) {
+            console.error(`Error processing customer ${customer.first_name}:`, err);
+          }
+        }
+        
+      }
+>>>>>>> 50bc8428eba644b356898945a2134b8590826159
   
       res.redirect('/admin/product/lists'); // Redirect to a suitable page after a successful update
     } catch (error) {

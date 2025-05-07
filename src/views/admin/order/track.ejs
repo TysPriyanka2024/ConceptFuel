@@ -99,7 +99,11 @@
                                                             <div class="tracker-number">
                                                                 <p>Order Number : <span><%= order.order_id %></span></p>
                                                                 <p>Branch : <span><%= order.branch_id.name %></span></p>
+<<<<<<< HEAD
                                                                 <p>Order Placed : <span><%= order.created_date.toLocaleDateString('en-UK', options)%></span></p>
+=======
+                                                                <p>Order Placed : <span><%= order.created_date.toLocaleDateString('en-IN', options)%></span></p>
+>>>>>>> 50bc8428eba644b356898945a2134b8590826159
                                                             </div>
 
                                                             <% if(order.status == "Pending") { %>
@@ -220,10 +224,17 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>
+<<<<<<< HEAD
                                                                             <h6><%= order.updated_date.toLocaleDateString('en-UK', options)%></h6>
                                                                         </td>
                                                                         <td>
                                                                             <h6><%= order.updated_date.toLocaleTimeString('en-UK', options2) %>
+=======
+                                                                            <h6><%= order.updated_date.toLocaleDateString('en-IN', options)%></h6>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h6><%= order.updated_date.toLocaleTimeString('en-IN', options2) %>
+>>>>>>> 50bc8428eba644b356898945a2134b8590826159
                                                                             </h6>
                                                                         </td>
                                                                         <td>
