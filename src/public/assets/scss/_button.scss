@@ -127,8 +127,8 @@
       overflow: hidden;
       transition: all 0.3s ease;
       position: relative;
-      background: #0da487;
-      background: linear-gradient(90deg, #0da487 0%, #0e947a 100%);
+      background: #9A2A2A;
+      background: linear-gradient(90deg, #9A2A2A 0%, #0e947a 100%);
       border: none;
       z-index: 0;
 
@@ -139,8 +139,8 @@
         left: 0;
         z-index: -1;
         border-radius: 5px;
-        background: #0da487;
-        background: linear-gradient(90deg, #0e947a 0%, #0da487 100%);
+        background: #9A2A2A;
+        background: linear-gradient(90deg, #0e947a 0%, #9A2A2A 100%);
         transition: all 0.3s ease;
       }
     }

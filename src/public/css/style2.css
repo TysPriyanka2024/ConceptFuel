@@ -19,7 +19,7 @@
     --theme-color-rgb: 65, 115, 148
 }
 :root{
-    --theme-color: #0da487;
+    --theme-color: #9A2A2A;
     --theme-color-rgb: 13, 164, 135;
     --theme-color1: #0e947a;
     --theme-color1-rgb: 14, 148, 122;
@@ -948,9 +948,9 @@
     -webkit-transition:all 0.3s ease;
     transition:all 0.3s ease;
     position:relative;
-    background:#0da487;
-    background:-webkit-gradient(linear, left top, right top, from(#0da487), to(#0e947a));
-    background:linear-gradient(90deg, #0da487 0%, #0e947a 100%);
+    background:#9A2A2A;
+    background:-webkit-gradient(linear, left top, right top, from(#9A2A2A), to(#0e947a));
+    background:linear-gradient(90deg, #9A2A2A 0%, #0e947a 100%);
     border:none;
     z-index:0
 }
@@ -963,9 +963,9 @@
     left:0;
     z-index:-1;
     border-radius:5px;
-    background:#0da487;
-    background:-webkit-gradient(linear, left top, right top, from(#0e947a), to(#0da487));
-    background:linear-gradient(90deg, #0e947a 0%, #0da487 100%);
+    background:#9A2A2A;
+    background:-webkit-gradient(linear, left top, right top, from(#0e947a), to(#9A2A2A));
+    background:linear-gradient(90deg, #0e947a 0%, #9A2A2A 100%);
     -webkit-transition:all 0.3s ease;
     transition:all 0.3s ease
 }
@@ -11623,8 +11623,8 @@ header .location-box button i{
     font-size:calc(14px + (22 - 14) * ((100vw - 767px) / (1920 - 767)))
 }
 .home-search{
-    background-image:-webkit-gradient(linear, left bottom, right top, from(#0da487), color-stop(#06a188), color-stop(#019e88), color-stop(#009a89), color-stop(#009789), color-stop(#009489), color-stop(#009089), color-stop(#008d89), color-stop(#008a89), color-stop(#008688), color-stop(#008387), to(#007f86));
-    background-image:linear-gradient(to right top, #0da487, #06a188, #019e88, #009a89, #009789, #009489, #009089, #008d89, #008a89, #008688, #008387, #007f86);
+    background-image:-webkit-gradient(linear, left bottom, right top, from(#9A2A2A), color-stop(#06a188), color-stop(#019e88), color-stop(#009a89), color-stop(#009789), color-stop(#009489), color-stop(#009089), color-stop(#008d89), color-stop(#008a89), color-stop(#008688), color-stop(#008387), to(#007f86));
+    background-image:linear-gradient(to right top, #9A2A2A, #06a188, #019e88, #009a89, #009789, #009489, #009089, #008d89, #008a89, #008688, #008387, #007f86);
     padding-top:0
 }
 .home-search .home-search-content{
