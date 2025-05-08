@@ -1,5 +1,5 @@
 {
-  "name": "ConceptFuels",
+  "name": "concept-fuels",
   "version": "1.0.0",
   "description": "This a fuel delivery app this project contains api and admin panel",
   "main": "app.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shivamrvgupta/Jetway_Prod.git"
+    "url": "git+https://github.com/TysPriyanka2024/ConceptFuel.git"
   },
   "author": "Shivam Gupta",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/shivamrvgupta/Jetway_Prod/issues"
+    "url": "https://github.com/TysPriyanka2024/ConceptFuel/issues"
   },
-  "homepage": "https://github.com/shivamrvgupta/Jetway_Prod#readme",
+  "homepage": "https://github.com/TysPriyanka2024/ConceptFuel#readme",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.496.0",
     "@google/maps": "^1.1.3",
