@@ -591,7 +591,7 @@ module.exports = {
 
                     }
                     const delivery_link = await models.BranchModel.VehicleLocation.findOne({ vehicle_id: existingOrder.delivery_id });
-                    trackingLink = `https://doorstepservices.joshfuels.com/customer/auth/track-order/${order_id}`;
+                    trackingLink = `https://doorstepservices.conceptfuel.in/customer/auth/track-order/${order_id}`;
                     messageNotify = NotificationConstants.TrackOrderNotify(order_id, Name, trackingLink)
                     description.status = "Track";
 
@@ -680,7 +680,7 @@ module.exports = {
                         const emailResult = await Mailer.sendCustomMail(recipientEmail, subject, renderedEmailContent, invoiceLocations, invoiceName);
                         console.log(emailResult);
 
-                        const serverBaseUrl = process.env.SERVER_BASE_URL || 'https://doorstepservices.joshfuels.com';
+                        const serverBaseUrl = process.env.SERVER_BASE_URL || 'https://doorstepservices.conceptfuel.in';
                         const invoiceURL = `${serverBaseUrl}/invoice/${invoiceName}`;
                         if(invoiceURL){
                         console.log("Invoice URL", invoiceURL)
