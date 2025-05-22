@@ -32,4 +32,8 @@ router.post('/update/:customerId',
 
 router.delete('/delete/:customerId', AuthMiddleware.authenticateToken(), CustomerControllers.delete)
 
+router.get('/export-customer-payments', AuthMiddleware.authenticateToken(), CustomerControllers.exportCustomerPayments);
+router.get('/customer-sheet', AuthMiddleware.authenticateToken(), CustomerControllers.getCustomerPayment);
+router.post('/customer-sheet/export', AuthMiddleware.authenticateToken(), CustomerControllers.updateCustomerPayments);
+
 module.exports = router;

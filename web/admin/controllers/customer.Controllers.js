@@ -30,6 +30,17 @@ const options = { day: '2-digit', weekday: 'long', month: 'short', year: 'numeri
 const options2 = { timeZone: 'UTC', };
 const options4 = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
+const { google } = require('googleapis');
+const fs = require('fs');
+// Load service account credentials
+const auth = new google.auth.GoogleAuth({
+  keyFile: path.join(__dirname, '../config/concept-fuel-d9dff5620522.json'), // path to your service account file
+  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+});
+
+const SHEET_ID = '1PY7dvV5HPYVp6-flzf6cVngQwABcSmq0a5kO8_w5O0I'; // Replace with your Google Sheet ID
+const SHEET_NAME = 'PaymentIn'; // Replace with your Sheet name (tab)
+
 module.exports = {
 
   // Get Product List
@@ -708,6 +719,429 @@ module.exports = {
       return res.status(500).json({ success: false, message: 'Internal server error' });
     }
   },
+
+  exportCustomerPayments: async (req, res) => {
+  try {
+    console.log("Exporting customer payments to Google Sheets...");
+    const user = req.user;
+    if (!user) return res.redirect('/admin/auth/login');
+
+    const customers = await models.UserModel.User.find({ usertype: "Customer", status: true });
+
+    const client = await auth.getClient();
+    const sheets = google.sheets({ version: 'v4', auth: client });
+
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const sheetMetadata = await sheets.spreadsheets.get({ spreadsheetId: SHEET_ID });
+    const existingSheets = sheetMetadata.data.sheets;
+    const sheetMap = existingSheets.reduce((acc, sheet) => {
+      acc[sheet.properties.title] = sheet.properties.sheetId;
+      return acc;
+    }, {});
+
+    for (let customer of customers) {
+      const customerName = `${customer.first_name} ${customer.last_name}`.trim().substring(0, 90);
+      const safeSheetName = customerName.replace(/[:\\/?*\[\]]/g, "");
+
+      // Handle duplicate sheet names
+      let sheetKey = safeSheetName;
+      let counter = 1;
+      while (sheetMap[sheetKey]) {
+        sheetKey = `${safeSheetName} (${counter++})`;
+      }
+
+      const orders = await models.BranchModel.Order.find({ user_id: customer._id, is_delivered: true })
+        .populate('product_items')
+        .populate('product_items.product_id');
+
+      const payments = await models.UserModel.Payment.find({ user_id: customer._id });
+
+      if (orders.length === 0 && payments.length === 0) {
+        let total = 0, paid = 0;
+        if (!sheetMap[sheetKey]) {
+          await sheets.spreadsheets.batchUpdate({
+            spreadsheetId: SHEET_ID,
+            requestBody: {
+              requests: [{ addSheet: { properties: { title: sheetKey } } }]
+            }
+          });
+          sheetMap[sheetKey] = true; // Mark as created
+          await sleep(1000);
+        } else {
+          // Clear the existing sheet if already present
+          await sheets.spreadsheets.values.clear({
+            spreadsheetId: SHEET_ID,
+            range: `'${sheetKey}'!A:I`
+          });
+        }
+
+        const headerBlock = [
+          [],
+          ["", "", "JETWAY OIL AND FUEL SERVICES HOME PVT. LTD."],
+          ["", "", "Email :", "accounts@joshfuels.com"],
+          ["", "", "GSTIN/UIN:", "27AAFCJ2498F1ZC"],
+          ["", "", "Phone", "9988553777"],
+          [],
+          [],
+          ["Customer Name", customerName],
+          ["Phone No", customer.phone || ""],
+          ["Email", customer.email || "", "", "", "", "", "", "Grand Total:", `₹ ${total.toFixed(2)}`],
+          ["GST No", customer.gst_no || "", "", "", "", "", "", "Total Paid:", `₹ ${paid.toFixed(2)}`],
+          ["Company", customer.company || "", "", "", "", "", "", "Total Due:", `₹ ${(total - paid).toFixed(2)}`],
+          [],
+          ["S.No", "Date", "Invoice No.", "Type", "Mode", "Challan No", "Quantity", "Amount", "Balance"],
+        ];
+
+        await sheets.spreadsheets.values.update({
+          spreadsheetId: SHEET_ID,
+          range: `'${sheetKey}'!A1:I20`,
+          valueInputOption: 'USER_ENTERED',
+          requestBody: { values: headerBlock }
+        });
+
+        console.log(`Created empty sheet for ${customerName}`);
+        continue;
+      }
+
+      let total = 0, paid = 0;
+      const rows = [];
+
+      orders.forEach(order => {
+        total += order.grand_total;
+        rows.push([
+          null,
+          order.created_date.toISOString().split('T')[0],
+          order.order_id || "--",
+          "Sale",
+          "--",
+          order.challan_number || "--",
+          order.product_items[0]?.quantity || "--",
+          order.grand_total,
+        ]);
+      });
+
+      payments.forEach(payment => {
+        paid += payment.amount;
+        rows.push([
+          null,
+          payment.date || "--",
+          payment.payment_id || "--",
+          "Payment-In",
+          payment.payment_type || "--",
+          payment.challan_number || "--",
+          payment.quantity || "--",
+          payment.amount || 0,
+        ]);
+      });
+
+      rows.sort((a, b) => new Date(a[1]) - new Date(b[1]));
+
+      let balance = 0;
+      rows.forEach((row, idx) => {
+        row[0] = idx + 1;
+        const type = row[3];
+        const amount = parseFloat(row[7]) || 0;
+        balance += type === "Sale" ? amount : -amount;
+        row.push(`₹ ${balance.toFixed(2)}`);
+      });
+
+      const customerBlock = [
+        [],
+        ["", "", "JETWAY OIL AND FUEL SERVICES HOME PVT. LTD."],
+        ["", "", "Email :" ,  "accounts@joshfuels.com"] ,
+        ["", "", "GSTIN/UIN:","27AAFCJ2498F1ZC"],
+        ["", "", "phon","9988553777" ] ,
+        [],
+        [],
+        ["Customer Name", customerName],
+        ["Phone No", customer.phone || ""],
+        ["Email", customer.email || "", "", "", "", "", "", "Grand Total:", `₹ ${total.toFixed(2)}`],
+        ["GST No", customer.gst_no || "", "", "", "", "", "", "Total Paid:", `₹ ${paid.toFixed(2)}`],
+        ["Company", customer.company || "", "", "", "", "", "", "Total Due:", `₹ ${(total - paid).toFixed(2)}`],
+        [],
+        ["S.No", "Date", "Invoice No.", "Type", "Mode", "Challan No", "Quantity", "Amount", "Balance"],
+        ...rows,
+      ];
+
+      const prevSheetData = await sheets.spreadsheets.values.get({
+        spreadsheetId: SHEET_ID,
+        range: `'${sheetKey}'!A:I`
+      }).catch(() => null);
+
+      const newDataString = JSON.stringify(customerBlock);
+      const oldDataString = prevSheetData?.data?.values ? JSON.stringify(prevSheetData.data.values) : "";
+
+      if (newDataString === oldDataString) {
+        console.log(`No update required for ${sheetKey}`);
+        continue;
+      }
+
+      if (!sheetMap[sheetKey]) {
+        const addSheetRes = await sheets.spreadsheets.batchUpdate({
+          spreadsheetId: SHEET_ID,
+          requestBody: {
+            requests: [{ addSheet: { properties: { title: sheetKey } } }]
+          }
+        });
+        sheetMap[sheetKey] = addSheetRes.data.replies[0].addSheet.properties.sheetId;
+        await sleep(1000);
+      } else {
+        await sheets.spreadsheets.values.clear({
+          spreadsheetId: SHEET_ID,
+          range: `'${sheetKey}'!A:I`
+        });
+      }
+
+      await sheets.spreadsheets.values.update({
+        spreadsheetId: SHEET_ID,
+        range: `'${sheetKey}'!A:I`,
+        valueInputOption: 'USER_ENTERED',
+        requestBody: { values: customerBlock }
+      });
+
+      console.log(`Exported data for ${customerName} to sheet ${sheetKey}`);
+      await sleep(1500);
+    }
+
+    res.redirect('/admin/customer/list');
+
+  } catch (err) {
+    console.error("Error exporting data:", err.message);
+    res.status(500).json({ success: false, message: 'Internal server error while exporting data' });
+  }
+},
+
+// working code
+
+  getCustomerPayment: async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) return res.redirect('/admin/auth/login');
+
+      const { customerId = '', startDate = '', endDate = '' } = req.query;
+      const customers = await models.UserModel.User.find({ usertype: 'Customer', status: true });
+
+      let transactions = [];
+      let total = 0, paid = 0;
+
+      if (customerId) {
+        const orderFilter = { user_id: customerId, is_delivered: true };
+        const paymentFilter = { user_id: customerId };
+
+        if (startDate && endDate) {
+          const s = new Date(startDate);
+          const e = new Date(endDate);
+          e.setDate(e.getDate() + 1);
+          orderFilter.created_date = { $gte: s, $lt: e };
+          paymentFilter.created_date = { $gte: s, $lt: e };
+        }
+
+        const orders = await models.BranchModel.Order.find(orderFilter)
+          .populate('product_items')
+          .populate('product_items.product_id');
+
+        const payments = await models.UserModel.Payment.find(paymentFilter);
+
+        // Build transactions
+        const orderTxns = orders.map(o => {
+          const amount = o.grand_total ?? 0;
+          total += amount;
+          return {
+            date: o.created_date?.toISOString().split('T')[0] || '--',
+            invoiceNo: o.order_id || '--',
+            type: 'Sale',
+            mode: '--',
+            challanNo: o.challan_number || '--',
+            quantity: o.product_items?.[0]?.quantity ?? '--',
+            amount
+          };
+        });
+
+        console.log("Order Txns", orderTxns);
+        const paymentTxns = payments.map(p => {
+          const amount = p.amount ?? 0;
+          paid += amount;
+          return {
+            date: p.created_date?.toISOString().split('T')[0] || '--',
+            invoiceNo: p.payment_id || '--',
+            type: 'Payment-In',
+            mode: p.payment_type || '--',
+            challanNo: p.challan_number || '--',
+            quantity: p.quantity ?? '--',
+            amount
+          };
+        });
+
+        console.log("Payment Txns", paymentTxns);
+        transactions = [...orderTxns, ...paymentTxns]
+        transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+        console.log("transactions", transactions);
+
+        // Add running balance
+        let balance = 0;
+        transactions = transactions.map((tx, i) => {
+          balance += tx.type === 'Sale' ? tx.amount : -tx.amount;
+          return {
+            sno: i + 1,
+            ...tx,
+            balance: `₹ ${balance.toFixed(2)}`
+          };
+        });
+      }
+
+      res.render('admin/customer/select-customer', {
+        user,
+        customers,
+        queryCustomerId: customerId,
+        queryStartDate: startDate,
+        queryEndDate: endDate,
+        transactions,
+        grandTotal: total,
+        paidTotal: paid,
+        dueTotal: total - paid,
+        error: "Customer Payments"
+      });
+
+    } catch (err) {
+      console.error('getCustomerPayment error:', err);
+      res.status(500).send('Internal Server Error');
+    }
+  },
+
+  updateCustomerPayments: async (req, res) => {
+    try {
+      const user = req.user;
+      if (!user) return res.redirect('/admin/auth/login');
+
+      const { customerId = '', startDate = '', endDate = '' } = req.body;
+      if (!customerId) return res.status(400).send('Customer ID is required to export.');
+
+      const customer = await models.UserModel.User.findById(customerId);
+      if (!customer) return res.status(404).send('Customer not found.');
+
+      const orderFilter = { user_id: customerId, is_delivered: true };
+      const paymentFilter = { user_id: customerId };
+      let sheetKey = `${customer.first_name} ${customer.last_name}`.slice(0, 90).replace(/[:\\/?*\[\]]/g, '');
+
+      if (startDate && endDate) {
+        const s = new Date(startDate);
+        const e = new Date(endDate);
+        e.setDate(e.getDate() + 1);
+        orderFilter.created_date = { $gte: s, $lt: e };
+        paymentFilter.created_date = { $gte: s, $lt: e };
+        sheetKey += ` (${startDate} to ${endDate})`;
+      }
+
+    
+      const orders = await models.BranchModel.Order.find(orderFilter)
+        .populate('product_items')
+        .populate('product_items.product_id')
+
+      const payments = await models.UserModel.Payment.find(paymentFilter);
+
+      let total = 0, paid = 0;
+      const rows = [];
+
+      orders.forEach(order => {
+        total += order.grand_total;
+        rows.push([
+          null,
+          order.created_date.toISOString().split('T')[0],
+          order.order_id || "--",
+          "Sale",
+          "--",
+          order.challan_number || "--",
+          order.product_items[0]?.quantity || "--",
+          order.grand_total,
+        ]);
+      });
+
+      payments.forEach(payment => {
+        paid += payment.amount;
+        rows.push([
+          null,
+          payment.created_date?.toISOString().split('T')[0] || '--',
+          payment.payment_id || "--",
+          "Payment-In",
+          payment.payment_type || "--",
+          payment.challan_number || "--",
+          payment.quantity || "--",
+          payment.amount || 0,
+        ]);
+      });
+
+      rows.sort((a, b) => new Date(a[1]) - new Date(b[1]));
+      // Add serial numbers and running balance
+
+      let balance = 0;
+      rows.forEach((row, idx) => {
+        row[0] = idx + 1;
+        const type = row[3];
+        const amount = parseFloat(row[7]) || 0;
+        balance += type === "Sale" ? amount : -amount;
+        row.push(`₹ ${balance.toFixed(2)}`);
+      });
+
+      const sheetData = [
+        [],
+        ["", "", "JETWAY OIL AND FUEL SERVICES HOME PVT. LTD."],
+        ["", "", "Email :", "accounts@joshfuels.com"],
+        ["", "", "GSTIN/UIN:", "27AAFCJ2498F1ZC"],
+        ["", "", "Phone", "9988553777"],
+        [],
+        [],
+        ["Customer Name", sheetKey],
+        ["Phone No", customer.phone],
+        ["Email", customer.email, "", "", "", "", "", "Grand Total:", `₹ ${total.toFixed(2)}`],
+        ["GST No", customer.gst_no, "", "", "", "", "", "Total Paid:", `₹ ${paid.toFixed(2)}`],
+        ["Company", customer.company, "", "", "", "", "", "Total Due:", `₹ ${(total - paid).toFixed(2)}`],
+        [],
+        ["S.No", "Date", "Invoice No.", "Type", "Mode", "Challan No", "Quantity", "Amount", "Balance"],
+        ...rows
+      ];
+
+      // Google Sheets update
+      const client = await auth.getClient();
+      const sheets = google.sheets({ version: 'v4', auth: client });
+      const { data } = await sheets.spreadsheets.get({ spreadsheetId: SHEET_ID });
+      const existingSheets = data.sheets.reduce((acc, sheet) => {
+        acc[sheet.properties.title] = true;
+        return acc;
+      }, {});
+
+      if (!existingSheets[sheetKey]) {
+        await sheets.spreadsheets.batchUpdate({
+          spreadsheetId: SHEET_ID,
+          requestBody: { requests: [{ addSheet: { properties: { title: sheetKey } } }] }
+        });
+        await new Promise(r => setTimeout(r, 1000));
+      } else {
+        await sheets.spreadsheets.values.clear({
+          spreadsheetId: SHEET_ID,
+          range: `'${sheetKey}'!A:I`
+        });
+      }
+
+      await sheets.spreadsheets.values.update({
+        spreadsheetId: SHEET_ID,
+        range: `'${sheetKey}'!A:I`,
+        valueInputOption: 'USER_ENTERED',
+        requestBody: { values: sheetData }
+      });
+
+      return res.redirect(
+        `/admin/customer/customer-sheet?customerId=${customerId}` +
+        `&startDate=${encodeURIComponent(startDate)}` +
+        `&endDate=${encodeURIComponent(endDate)}`
+      );
+
+    } catch (err) {
+      console.error('updateCustomerPayments error:', err);
+      res.status(500).send('Internal Server Error during export');
+    }
+  }
+
 
 }
 

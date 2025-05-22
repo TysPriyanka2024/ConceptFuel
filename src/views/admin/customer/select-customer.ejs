@@ -1,0 +1,184 @@
+<%- include('../../partials/main', { pageTitle: "Select Customer for Paymentdata" }) %>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<div class="page-body">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table">
+          <div class="card-body">
+            <div class="title-header option-title">
+              <div class="container">
+                <div class="d-flex justify-content-md-start justify-content-star">
+                  <form class="row g-3 align-items-end mb-4">
+                    <div class="col-md-4">
+                      <label class="form-label">Select Customer</label>
+                      <select name="customerId" id="customer" class="form-control select2" required>
+                        <option value="">-- Choose Customer --</option>
+                        <% customers.forEach(customer => { %>
+                          <option value="<%= customer._id %>"
+                            <%= customer._id.toString() === queryCustomerId ? 'selected' : '' %>>
+                            <%= customer.first_name %> <%= customer.last_name %>
+                          </option>
+                        <% }) %>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">Start Date</label>
+                      <input type="date" id="startDate" name="startDate" class="form-control"
+                            value="<%= queryStartDate %>">
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label">End Date</label>
+                      <input type="date" id="endDate" name="endDate" class="form-control"
+                            value="<%= queryEndDate %>">
+                    </div>
+                    <div class="col-md-2 d-flex gap-2">
+                      <!-- GET: filter the table -->
+                      <button formaction="/admin/customer/customer-sheet"
+                              formmethod="get"
+                              class="btn btn-primary w-100">
+                        Apply
+                      </button>
+
+                      <!-- POST: export to Sheets -->
+                      <button formaction="/admin/customer/customer-sheet/export"
+                              formmethod="post"
+                              class="btn btn-primary w-100">
+                        Export
+                      </button>
+                    </div>
+                  </form>                           
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive table-customer">
+              <table class="table all-package theme-table" id="table_id">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Invoice No.</th>
+                    <th>Type</th>
+                    <th>Mode</th>
+                    <th>Challan No</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                    <th>Balance</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                <% if (transactions.length) { %>
+                  <% transactions.forEach(tx => { %>
+                    <tr>
+                      <td><%= tx.sno %></td>
+                      <td><%= tx.date %></td>
+                      <td><%= tx.invoiceNo %></td>
+                      <td><%= tx.type %></td>
+                      <td><%= tx.mode %></td>
+                      <td><%= tx.challanNo %></td>
+                      <td><%= tx.quantity %></td>
+                      <td>₹ <%= tx.amount.toFixed(2) %></td>
+                      <td><%= tx.balance %></td>
+                    </tr>
+                  <% }) %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="9" class="text-center">No transactions to show</td>
+                  </tr>
+                <% } %>
+                                                
+                                  
+                              </tbody>
+                            </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<%- include('../../partials/footer') %>
+<%- include('../../partials/end') %>
+
+
+<script>
+  $(function(){
+    $('.select2').select2({
+      placeholder: 'Search or select customer',
+      allowClear: true,
+      // minimumResultsForSearch: Infinity // hides the search bar
+    });
+  });
+</script>
+
+               
+<script>
+  // 1) Send Customer Sheet via AJAX (if you have an API endpoint)
+  function sendCustomerSheet() {
+    const customerId = $('#customer').val();
+    const startDate  = $('#startDate').val();
+    const endDate    = $('#endDate').val();
+
+    let url = '/admin/customer-sheet?';
+    if (customerId) url += `customerId=${encodeURIComponent(customerId)}&`;
+    if (startDate)  url += `startDate=${encodeURIComponent(startDate)}&`;
+    if (endDate)    url += `endDate=${encodeURIComponent(endDate)}`;
+
+    console.log(`Fetching data from: ${url}`);
+
+    $.ajax({
+      type: 'GET',          // or 'POST' if your API uses POST
+      url: url,
+      dataType: 'json',     // expect JSON back
+      success: function(response) {
+        alert('Data fetched successfully!');
+        // Optionally re-render your table here with response.transactions
+      },
+      error: function(xhr, status, err) {
+        console.error(`Error ${status}: ${err}`);
+        alert('Error fetching customer data');
+      }
+    });
+  }
+
+  // 2) Live‐filter the transactions table
+  $(document).ready(function () {
+    function filterTransactions() {
+      const cid = $('#customer').val();
+      const s  = $('#startDate').val();
+      const e  = $('#endDate').val();
+
+      $('.transaction-row').each(function() {
+        const rowCid  = $(this).data('customer');      
+        const rowDate = $(this).data('date');          
+        let visible = true;
+
+        if (cid && rowCid !== cid) visible = false;
+        if (s && rowDate < s)       visible = false;
+        if (e && rowDate > e)       visible = false;
+
+        $(this).toggle(visible);
+      });
+
+      // if none shown, show a "no data" row
+      if ($('.transaction-row:visible').length === 0) {
+        $('.no-data-row').show();
+      } else {
+        $('.no-data-row').hide();
+      }
+    }
+
+    // wire up filter on any change
+    $('#customer, #startDate, #endDate').on('change', filterTransactions);
+  });
+</script>
