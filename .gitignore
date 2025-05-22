@@ -136,3 +136,5 @@ dist
 .src/uploads
 
 .rest
+
+./web/admin/config/*.json

@@ -34,7 +34,7 @@ const { google } = require('googleapis');
 const fs = require('fs');
 // Load service account credentials
 const auth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, '../config/concept-fuel-d9dff5620522.json'), // path to your service account file
+  keyFile: path.join(__dirname, '../config/concept-fuel.json'), // path to your service account file
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
