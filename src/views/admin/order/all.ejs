@@ -27,17 +27,18 @@
                                                 <a href="/admin/orders/add-order" class="align-items-center btn btn-theme d-flex">
                                                     <i data-feather="plus"></i>Add New order</a>
                                             </form>
+                                            
                                             <form class="d-inline-flex" style="font-size: 15px !important;">
-                                                    <select class="js-example-basic-single w-100" id="table_search" name="branch">
-                                                        <option disabled selected value="none">-- Select Branch --</option>
-                                                        <% if (branches != '') { %>        
-                                                            <% branches.forEach(branch => { %>
-                                                                <option value="<%= branch._id %>"><%= branch.name %></option>
-                                                            <% }); %>
-                                                        <% } else { %>
-                                                            <option value="none">--- Nothing To Show ---</option>
-                                                        <% } %>      
-                                                    </select>
+                                                <select class="js-example-basic-single w-100" id="table_search" name="branch">
+                                                    <option disabled value="none" <%= !options.branch ? 'selected' : '' %>>-- Select Branch --</option>
+                                                    <% if (branches && branches.length > 0) { %>
+                                                        <% branches.forEach(branch => { %>
+                                                        <option value="<%= branch.district %>" <%= options.branch == branch.district ? 'selected' : '' %>><%= branch.name %></option>
+                                                        <% }); %>
+                                                    <% } else { %>
+                                                        <option value="none">--- Nothing To Show ---</option>
+                                                    <% } %>
+                                                </select>
                                             </form>
                                         </div>
                                     </div>
@@ -164,6 +165,45 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+                                                                        <div class="pagination d-flex justify-content-end" style="margin-top: 10px;">
+                                        <ul class="pagination">
+                                    
+                                            <% if (options.prevPage) { %>
+                                                <li class="page-item">
+                                                    <a href="?page=<%= options.prevPage %><%= options.branch ? '&branch=' + options.branch : '' %>" class="btn btn-theme me-2">&laquo; Prev</a>
+                                                </li>
+                                            <% } %>
+                                    
+                                            <% 
+                                                let startPage = Math.max(1, options.currentPage - 1);
+                                                let endPage = Math.min(options.totalPages, options.currentPage + 1);
+                                    
+                                                // Adjust range if near the start
+                                                if (options.currentPage <= 2) {
+                                                    endPage = Math.min(3, options.totalPages);
+                                                }
+                                    
+                                                // Adjust range if near the end
+                                                if (options.currentPage >= options.totalPages - 1) {
+                                                    startPage = Math.max(options.totalPages - 2, 1);
+                                                }
+                                            %>
+                                    
+                                            <% for (let i = startPage; i <= endPage; i++) { %>
+                                                <li class="page-item <%= i === options.currentPage ? 'active' : '' %>">
+                                                    <a class="btn btn-theme me-2" href="?page=<%= i %><%= options.branch ? '&branch=' + options.branch : '' %>"><%= i %></a>
+                                                </li>
+                                            <% } %>
+                                    
+                                            <% if (options.nextPage) { %>
+                                                <li class="page-item">
+                                                    <a class="btn btn-theme me-2" href="?page=<%= options.nextPage %><%= options.branch ? '&branch=' + options.branch : '' %>">Next &raquo;</a>
+                                                </li>
+                                            <% } %>
+                                    
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -235,8 +275,20 @@
                 
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                         
-
                 <script>
+                    $(document).ready(function () {
+                        $('#table_search').change(function () {
+                        const selectedBranch = $(this).val();
+                        const url = new URL(window.location.href);
+
+                        url.searchParams.set('branch', selectedBranch);
+                        url.searchParams.set('page', 1); // Reset to first page when branch changes
+                        window.location.href = url.toString();
+                        });
+                    });
+                </script>
+
+                <!-- <script>
                     $(document).ready(function () {
                         // Add change event listener to the branch dropdown
                         $('#table_search').change(function () {
@@ -268,7 +320,7 @@
                             }
                         });
                     });
-                </script>
+                </script> -->
 
 <script>
     // Function to handle the order deletion on click

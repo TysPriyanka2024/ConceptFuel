@@ -1,5 +1,14 @@
 
 <%- include('../../partials/main', { pageTitle: "Customer's List's " }) %>
+<style>
+  .dataTables_filter {
+    display: none;
+  }
+
+  .form-label {
+    margin-top: .5rem;
+  }
+</style>
 
             <!-- Container-fluid starts-->
             <div class="page-body">
@@ -16,6 +25,11 @@
                                                 <i data-feather="plus"></i>Add New
                                             </a>
                                         </form>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end mb-3">
+                                        <h4 for="searchInput" class="form-label me-2">Search:</h4>
+                                        <input type="text" id="searchInput" class="form-control" style="max-width: 300px;" placeholder="Search...">
                                     </div>
 
                                     <div class="table-responsive table-customer">
@@ -106,9 +120,17 @@
                                                             <td>
                                                                 <tr>
                                                                     <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
                                                                     <td style="width: 100%;text-align:right;padding-right:10%">
                                                                         Nothing To Show
                                                                     </td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>                                                        
                                                                     <td></td>
                                                                     <td></td>
                                                                 </tr>
@@ -116,6 +138,45 @@
                                                     <% } %>
                                             </tbody>
                                         </table>
+                                    </div>
+
+                                    <div class="pagination d-flex justify-content-end" style="margin-top: 10px;">
+                                        <ul class="pagination">
+                                    
+                                            <% if (options.prevPage) { %>
+                                                <li class="page-item">
+                                                    <a href="?page=<%= options.prevPage %><%= options.search ? '&search=' + options.search : '' %>" class="btn btn-theme me-2">&laquo; Prev</a>
+                                                </li>
+                                            <% } %>
+                                    
+                                            <% 
+                                                let startPage = Math.max(1, options.currentPage - 1);
+                                                let endPage = Math.min(options.totalPages, options.currentPage + 1);
+                                    
+                                                // Adjust range if near the start
+                                                if (options.currentPage <= 2) {
+                                                    endPage = Math.min(3, options.totalPages);
+                                                }
+                                    
+                                                // Adjust range if near the end
+                                                if (options.currentPage >= options.totalPages - 1) {
+                                                    startPage = Math.max(options.totalPages - 2, 1);
+                                                }
+                                            %>
+                                    
+                                            <% for (let i = startPage; i <= endPage; i++) { %>
+                                                <li class="page-item <%= i === options.currentPage ? 'active' : '' %>">
+                                                    <a class="btn btn-theme me-2" href="?page=<%= i %><%= options.search ? '&search=' + options.search : '' %>"><%= i %></a>
+                                                </li>
+                                            <% } %>
+                                    
+                                            <% if (options.nextPage) { %>
+                                                <li class="page-item">
+                                                    <a class="btn btn-theme me-2" href="?page=<%= options.nextPage %><%= options.search ? '&search=' + options.search : '' %>">Next &raquo;</a>
+                                                </li>
+                                            <% } %>
+                                    
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -387,4 +448,20 @@
                     });
                 </script> -->
                 <!-- Add this script after including jQuery -->
+
+<script>
+  let timeoutId;
+  document.getElementById('searchInput').addEventListener('keyup', function () {
+    clearTimeout(timeoutId);
+    const search = this.value.trim();
+
+    // Delay to avoid too many redirects
+    timeoutId = setTimeout(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.set('search', search);
+      url.searchParams.set('page', 1); // Reset to page 1 on search
+      window.location.href = url.toString();
+    }, 2000); // Wait 500ms after last keystroke
+  });
+</script>
 <%- include('../../partials/end')%>

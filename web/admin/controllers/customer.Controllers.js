@@ -47,25 +47,54 @@ module.exports = {
     list : async (req, res) => {
         try {
             const user = req.user;
+            const page = req.query.page ? parseInt(req.query.page) : 1; // Start from page 1
+            const perPage = req.query.perPage ? parseInt(req.query.perPage) : 50; // Items per page
+            const search = req.query.search || '';
         
             if (!user) {
               return res.redirect('/admin/auth/login');
             }
         
+            const query = search
+            ? {
+                $or: [
+                  { company: { $regex: search, $options: 'i' } },
+                  { first_name: { $regex: search, $options: 'i' } },
+                  { last_name: { $regex: search, $options: 'i' } },
+                  { email: { $regex: search, $options: 'i' } },
+                  { phone: { $regex: search, $options: 'i' } }
+                ],
+                usertype: "Customer" 
+              }
+            : {usertype: "Customer"};  
+
+            const totalCustomer = await models.UserModel.User.countDocuments(query); // Count total customers with user_type = "Customer"
+
             // Filter customers with user_type = "customer"
-            const customers = await models.UserModel.User.find({ usertype: "Customer" });
+            const customers = await models.UserModel.User.find(query)
+                .skip((page - 1) * perPage)
+                .limit(perPage)
+                .exec();
+
             const customerCount = customers.length;
-            
-
-
-            console.log(customerCount)
             const error = "Customer's Lists";
+
+            const totalPages = Math.ceil(totalCustomer/ perPage);
+  
+            const options = {
+              currentPage: page,
+              perPage,
+              totalPages,
+              prevPage: page > 1 ? page - 1 : null,
+              nextPage: page < totalPages ? page + 1 : null
+            };
 
             res.render('admin/customer/lists', {
               Title: "All Customers",
               user,
               customers,
-              customerCount,
+              customerCount : totalCustomer,
+              options,
               error,
             });
           } catch (err) {

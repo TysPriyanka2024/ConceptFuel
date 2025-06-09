@@ -77,8 +77,15 @@ module.exports = {
     list : async (req, res) => {
       try{
         const user = req.user;
-        const page = req.query.page ? parseInt(req.query.page) : 0; // Start from page 0
-        const perPage = req.query.perPage ? parseInt(req.query.perPage) : 10; // Items per page
+        const page = req.query.page ? parseInt(req.query.page) : 1; // Start from page 0
+        const perPage = req.query.perPage ? parseInt(req.query.perPage) : 50; // Items per page
+        const branchDistrict = req.query.branch || 'none'; // Default to 'none' if not provided
+        
+        const query = {};
+        if (branchDistrict && branchDistrict !== 'none') {
+          const branch = await models.BranchModel.Branch.findOne({district : branchDistrict})
+          query['branch_id'] = branch._id; 
+        }
 
         if(!user){
           return res.redirect('/admin/auth/login')
@@ -89,19 +96,35 @@ module.exports = {
 
         console.log(today)
 
+        const totalOrders = await models.BranchModel.Order.countDocuments(query);
+
         const orders = await models.BranchModel.Order
-        .find()
+        .find(query)
         .populate('user_id')
         .populate('branch_id')
         .populate('address_id')
         .populate('delivery_id') // Populate the delivery information if applicable
         .sort({ created_date: -1 })
+        .skip((page - 1) * perPage)
+        .limit(perPage)
+        .exec();
     
       const customers = await models.UserModel.User.find({ usertype: "Customer" });
       const branches = await models.BranchModel.Branch.find();
       const ordersCount = orders.length;
+
+      const totalPages = Math.ceil(totalOrders/ perPage);
+  
+      const options = {
+        currentPage: page,
+        perPage,
+        totalPages,
+        prevPage: page > 1 ? page - 1 : null,
+        nextPage: page < totalPages ? page + 1 : null,  
+        branch: req.query.branch || '',
+      };
     
-      res.render("admin/order/all", {user, branches, ordersCount, customers, orders, options, error: "List of Orders"});
+      res.render("admin/order/all", {user, branches, ordersCount :totalOrders, customers, orders, options, error: "List of Orders"});
       }catch(err){
         console.log(err);
         res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).send(MessageConstants.INTERNAL_SERVER_ERROR);
@@ -112,8 +135,15 @@ module.exports = {
     dailylist : async (req, res) => {
       try{
         const user = req.user;
-        const page = req.query.page ? parseInt(req.query.page) : 0; // Start from page 0
+        const page = req.query.page ? parseInt(req.query.page) : 1; // Start from page 0
         const perPage = req.query.perPage ? parseInt(req.query.perPage) : 10; // Items per page
+        const branchDistrict = req.query.branch || 'none'; // Default to 'none' if not provided
+
+        const query = {};
+        if (branchDistrict && branchDistrict !== 'none') {
+          const branch = await models.BranchModel.Branch.findOne({district : branchDistrict})
+          query['branch_id'] = branch._id; 
+        }
 
         if(!user){
           return res.redirect('/admin/auth/login')
@@ -123,26 +153,44 @@ module.exports = {
         today.setHours(0, 0, 0, 0); 
 
         console.log(today)
+        query['created_date'] = { $gte: today };
+
+        const totalOrders = await models.BranchModel.Order.countDocuments(query);
 
         const orders = await models.BranchModel.Order
-        .find({created_date : { $gte: today } })
+        .find(query)
         .populate('user_id')
         .populate('branch_id')
         .populate('address_id')
         .populate('delivery_id') // Populate the delivery information if applicable
         .sort({ created_date: -1 })
+        .skip((page - 1) * perPage)
+        .limit(perPage)
+        .exec();
     
       const customers = await models.UserModel.User.find({ usertype: "Customer" });
       const branches = await models.BranchModel.Branch.find();
       const ordersCount = orders.length;
-    
-      res.render("admin/order/all", {user, branches, ordersCount, customers, orders, options, error: "List of Orders"});
+
+      const totalPages = Math.ceil(totalOrders/ perPage);
+
+      const options = {
+        currentPage: page,
+        perPage,
+        totalPages,
+        prevPage: page > 1 ? page - 1 : null,
+        nextPage: page < totalPages ? page + 1 : null,
+        branch: req.query.branch || '',
+      };
+
+      res.render("admin/order/all", {user, branches, ordersCount:totalOrders, customers, orders, options, error: "List of Orders"});
       }catch(err){
         console.log(err);
         res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).send(MessageConstants.INTERNAL_SERVER_ERROR);
       }
     },
 
+  // Get count of all orders
     getCount : async ( req, res ) =>{
       try {
         const orderInfo = await models.BranchModel.Order.find();
@@ -289,6 +337,16 @@ module.exports = {
     listByStatus: async (req, res) => {
       try {
         const user = req.user;
+        const page = req.query.page ? parseInt(req.query.page) : 1; // Start from page 0
+        const perPage = req.query.perPage ? parseInt(req.query.perPage) : 50; // Items per page
+        const branchDistrict = req.query.branch || 'none'; // Default to 'none' if not provided
+        
+        const query = {};
+        if (branchDistrict && branchDistrict !== 'none') {
+          const branch = await models.BranchModel.Branch.findOne({district : branchDistrict})
+          query['branch_id'] = branch._id; 
+        }
+
         if (!user) {
           return res.redirect('/admin/auth/login');
         }
@@ -327,15 +385,22 @@ module.exports = {
         today.setHours(0, 0, 0, 0); 
 
         console.log(today)
+        query['created_date'] = { $gte: today };
+        query['status'] = status.charAt(0).toUpperCase() + status.slice(1); // Capitalize the status
+
+        const totalOrders = await models.BranchModel.Order.countDocuments(query);
 
         // Fetch orders based on the provided status
         const orders = await models.BranchModel.Order
-          .find({ status: status.charAt(0).toUpperCase() + status.slice(1), created_date : { $gte: today }}) // Capitalize the status
+          .find(query) // Capitalize the status
           .populate('user_id')
           .populate('branch_id')
           .populate('address_id')
           .populate('delivery_id') // Populate the delivery information if applicable
           .sort({ created_date: -1 })
+          .skip((page - 1) * perPage)
+          .limit(perPage)
+          .exec();
     
         console.log(status.charAt(0).toUpperCase() + status.slice(1))
         // console.log(orders)
@@ -344,10 +409,21 @@ module.exports = {
         const ordersCount = orders.length;
     
         console.log(orders)
+
+        const totalPages = Math.ceil(totalOrders/ perPage);
+
+        const options = {
+          currentPage: page,
+          perPage,
+          totalPages,
+          prevPage: page > 1 ? page - 1 : null,
+          nextPage: page < totalPages ? page + 1 : null,
+          branch: req.query.branch || '',
+        };
         // Render the view with filtered orders and the appropriate error message
         res.render("admin/order/all", {
           user,
-          ordersCount,
+          ordersCount:totalOrders,
           orders,
           options,
           branches,
@@ -362,6 +438,16 @@ module.exports = {
     reportlistByStatus: async (req, res) => {
       try {
         const user = req.user;
+        const page = req.query.page ? parseInt(req.query.page) : 1; // Start from page 0
+        const perPage = req.query.perPage ? parseInt(req.query.perPage) : 20; // Items per page
+        const branchDistrict = req.query.branch || 'none'; // Default to 'none' if not provided
+        
+        const query = {};
+        if (branchDistrict && branchDistrict !== 'none') {
+          const branch = await models.BranchModel.Branch.findOne({district : branchDistrict})
+          query['branch_id'] = branch._id; 
+        }
+
         if (!user) {
           return res.redirect('/admin/auth/login');
         }
@@ -376,6 +462,9 @@ module.exports = {
         } 
         
         console.log(status)
+        query['status'] = status.charAt(0).toUpperCase() + status.slice(1); // Capitalize the status
+        
+        const totalOrders = await models.BranchModel.Order.countDocuments(query);
 
         // Define a mapping of status values to user-friendly error messages
         const statusMessages = {
@@ -403,12 +492,15 @@ module.exports = {
 
         // Fetch orders based on the provided status
         const orders = await models.BranchModel.Order
-          .find({ status: status.charAt(0).toUpperCase() + status.slice(1)}) // Capitalize the status
+          .find(query) // Capitalize the status
           .populate('user_id')
           .populate('branch_id')
           .populate('address_id')
           .populate('delivery_id') // Populate the delivery information if applicable
           .sort({ created_date: -1 })
+          .skip((page - 1) * perPage)
+          .limit(perPage)
+          .exec();
     
         console.log(status.charAt(0).toUpperCase() + status.slice(1))
         // console.log(orders)
@@ -417,10 +509,23 @@ module.exports = {
         const ordersCount = orders.length;
     
         console.log(orders)
+
+        console.log(orders)
+
+        const totalPages = Math.ceil(totalOrders/ perPage);
+
+        const options = {
+          currentPage: page,
+          perPage,
+          totalPages,
+          prevPage: page > 1 ? page - 1 : null,
+          nextPage: page < totalPages ? page + 1 : null,
+          branch: req.query.branch || '',
+        };
         // Render the view with filtered orders and the appropriate error message
         res.render("admin/order/all", {
           user,
-          ordersCount,
+          ordersCount:totalOrders,
           orders,
           options,
           branches,
