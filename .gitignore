@@ -137,4 +137,4 @@ dist
 
 .rest
 
-./web/admin/config/*
+"web/admin/config/*.json"
