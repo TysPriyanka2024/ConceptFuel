@@ -206,7 +206,12 @@
                                             </div>
 
                                             <div class="delivery-sec">
-                                                <h3>expected date of delivery: <span style="font-size: 15px;"> <%= order.delivery_date%></span> </h3>
+                                                <h4>Expected date of delivery:</h4>
+                                                <span style="font-size: 15px;"> <%= order.delivery_date%></span>
+                                                <a></a>
+                                                <h4>Expected Time of delivery:</h4>
+                                                <span style="font-size: 15px;"><%= order.delivery_time%></span>
+
                                                 <!-- <a href="/branch/order/track-order/<%= order.id %>">track order</a> -->
                                             </div>
                                         </div>

@@ -107,6 +107,7 @@ module.exports = {
                 note: order.note,
                 status: order.status,
                 grand_total: order.grand_total,
+                delivered_date: order.delivered_date || "---",
             };
 
               const branchData = {

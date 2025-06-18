@@ -111,6 +111,7 @@ module.exports = {
                             note: order.note,
                             status: order.status,
                             grand_total: order.total_price,
+                            delivered_date: order.delivered_date || "---", 
                         };
         
                         const deliveryManData = order.is_delivery_man_assigned
@@ -238,6 +239,7 @@ module.exports = {
                             note: order.note,
                             status: order.status,
                             grand_total: order.grand_total,
+                            delivered_date: order.delivered_date || "---", 
                         };
         
                         const deliveryManData = order.is_delivery_man_assigned
@@ -336,7 +338,7 @@ module.exports = {
                     payment_method : user_data.payment_method,
                     note : req.body.note ,
                     grand_total : req.body.grand_total,
-                        
+                    delivered_date : req.body.delivered_date || "---",
                 }
 
                 console.log("orderdata --- ", orderData)
@@ -521,7 +523,8 @@ module.exports = {
                             note : orderData.note,
                             status : "Pending",
                             delivery_man : "Not Assigned Yet",
-                            grand_total : orderData.grand_total
+                            grand_total : orderData.grand_total,
+                            delivered_date: orderData.delivered_date || "---",
                         };
                         const newOrder = new models.BranchModel.Order(orderItem);
                         await newOrder.save();
@@ -556,6 +559,7 @@ module.exports = {
                             discount: cartInfo.discount,
                             status : orderItem.status,
                             delivery_man : orderItem.delivery_man,
+                            delivered_date: orderItem.delivered_date || "---",
                         }
                         
                         const addressInfo = await models.UserModel.Address.findOne({ _id: orderData.address_id });
@@ -942,6 +946,7 @@ module.exports = {
                         note: order.note,
                         status: order.status,
                         grand_total: order.grand_total,
+                        delivered_date: order.delivered_date || "---",
                     };
 
                     const deliveryManData = order.is_delivery_man_assigned

@@ -124,7 +124,11 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: "Not Assigned",
     },
-    esitmated_delivery_time : {
+    delivered_date :{
+        type: String,
+        default: "---",
+    },
+    estimated_delivery_time : {
         type: String,
         required: true,
         default : "6:00 PM",

@@ -100,7 +100,16 @@
                     <td style="border: 1px solid black;padding: 8px;" colspan="2">Buyer's Contact Person.<strong><br><%= order.user_id.first_name %> <%= order.user_id.last_name %></strong></td>
                     <td style="border: 1px solid black;padding: 8px;" colspan="2">Delivery Date<strong>
                         <br>
-                        <%= order.delivery_date.toLocaleString('en-US', options) %>    
+                        <% if(order.status === "Out for delivery" || order.status === "Delivered"){ %>
+                            <% if (order.delivered_date === "---") { %>
+                                <%= order.delivery_date.toLocaleString('en-IN', options) %>
+                            <% } else { %>
+                                <%= order.delivered_date.toLocaleString('en-IN', options) %> 
+                            <% } %>
+                        <% } else { %>
+                             ----
+                        <% } %>
+                        <!-- <%= order.delivery_date.toLocaleString('en-US', options) %>     -->
                 </tr>
                 <tr>
                     <td style="border: 1px solid black;padding: 8px;" rowspan="2" colspan="2">

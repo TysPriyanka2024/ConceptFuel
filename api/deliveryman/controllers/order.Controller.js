@@ -118,6 +118,7 @@ module.exports = {
                             note: order.note,
                             status: order.status,
                             grand_total: order.grand_total,
+                            delivered_date: order.delivered_date || "---",
                         };
         
                         const deliveryManData = order.is_delivery_man_assigned
@@ -248,6 +249,7 @@ module.exports = {
                             note: order.note,
                             status: order.status,
                             grand_total: order.grand_total,
+                            delivered_date: order.delivered_date || "---",
                         };
         
                         const deliveryManData = order.is_delivery_man_assigned
@@ -394,6 +396,7 @@ module.exports = {
                             note: order.note,
                             status: order.status,
                             grand_total: order.grand_total,
+                            delivered_date: order.delivered_date || "---",
                         };
         
                         const deliveryManData = order.is_delivery_man_assigned
@@ -601,7 +604,8 @@ module.exports = {
                     const formattedDate = currentDate.getFullYear() + '-' +
                                             String(currentDate.getMonth() + 1).padStart(2, '0') + '-' +
                                             String(currentDate.getDate()).padStart(2, '0');
-                    order.delivery_date = formattedDate;  // Corrected line
+                    // order.delivery_date = formattedDate;  // Corrected line
+                    order.delivered_date = formattedDate; 
                     await order.save();  // Ensure you use await to properly save the order
                     
                   }else if(existingOrder.status === "Rejected"){
